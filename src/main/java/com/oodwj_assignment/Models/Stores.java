@@ -7,10 +7,10 @@ import java.util.UUID;
 
 public class Stores {
     private UUID storeId;
-    private final String name;
-    private final UUID vendorId;
-    private final LocalDate updatedAt;
-    private final LocalDate createdAt;
+    private String name;
+    private UUID vendorId;
+    private LocalDate updatedAt;
+    private LocalDate createdAt;
 
     public Stores(UUID storeId, String name, UUID vendorId, LocalDate updatedAt, LocalDate createdAt) {
         this.storeId = storeId;
@@ -55,6 +55,22 @@ public class Stores {
         this.storeId = storeId;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setVendorId(UUID vendorId) {
+        this.vendorId = vendorId;
+    }
+
+    public void setUpdatedAt(LocalDate updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         switch (attributeName) {
             case "storeId" -> {
@@ -67,28 +83,32 @@ public class Stores {
             }
             case "name" -> {
                 if (newValue instanceof String) {
-                    return Response.failure("Name cannot be updated");
+                    setName((String) newValue);
+                    return Response.success("Name updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }
             }
             case "vendorId" -> {
                 if (newValue instanceof UUID) {
-                    return Response.failure("Vendor ID cannot be updated");
+                    setVendorId((UUID) newValue);
+                    return Response.success("Vendor ID updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }
             }
             case "updatedAt" -> {
                 if (newValue instanceof LocalDate) {
-                    return Response.failure("Updated At cannot be updated");
+                    setUpdatedAt((LocalDate) newValue);
+                    return Response.success("Updated At updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }
             }
             case "createdAt" -> {
                 if (newValue instanceof LocalDate) {
-                    return Response.failure("Created At cannot be updated");
+                    setCreatedAt((LocalDate) newValue);
+                    return Response.success("Created At updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }

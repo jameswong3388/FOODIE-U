@@ -7,13 +7,13 @@ import java.util.UUID;
 
 public class Transactions {
     public UUID transactionId;
-    public final Double amount;
-    public final transactionType type;
-    public final transactionStatus status;
-    public final UUID payerId;
-    public final UUID payeeId;
-    public final LocalDate updatedAt;
-    public final LocalDate createdAt;
+    public Double amount;
+    public transactionType type;
+    public transactionStatus status;
+    public UUID payerId;
+    public UUID payeeId;
+    public LocalDate updatedAt;
+    public LocalDate createdAt;
 
 
     public Transactions(UUID transactionId, Double amount, transactionType type, transactionStatus status, UUID payerId, UUID payeeId, LocalDate updatedAt, LocalDate createdAt) {
@@ -77,6 +77,34 @@ public class Transactions {
         this.transactionId = transactionId;
     }
 
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public void setType(transactionType type) {
+        this.type = type;
+    }
+
+    public void setStatus(transactionStatus status) {
+        this.status = status;
+    }
+
+    public void setPayerId(UUID payerId) {
+        this.payerId = payerId;
+    }
+
+    public void setPayeeId(UUID payeeId) {
+        this.payeeId = payeeId;
+    }
+
+    public void setUpdatedAt(LocalDate updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         switch (attributeName) {
             case "transactionId" -> {
@@ -89,49 +117,56 @@ public class Transactions {
             }
             case "amount" -> {
                 if (newValue instanceof Double) {
-                    return Response.failure("Amount cannot be updated");
+                    setAmount((Double) newValue);
+                    return Response.success("Amount updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }
             }
             case "type" -> {
                 if (newValue instanceof transactionType) {
-                    return Response.failure("Type cannot be updated");
+                    setType((transactionType) newValue);
+                    return Response.success("Type updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }
             }
             case "status" -> {
                 if (newValue instanceof transactionStatus) {
-                    return Response.failure("Status cannot be updated");
+                    setStatus((transactionStatus) newValue);
+                    return Response.success("Status updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }
             }
             case "payerId" -> {
                 if (newValue instanceof UUID) {
-                    return Response.failure("PayerId cannot be updated");
+                    setPayerId((UUID) newValue);
+                    return Response.success("PayerId updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }
             }
             case "payeeId" -> {
                 if (newValue instanceof UUID) {
-                    return Response.failure("PayeeId cannot be updated");
+                    setPayeeId((UUID) newValue);
+                    return Response.success("PayeeId updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }
             }
             case "updatedAt" -> {
                 if (newValue instanceof LocalDate) {
-                    return Response.failure("UpdatedAt cannot be updated");
+                    setUpdatedAt((LocalDate) newValue);
+                    return Response.success("UpdatedAt updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }
             }
             case "createdAt" -> {
                 if (newValue instanceof LocalDate) {
-                    return Response.failure("CreatedAt cannot be updated");
+                    setCreatedAt((LocalDate) newValue);
+                    return Response.success("CreatedAt updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
                 }
