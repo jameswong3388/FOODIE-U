@@ -1,0 +1,3 @@
+cbc8691f-6985-41d4-9245-840041851a58;john_doe;password123;john@example.com;30;Vendor;2023-09-21;2023-09-21
+5c70c7eb-cd5b-4966-8e59-45acf8276223;james;password123;james@example.com;30;Admin;2023-09-21;2023-09-21
+c74e7e5d-610c-47d9-b083-9b54a472850a;gino;password123;gino@example.com;30;Customer;2023-09-21;2023-09-21
