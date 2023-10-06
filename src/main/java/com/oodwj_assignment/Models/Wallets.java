@@ -7,10 +7,10 @@ import java.util.UUID;
 
 public class Wallets {
     public UUID walletId;
-    public final UUID userId;
+    public UUID userId;
     public Double credit;
     private LocalDate updatedAt;
-    private final LocalDate createdAt;
+    private LocalDate createdAt;
 
     public Wallets(UUID walletId, UUID userId, Double credit, LocalDate updatedAt, LocalDate createdAt) {
         this.walletId = walletId;
@@ -67,6 +67,10 @@ public class Wallets {
         this.walletId = walletId;
     }
 
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
     public void setCredit(Double credit) {
         this.credit = credit;
     }
@@ -75,32 +79,31 @@ public class Wallets {
         this.updatedAt = updatedAt;
     }
 
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         switch (attributeName) {
             case "walletId" -> {
-                if (newValue instanceof UUID) {
-                    setWalletId((UUID) newValue);
-                    return Response.success("Wallet ID updated successfully");
-                } else {
-                    return Response.failure("Wallet ID must be a UUID");
-                }
+                setWalletId((UUID) newValue);
+                return Response.success("Wallet ID updated successfully");
+            }
+            case "userId" -> {
+                setUserId((UUID) newValue);
+                return Response.success("User ID updated successfully");
             }
             case "credit" -> {
-                if (newValue instanceof Double) {
-                    setCredit((Double) newValue);
-                    System.out.println("Credit updated successfully");
-                    return Response.success("Credit updated successfully");
-                } else {
-                    return Response.failure("Credit must be a Double");
-                }
+                setCredit((Double) newValue);
+                return Response.success("Credit updated successfully");
             }
             case "updatedAt" -> {
-                if (newValue instanceof LocalDate) {
-                    setUpdatedAt((LocalDate) newValue);
-                    return Response.success("Updated At updated successfully");
-                } else {
-                    return Response.failure("Updated At must be a LocalDate");
-                }
+                setUpdatedAt((LocalDate) newValue);
+                return Response.success("Updated At updated successfully");
+            }
+            case "createdAt" -> {
+                setCreatedAt((LocalDate) newValue);
+                return Response.success("Created At updated successfully");
             }
             default -> {
                 return Response.failure("Invalid attribute name");
