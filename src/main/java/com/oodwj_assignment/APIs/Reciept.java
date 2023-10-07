@@ -88,6 +88,29 @@ public class Reciept {
         }
     }
 
+    public static Response<Void> deleteAll(Map<String, Object> query) {
+        Response<ArrayList<Receipts>> receipts = read(Map.of());
+
+        if (receipts.isSuccess()) {
+            for (Receipts receipt : receipts.getData()) {
+                Response<Void> matchRes = match(query, receipt);
+
+                if (matchRes.isSuccess()) {
+                    receipts.getData().remove(receipt);
+                }
+            }
+            Response<Void> saveRes = saveAllReceipts(receipts.getData());
+
+            if (saveRes.isSuccess()) {
+                return Response.success("Receipts deleted successfully");
+            } else {
+                return Response.failure(saveRes.getMessage());
+            }
+        } else {
+            return Response.failure(receipts.getMessage());
+        }
+    }
+
     private static Response<Void> match(Map<String, Object> query, Receipts receipts) {
         boolean match = true;
 

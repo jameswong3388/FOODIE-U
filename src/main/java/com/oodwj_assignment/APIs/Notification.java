@@ -1,6 +1,7 @@
 package com.oodwj_assignment.APIs;
 
 import com.oodwj_assignment.Models.Notifications;
+import com.oodwj_assignment.Models.Orders;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -104,6 +105,29 @@ public class Notification {
                 }
             }
             return Response.failure("Notification not found");
+        } else {
+            return Response.failure(notifications.getMessage());
+        }
+    }
+
+    public static Response<Void> deleteAll(Map<String, Object> query) {
+        Response<ArrayList<Notifications>> notifications = read(Map.of());
+
+        if (notifications.isSuccess()) {
+            for (Notifications notification : notifications.getData()) {
+                Response<Void> matchRes = match(query, notification);
+
+                if (matchRes.isSuccess()) {
+                    notifications.getData().remove(notification);
+                }
+            }
+            Response<Void> saveRes = saveAllNotifications(notifications.getData());
+
+            if (saveRes.isSuccess()) {
+                return Response.success("Notifications deleted successfully");
+            } else {
+                return Response.failure(saveRes.getMessage());
+            }
         } else {
             return Response.failure(notifications.getMessage());
         }
