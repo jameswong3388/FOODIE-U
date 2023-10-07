@@ -70,8 +70,6 @@ public class Food {
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
         Response<ArrayList<Foods>> foods = read(query);
 
-        System.out.println(foods.getData());
-
         if (foods.isSuccess()) {
             for (Foods food : foods.getData()) {
                 for (Map.Entry<String, Object> entry : newValue.entrySet()) {
