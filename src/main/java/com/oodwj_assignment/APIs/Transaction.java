@@ -119,6 +119,28 @@ public class Transaction {
             return Response.failure(transactions.getMessage());
         }
     }
+    public static Response<Void> deleteAll(Map<String, Object> query) {
+        Response<ArrayList<Transactions>> transactions = read(Map.of());
+
+        if (transactions.isSuccess()) {
+            for (Transactions transaction : transactions.getData()) {
+                Response<Void> matchRes = match(query, transaction);
+
+                if (matchRes.isSuccess()) {
+                    transactions.getData().remove(transaction);
+                }
+            }
+            Response<Void> saveRes = saveAllTransactions(transactions.getData());
+
+            if (saveRes.isSuccess()) {
+                return Response.success("Transactions deleted successfully");
+            } else {
+                return Response.failure(saveRes.getMessage());
+            }
+        } else {
+            return Response.failure(transactions.getMessage());
+        }
+    }
 
     private static Response<Void> match(Map<String, Object> query, Transactions transaction) {
         boolean match = true;
