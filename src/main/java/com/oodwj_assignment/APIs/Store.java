@@ -11,14 +11,14 @@ import java.util.UUID;
 public class Store {
     private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/stores.txt";
 
-    public static Response<Void> create(Stores store) {
+    public static Response<UUID> create(Stores store) {
         UUID storeId = UUID.randomUUID();
         store.setStoreId(storeId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(store);
 
-            return Response.success("Store created successfully");
+            return Response.success("Store created successfully", storeId);
         } catch (IOException e) {
             return Response.failure("Failed to create store: " + e.getMessage());
         }

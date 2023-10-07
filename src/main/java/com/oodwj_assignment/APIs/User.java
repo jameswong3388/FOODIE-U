@@ -11,7 +11,7 @@ import java.util.UUID;
 public class User {
     private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/users.txt";
 
-    public static Response<Void> create(Users user) {
+    public static Response<UUID> create(Users user) {
         if (isUsernameTaken(user.getUsername()).getData()) {
             return Response.failure("Username is taken");
         }
@@ -28,7 +28,7 @@ public class User {
 //                return Response.failure(createRes.getMessage());
 //            }
 
-            return Response.success("User created successfully");
+            return Response.success("User created successfully", userId);
         } catch (IOException e) {
             return Response.failure("Failed to create user: " + e.getMessage());
         }

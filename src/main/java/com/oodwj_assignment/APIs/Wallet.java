@@ -11,13 +11,13 @@ import java.util.UUID;
 public class Wallet {
     private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/wallets.txt";
 
-    public static Response<Void> create(Wallets wallet) {
+    public static Response<UUID> create(Wallets wallet) {
         UUID walletId = UUID.randomUUID();
         wallet.setWalletId(walletId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(wallet);
-            return Response.success("Wallet created successfully");
+            return Response.success("Wallet created successfully", walletId);
         } catch (IOException e) {
             return Response.failure("Failed to create wallet: " + e.getMessage());
         }

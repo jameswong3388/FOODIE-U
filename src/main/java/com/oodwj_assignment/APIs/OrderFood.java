@@ -11,13 +11,13 @@ import java.util.UUID;
 public class OrderFood {
     private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Database/orderFoods.txt";
 
-    public static Response<Void> create(OrderFoods orderFood) {
+    public static Response<UUID> create(OrderFoods orderFood) {
         UUID orderFoodId = UUID.randomUUID();
         orderFood.setOderFoodId(orderFoodId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(orderFood);
-            return Response.success("OrderFood created successfully");
+            return Response.success("OrderFood created successfully", orderFoodId);
         } catch (IOException e) {
             return Response.failure("Failed to create orderFood: " + e.getMessage());
         }

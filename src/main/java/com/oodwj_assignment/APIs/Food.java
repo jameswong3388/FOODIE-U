@@ -11,14 +11,14 @@ import java.util.UUID;
 public class Food {
     private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/foods.txt";
 
-    public static Response<Void> create(Foods food) {
+    public static Response<UUID> create(Foods food) {
         UUID foodId = UUID.randomUUID();
         food.setFoodId(foodId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(food);
 
-            return Response.success("Food created successfully");
+            return Response.success("Food created successfully", foodId);
         } catch (IOException e) {
             return Response.failure("Failed to create food: " + e.getMessage());
         }
