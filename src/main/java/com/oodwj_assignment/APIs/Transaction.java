@@ -69,8 +69,6 @@ public class Transaction {
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
         Response<ArrayList<Transactions>> transactions = read(query);
 
-        System.out.println(transactions.getData());
-
         if (transactions.isSuccess()) {
             for (Transactions transaction : transactions.getData()) {
                 for (Map.Entry<String, Object> entry : newValue.entrySet()) {

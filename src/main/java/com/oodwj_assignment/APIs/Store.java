@@ -67,8 +67,6 @@ public class Store {
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
         Response<ArrayList<Stores>> stores = read(query);
 
-        System.out.println(stores.getData());
-
         if (stores.isSuccess()) {
             for (Stores store : stores.getData()) {
                 for (Map.Entry<String, Object> entry : newValue.entrySet()) {

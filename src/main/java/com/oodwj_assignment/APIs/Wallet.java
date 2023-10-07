@@ -62,12 +62,7 @@ public class Wallet {
     }
 
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
-        // query is used to find the wallet to update.
-        // newValue is used to update the wallet. key is the attribute name, value is the new value.
-
         Response<ArrayList<Wallets>> wallets = read(query);
-
-        System.out.println(wallets.getData());
 
         if (wallets.isSuccess()) {
             for (Wallets wallet : wallets.getData()) {
