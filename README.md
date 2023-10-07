@@ -20,7 +20,7 @@ JDK - [Adoptium 20](https://adoptium.net/en-GB/temurin/releases/?arch=any&versio
 └── README.md
 ```
 
-`java/com.oodwj_assignment` - Contains all the source code for the project.
+`/java/com.oodwj_assignment` - Contains all the source code for the project.
 
 `main.java` - Here is where the app is initialized.
 
@@ -32,8 +32,8 @@ JDK - [Adoptium 20](https://adoptium.net/en-GB/temurin/releases/?arch=any&versio
 
 `/Models` - Contains all the model classes, used to define the data structure.
 
-`resources/com.oodwj_assignment` - Contains all the view classes, used to display pages.
+`/resources/com.oodwj_assignment` - Contains all the view classes, used to display pages.
 
 ## Bugs and Issues
 
-If you find any bugs or issues, please report it to the [issue tracker](https://github.com/jameswong3388/OODWJ_Assignment/issues)
+If you find any bugs or issues, please report it to the [issue tracker](https://github.com/jameswong3388/OODWJ/issues)
