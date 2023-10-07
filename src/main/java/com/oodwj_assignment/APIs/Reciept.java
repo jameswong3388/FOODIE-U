@@ -10,13 +10,14 @@ import java.util.UUID;
 
 public class Reciept {
     private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/receipts.txt";
-    public static Response<Void> create(Receipts receipt) {
+
+    public static Response<UUID> create(Receipts receipt) {
         UUID receiptId = UUID.randomUUID();
         receipt.setReceiptId(receiptId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(receipt);
-            return Response.success("Notification sent successfully");
+            return Response.success("Notification sent successfully", receiptId);
         } catch (IOException e) {
             return Response.failure("Failed to send notification: " + e.getMessage());
         }

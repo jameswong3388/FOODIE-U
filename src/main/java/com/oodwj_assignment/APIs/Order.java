@@ -11,13 +11,13 @@ import java.util.UUID;
 public class Order {
     private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/orders.txt";
 
-    public static Response<Void> create(Orders order) {
+    public static Response<UUID> create(Orders order) {
         UUID orderId = UUID.randomUUID();
         order.setOrderId(orderId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(order);
-            return Response.success("Order created successfully");
+            return Response.success("Order created successfully", orderId);
         } catch (IOException e) {
             return Response.failure("Failed to create order: " + e.getMessage());
         }

@@ -11,13 +11,13 @@ import java.util.UUID;
 public class Attachment {
     private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/attachments.txt";
 
-    public static Response<Void> create(Attachments attachment) {
+    public static Response<UUID> create(Attachments attachment) {
         UUID attachmentId = UUID.randomUUID();
         attachment.setAttachmentId(attachmentId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(attachment);
-            return Response.success("Attachment sent successfully");
+            return Response.success("Attachment sent successfully", attachmentId);
         } catch (IOException e) {
             return Response.failure("Failed to send attachment: " + e.getMessage());
         }

@@ -11,13 +11,13 @@ import java.util.UUID;
 public class Transaction {
     private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/transactions.txt";
 
-    public static Response<Void> create(Transactions transaction) {
+    public static Response<UUID> create(Transactions transaction) {
         UUID transactionId = UUID.randomUUID();
         transaction.setTransactionId(transactionId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(transaction);
-            return Response.success("Transaction sent successfully");
+            return Response.success("Transaction sent successfully", transactionId);
         } catch (IOException e) {
             return Response.failure("Failed to send transaction: " + e.getMessage());
         }

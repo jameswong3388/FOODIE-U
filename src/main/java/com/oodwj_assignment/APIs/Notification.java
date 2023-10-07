@@ -11,13 +11,13 @@ import java.util.UUID;
 public class Notification {
     private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/notifications.txt";
 
-    public static Response<Void> send(Notifications notification) {
+    public static Response<UUID> send(Notifications notification) {
         UUID notificationId = UUID.randomUUID();
         notification.setNotificationId(notificationId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(notification);
-            return Response.success("Notification sent successfully");
+            return Response.success("Notification sent successfully", notificationId);
         } catch (IOException e) {
             return Response.failure("Failed to send notification: " + e.getMessage());
         }
