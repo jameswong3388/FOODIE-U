@@ -3,7 +3,7 @@ package com.oodwj_assignment.APIs;
 import com.oodwj_assignment.Models.Attachments;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -37,14 +37,18 @@ public class Attachment {
                     UUID userId = UUID.fromString(parts[1]);
                     UUID notificationId = UUID.fromString(parts[2]);
                     Attachments.attachmentType attachment = Attachments.attachmentType.valueOf(parts[3]);
-                    LocalDate updatedAt = LocalDate.parse(parts[4]);
-                    LocalDate createdAt = LocalDate.parse(parts[5]);
+                    LocalDateTime updatedAt = LocalDateTime.parse(parts[4]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[5]);
 
                     attachments.add(new Attachments(attachmentId, userId, notificationId, attachment, updatedAt, createdAt));
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read attachments: " + e.getMessage());
+        }
+
+        if (attachments.isEmpty()) {
+            return Response.failure("No attachments found");
         }
 
         if (query.isEmpty()) {

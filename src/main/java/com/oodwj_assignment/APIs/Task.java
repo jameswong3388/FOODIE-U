@@ -3,7 +3,7 @@ package com.oodwj_assignment.APIs;
 import com.oodwj_assignment.Models.Tasks;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -37,8 +37,8 @@ public class Task {
                     UUID orderId = UUID.fromString(parts[2]);
                     Integer deliveryFee = Integer.parseInt(parts[3]);
                     Tasks.taskStatus status = Tasks.taskStatus.valueOf(parts[4]);
-                    LocalDate updatedAt = LocalDate.parse(parts[5]);
-                    LocalDate createdAt = LocalDate.parse(parts[6]);
+                    LocalDateTime updatedAt = LocalDateTime.parse(parts[5]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
 
                     tasks.add(new Tasks(taskId, runnerId, orderId, deliveryFee, status, updatedAt, createdAt));
 
@@ -46,6 +46,10 @@ public class Task {
             }
         } catch (IOException e) {
             return Response.failure("Failed to read tasks: " + e.getMessage());
+        }
+
+        if (tasks.isEmpty()) {
+            return Response.failure("No tasks found");
         }
 
         if (query.isEmpty()) {
@@ -66,29 +70,35 @@ public class Task {
     }
 
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
-        Response<ArrayList<Tasks>> tasks = read(query);
+        Response<ArrayList<Tasks>> tasks = read(Map.of());
 
         if (tasks.isSuccess()) {
             for (Tasks task : tasks.getData()) {
-                for (Map.Entry<String, Object> entry : newValue.entrySet()) {
-                    String attributeName = entry.getKey();
-                    Object expectedValue = entry.getValue();
+                Response<Void> matchRes = match(query, task);
 
-                    Response<Void> updateRes = task.setAttributeValue(attributeName, expectedValue);
+                if (matchRes.isSuccess()) {
+                    for (Map.Entry<String, Object> entry : newValue.entrySet()) {
+                        String attributeName = entry.getKey();
+                        Object expectedValue = entry.getValue();
 
-                    if (!updateRes.isSuccess()) {
-                        return Response.failure(updateRes.getMessage());
+                        Response<Void> updateRes = task.setAttributeValue(attributeName, expectedValue);
+
+                        if (!updateRes.isSuccess()) {
+                            return Response.failure(updateRes.getMessage());
+                        }
+                    }
+
+                    Response<Void> saveRes = saveAllTasks(tasks.getData());
+
+                    if (saveRes.isSuccess()) {
+                        return Response.success("Task updated successfully");
+                    } else {
+                        return Response.failure(saveRes.getMessage());
                     }
                 }
             }
 
-            Response<Void> saveRes = saveAllTasks(tasks.getData());
-
-            if (saveRes.isSuccess()) {
-                return Response.success("Tasks updated successfully");
-            } else {
-                return Response.failure(saveRes.getMessage());
-            }
+            return Response.failure("Task not found");
         } else {
             return Response.failure(tasks.getMessage());
         }

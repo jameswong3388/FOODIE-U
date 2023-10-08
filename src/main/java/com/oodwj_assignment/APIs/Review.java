@@ -3,7 +3,7 @@ package com.oodwj_assignment.APIs;
 import com.oodwj_assignment.Models.Reviews;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -39,14 +39,18 @@ public class Review {
                     UUID userId = UUID.fromString(parts[2]);
                     String reviewContent = parts[4];
                     Reviews.reviewRating reviewRating = Reviews.reviewRating.valueOf(parts[5]);
-                    LocalDate updatedAt = LocalDate.parse(parts[6]);
-                    LocalDate createdAt = LocalDate.parse(parts[7]);
+                    LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
 
                     reviews.add(new Reviews(reviewId, foodId, userId, reviewContent, reviewRating, updatedAt, createdAt));
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read reviews: " + e.getMessage());
+        }
+
+        if (reviews.isEmpty()) {
+            return Response.success("Reviews read successfully", reviews);
         }
 
         if (query.isEmpty()) {
@@ -67,29 +71,35 @@ public class Review {
     }
 
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
-        Response<ArrayList<Reviews>> reviews = read(query);
+        Response<ArrayList<Reviews>> reviews = read(Map.of());
 
         if (reviews.isSuccess()) {
             for (Reviews review : reviews.getData()) {
-                for (Map.Entry<String, Object> entry : newValue.entrySet()) {
-                    String attributeName = entry.getKey();
-                    Object expectedValue = entry.getValue();
+                Response<Void> matchRes = match(query, review);
 
-                    Response<Void> updateRes = review.setAttributeValue(attributeName, expectedValue);
+                if (matchRes.isSuccess()) {
+                    for (Map.Entry<String, Object> entry : newValue.entrySet()) {
+                        String attributeName = entry.getKey();
+                        Object expectedValue = entry.getValue();
 
-                    if (!updateRes.isSuccess()) {
-                        return Response.failure(updateRes.getMessage());
+                        Response<Void> updateRes = review.setAttributeValue(attributeName, expectedValue);
+
+                        if (!updateRes.isSuccess()) {
+                            return Response.failure(updateRes.getMessage());
+                        }
+                    }
+
+                    Response<Void> saveRes = saveAllReviews(reviews.getData());
+
+                    if (saveRes.isSuccess()) {
+                        return Response.success("Review updated successfully");
+                    } else {
+                        return Response.failure(saveRes.getMessage());
                     }
                 }
             }
 
-            Response<Void> saveRes = saveAllReviews(reviews.getData());
-
-            if (saveRes.isSuccess()) {
-                return Response.success("Reviews updated successfully");
-            } else {
-                return Response.failure(saveRes.getMessage());
-            }
+            return Response.failure("Review not found");
         } else {
             return Response.failure(reviews.getMessage());
         }

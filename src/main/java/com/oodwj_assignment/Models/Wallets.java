@@ -2,17 +2,17 @@ package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Wallets {
     public UUID walletId;
     public UUID userId;
     public Double credit;
-    private LocalDate updatedAt;
-    private LocalDate createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
 
-    public Wallets(UUID walletId, UUID userId, Double credit, LocalDate updatedAt, LocalDate createdAt) {
+    public Wallets(UUID walletId, UUID userId, Double credit, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.walletId = walletId;
         this.userId = userId;
         this.credit = credit;
@@ -32,11 +32,11 @@ public class Wallets {
         return credit;
     }
 
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -75,11 +75,11 @@ public class Wallets {
         this.credit = credit;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -98,11 +98,11 @@ public class Wallets {
                 return Response.success("Credit updated successfully");
             }
             case "updatedAt" -> {
-                setUpdatedAt((LocalDate) newValue);
+                setUpdatedAt((LocalDateTime) newValue);
                 return Response.success("Updated At updated successfully");
             }
             case "createdAt" -> {
-                setCreatedAt((LocalDate) newValue);
+                setCreatedAt((LocalDateTime) newValue);
                 return Response.success("Created At updated successfully");
             }
             default -> {

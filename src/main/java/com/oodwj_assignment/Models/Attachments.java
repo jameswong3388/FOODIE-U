@@ -2,7 +2,7 @@ package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Attachments {
@@ -10,10 +10,10 @@ public class Attachments {
     private final UUID NotificationId;
     private final UUID attachedId;
     private final attachmentType attachmentType;
-    private final LocalDate updatedAt;
-    private final LocalDate createdAt;
+    private final LocalDateTime updatedAt;
+    private final LocalDateTime createdAt;
 
-    public Attachments(UUID attachmentId, UUID NotificationId, UUID attachedId, attachmentType attachmentType, LocalDate updatedAt, LocalDate createdAt) {
+    public Attachments(UUID attachmentId, UUID NotificationId, UUID attachedId, attachmentType attachmentType, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.attachmentId = attachmentId;
         this.NotificationId = NotificationId;
         this.attachedId = attachedId;
@@ -38,11 +38,11 @@ public class Attachments {
         return attachmentType;
     }
 
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 

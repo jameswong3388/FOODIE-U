@@ -2,7 +2,7 @@ package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Tasks {
@@ -11,10 +11,10 @@ public class Tasks {
     private UUID orderId;
     private Integer deliveryFee;
     private taskStatus status;
-    public LocalDate updatedAt;
-    public LocalDate createdAt;
+    public LocalDateTime updatedAt;
+    public LocalDateTime createdAt;
 
-    public Tasks(UUID taskId, UUID runnerId, UUID orderId, Integer deliveryFee, taskStatus status, LocalDate updatedAt, LocalDate createdAt) {
+    public Tasks(UUID taskId, UUID runnerId, UUID orderId, Integer deliveryFee, taskStatus status, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.taskId = taskId;
         this.runnerId = runnerId;
         this.orderId = orderId;
@@ -44,11 +44,11 @@ public class Tasks {
         return status;
     }
 
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -85,11 +85,11 @@ public class Tasks {
         this.status = status;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -131,18 +131,18 @@ public class Tasks {
                     return Response.failure("Status must be a taskStatus");
                 }
             case "updatedAt":
-                if (newValue instanceof LocalDate) {
-                    setUpdatedAt((LocalDate) newValue);
+                if (newValue instanceof LocalDateTime) {
+                    setUpdatedAt((LocalDateTime) newValue);
                     return Response.success("Updated At updated successfully");
                 } else {
-                    return Response.failure("Updated At must be a LocalDate");
+                    return Response.failure("Updated At must be a LocalDateTime");
                 }
             case "createdAt":
-                if (newValue instanceof LocalDate) {
-                    setCreatedAt((LocalDate) newValue);
+                if (newValue instanceof LocalDateTime) {
+                    setCreatedAt((LocalDateTime) newValue);
                     return Response.success("Created At updated successfully");
                 } else {
-                    return Response.failure("Created At must be a LocalDate");
+                    return Response.failure("Created At must be a LocalDateTime");
                 }
             default:
                 return Response.failure("No such attribute");

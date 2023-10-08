@@ -3,7 +3,7 @@ package com.oodwj_assignment.APIs;
 import com.oodwj_assignment.Models.OrderFoods;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -37,14 +37,18 @@ public class OrderFood {
                     String foodName = parts[3];
                     String foodPrice = parts[4];
                     Integer foodQuantity = Integer.parseInt(parts[5]);
-                    LocalDate updatedAt = LocalDate.parse(parts[6]);
-                    LocalDate createdAt = LocalDate.parse(parts[7]);
+                    LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
 
                     orderFoods.add(new OrderFoods(orderFoodId, foodId, orderId, foodName, foodPrice, foodQuantity, updatedAt, createdAt));
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read orderFoods: " + e.getMessage());
+        }
+
+        if (orderFoods.isEmpty()) {
+            return Response.success("OrderFoods read successfully", orderFoods);
         }
 
         if (query.isEmpty()) {
@@ -65,29 +69,35 @@ public class OrderFood {
     }
 
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
-        Response<ArrayList<OrderFoods>> orderFoods = read(query);
+        Response<ArrayList<OrderFoods>> orderFoods = read(Map.of());
 
         if (orderFoods.isSuccess()) {
             for (OrderFoods orderFood : orderFoods.getData()) {
-                for (Map.Entry<String, Object> entry : newValue.entrySet()) {
-                    String attributeName = entry.getKey();
-                    Object expectedValue = entry.getValue();
+                Response<Void> matchRes = match(query, orderFood);
 
-                    Response<Void> updateRes = orderFood.setAttributeValue(attributeName, expectedValue);
+                if (matchRes.isSuccess()) {
+                    for (Map.Entry<String, Object> entry : newValue.entrySet()) {
+                        String attributeName = entry.getKey();
+                        Object expectedValue = entry.getValue();
 
-                    if (!updateRes.isSuccess()) {
-                        return Response.failure(updateRes.getMessage());
+                        Response<Void> updateRes = orderFood.setAttributeValue(attributeName, expectedValue);
+
+                        if (!updateRes.isSuccess()) {
+                            return Response.failure(updateRes.getMessage());
+                        }
+                    }
+
+                    Response<Void> saveRes = saveAllOrderFoods(orderFoods.getData());
+
+                    if (saveRes.isSuccess()) {
+                        return Response.success("OrderFood updated successfully");
+                    } else {
+                        return Response.failure(saveRes.getMessage());
                     }
                 }
             }
 
-            Response<Void> saveRes = saveAllOrderFoods(orderFoods.getData());
-
-            if (saveRes.isSuccess()) {
-                return Response.success("OrderFoods updated successfully");
-            } else {
-                return Response.failure(saveRes.getMessage());
-            }
+            return Response.failure("OrderFood not found");
         } else {
             return Response.failure(orderFoods.getMessage());
         }

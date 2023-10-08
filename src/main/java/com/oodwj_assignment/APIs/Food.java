@@ -3,7 +3,7 @@ package com.oodwj_assignment.APIs;
 import com.oodwj_assignment.Models.Foods;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -40,14 +40,18 @@ public class Food {
                     Foods.foodType foodType = Foods.foodType.valueOf(parts[3]);
                     String foodDescription = parts[4];
                     String foodPrice = parts[5];
-                    LocalDate updatedAt = LocalDate.parse(parts[6]);
-                    LocalDate createdAt = LocalDate.parse(parts[7]);
+                    LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
 
                     foods.add(new Foods(foodId, storeId, foodName, foodType, foodDescription, foodPrice, updatedAt, createdAt));
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read foods: " + e.getMessage());
+        }
+
+        if (foods.isEmpty()) {
+            return Response.failure("No foods found");
         }
 
         if (query.isEmpty()) {
@@ -68,29 +72,35 @@ public class Food {
     }
 
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
-        Response<ArrayList<Foods>> foods = read(query);
+        Response<ArrayList<Foods>> foods = read(Map.of());
 
         if (foods.isSuccess()) {
             for (Foods food : foods.getData()) {
-                for (Map.Entry<String, Object> entry : newValue.entrySet()) {
-                    String attributeName = entry.getKey();
-                    Object expectedValue = entry.getValue();
+                Response<Void> matchRes = match(query, food);
 
-                    Response<Void> updateRes = food.setAttributeValue(attributeName, expectedValue);
+                if (matchRes.isSuccess()) {
+                    for (Map.Entry<String, Object> entry : newValue.entrySet()) {
+                        String attributeName = entry.getKey();
+                        Object expectedValue = entry.getValue();
 
-                    if (!updateRes.isSuccess()) {
-                        return Response.failure(updateRes.getMessage());
+                        Response<Void> updateRes = food.setAttributeValue(attributeName, expectedValue);
+
+                        if (!updateRes.isSuccess()) {
+                            return Response.failure(updateRes.getMessage());
+                        }
+                    }
+
+                    Response<Void> saveRes = saveAllFoods(foods.getData());
+
+                    if (saveRes.isSuccess()) {
+                        return Response.success("Food updated successfully");
+                    } else {
+                        return Response.failure(saveRes.getMessage());
                     }
                 }
             }
 
-            Response<Void> saveRes = saveAllFoods(foods.getData());
-
-            if (saveRes.isSuccess()) {
-                return Response.success("Food updated successfully");
-            } else {
-                return Response.failure(saveRes.getMessage());
-            }
+            return Response.failure("Food not found");
         } else {
             return Response.failure(foods.getMessage());
         }

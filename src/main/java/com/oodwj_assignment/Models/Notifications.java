@@ -2,7 +2,7 @@ package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Notifications {
@@ -11,9 +11,9 @@ public class Notifications {
     private notificationStatus status;
     private final notificationType type;
     public final UUID userid;
-    public final LocalDate createdAt;
+    public final LocalDateTime createdAt;
 
-    public Notifications(UUID notificationId, String message, notificationStatus status, notificationType type, UUID userid, LocalDate createdAt) {
+    public Notifications(UUID notificationId, String message, notificationStatus status, notificationType type, UUID userid, LocalDateTime createdAt) {
         this.notificationId = notificationId;
         this.message = message;
         this.status = status;
@@ -42,7 +42,7 @@ public class Notifications {
         return userid;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 

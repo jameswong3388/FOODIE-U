@@ -3,7 +3,7 @@ package com.oodwj_assignment.APIs;
 import com.oodwj_assignment.Models.Users;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -48,14 +48,18 @@ public class User {
                     String email = parts[3];
                     int age = Integer.parseInt(parts[4]);
                     Users.Role role = Users.Role.valueOf(parts[5]); // Parse the role from the string.
-                    LocalDate createdAt = LocalDate.parse(parts[6]);
-                    LocalDate updatedAt = LocalDate.parse(parts[7]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
+                    LocalDateTime updatedAt = LocalDateTime.parse(parts[7]);
 
                     users.add(new Users(uuid, username, password, email, age, role, updatedAt, createdAt));
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read users: " + e.getMessage());
+        }
+
+        if (users.isEmpty()) {
+            return Response.failure("No users found");
         }
 
         if (query.isEmpty()) {
@@ -75,30 +79,36 @@ public class User {
         return Response.success("User found", matchedUsers);
     }
 
-    public static Response<Void> replace(Map<String, Object> query, Users newUser) {
+    public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
         Response<ArrayList<Users>> users = read(Map.of());
 
         if (users.isSuccess()) {
-            ArrayList<Users> userList = users.getData();
-
-            for (int i = 0; i < userList.size(); i++) {
-                Response<Void> matchRes = match(query, userList.get(i));
+            for (Users user : users.getData()) {
+                Response<Void> matchRes = match(query, user);
 
                 if (matchRes.isSuccess()) {
-                    userList.set(i, newUser);
+                    for (Map.Entry<String, Object> entry : newValue.entrySet()) {
+                        String attributeName = entry.getKey();
+                        Object expectedValue = entry.getValue();
 
-                    Response<Void> saveRes = saveAllUsers(userList);
+                        Response<Void> updateRes = user.setAttributeValue(attributeName, expectedValue);
+
+                        if (!updateRes.isSuccess()) {
+                            return Response.failure(updateRes.getMessage());
+                        }
+                    }
+
+                    Response<Void> saveRes = saveAllUsers(users.getData());
 
                     if (saveRes.isSuccess()) {
-                        return Response.success("User replaced successfully");
+                        return Response.success("User updated successfully");
                     } else {
                         return Response.failure(saveRes.getMessage());
                     }
-
                 }
             }
-            return Response.failure("User not found");
 
+            return Response.failure("User not found");
         } else {
             return Response.failure(users.getMessage());
         }
