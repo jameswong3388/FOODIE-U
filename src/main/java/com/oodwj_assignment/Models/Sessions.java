@@ -2,15 +2,14 @@ package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
 
-import java.time.LocalDate;
-import java.util.Date; // For handling timestamps
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Sessions {
     private UUID sessionId;
     private UUID userId;
-    private LocalDate startTime;
-    private LocalDate endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private long duration; // Duration in milliseconds
     private String ipAddress;
     private String userAgent;
@@ -22,7 +21,7 @@ public class Sessions {
     private boolean isActive;
     private UUID sessionToken;
 
-    public Sessions(UUID sessionId, UUID userId, LocalDate startTime, LocalDate endTime, long duration,
+    public Sessions(UUID sessionId, UUID userId, LocalDateTime startTime, LocalDateTime endTime, long duration,
                     String ipAddress, String userAgent, String location, String deviceInfo,
                     boolean isAuthenticated, String referer, String terminationReason,
                     boolean isActive, UUID sessionToken) {
@@ -50,11 +49,11 @@ public class Sessions {
         return userId;
     }
 
-    public LocalDate getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public LocalDate getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
@@ -126,11 +125,11 @@ public class Sessions {
         this.userId = userId;
     }
 
-    public void setStartTime(LocalDate startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(LocalDate endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 

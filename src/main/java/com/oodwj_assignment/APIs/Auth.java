@@ -4,7 +4,10 @@ import com.oodwj_assignment.Models.Sessions;
 import com.oodwj_assignment.Models.Users;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Auth {
@@ -20,9 +23,9 @@ public class Auth {
                 if (parts.length == 14) {
                     UUID sessionId = UUID.fromString(parts[0]);
                     UUID userId = UUID.fromString(parts[1]);
-                    LocalDate startTime = LocalDate.parse(parts[2]);
-                    LocalDate endTime = parts[3].equals("null") ? null : LocalDate.parse(parts[3]);
-                    long duration = parts[4].equals("null") ? 0 : Long.parseLong(parts[4]);
+                    LocalDateTime startTime = LocalDateTime.parse(parts[2]);
+                    LocalDateTime endTime = parts[3].equals("null") ? null : LocalDateTime.parse(parts[3]);
+                    long duration = Long.parseLong(parts[4]);
                     String ipAddress = parts[5];
                     String userAgent = parts[6];
                     String location = parts[7];
@@ -39,6 +42,11 @@ public class Auth {
         } catch (IOException e) {
             return Response.failure("Failed to read sessions: " + e.getMessage());
         }
+
+        if (sessions.isEmpty()) {
+            return Response.failure("No sessions found");
+        }
+
         if (query.isEmpty()) {
             return Response.success("Sessions read successfully", sessions);
         }
@@ -56,17 +64,43 @@ public class Auth {
         return Response.success("Session found", matchedSessions);
     }
 
-    public static Response<UUID> login(String username, String password) {
+    public static Response<UUID> login(String username, String password) throws UnknownHostException {
         Users user = getUserByUsername(username);
 
         if (user != null) {
             if (user.getPassword().equals(password)) {
-                Sessions session = new Sessions(UUID.randomUUID(), user.getUserId(), LocalDate.now(), null, 0, null, null, null, null, false, null, null, true, generateSessionToken());
+                Response<ArrayList<Sessions>> sessions = read(Map.of());
+                boolean hasSession = false;
+                UUID newSessionToken = generateSessionToken();
 
-                Response<Void> saveRes = saveAllSessions(new ArrayList<>(Arrays.asList(session)));
+                for (Sessions session : sessions.getData()) {
+                    Response<Void> matchRes = match(Map.of("userId", user.getUserId()), session);
 
+                    if (matchRes.isSuccess()) {
+                        hasSession = true;
+                        session.setStartTime(LocalDateTime.now());
+                        session.setEndTime(null);
+                        session.setDuration(0);
+
+                        InetAddress localhost = InetAddress.getLocalHost();
+                        session.setIpAddress(localhost.getHostAddress());
+
+                        session.setIsAuthenticated(true);
+                        session.setTerminationReason(null);
+                        session.setActive(true);
+                        session.setSessionToken(newSessionToken);
+                    }
+                }
+
+                if (!hasSession) {
+                    Sessions newSession = new Sessions(UUID.randomUUID(), user.getUserId(), LocalDateTime.now(), null, 0, null, null, null, null, false, null, null, true, newSessionToken);
+                    InetAddress localhost = InetAddress.getLocalHost();
+                    newSession.setIpAddress(localhost.getHostAddress());
+                    sessions.getData().add(newSession);
+                }
+                Response<Void> saveRes = saveAllSessions(sessions.getData());
                 if (saveRes.isSuccess()) {
-                    return Response.success("User logged in successfully", session.getSessionToken());
+                    return Response.success("User logged in successfully", newSessionToken);
                 } else {
                     return Response.failure(saveRes.getMessage());
                 }
@@ -79,20 +113,25 @@ public class Auth {
     }
 
 
-    public static Response<Void> logout(UUID sessionToken) {
-        Response<ArrayList<Sessions>> res = read(Map.of("sessionToken", sessionToken));
+    public static Response<Void> logout(UUID sessionToken) throws UnknownHostException {
+        Response<ArrayList<Sessions>> res = read(Map.of());
 
         if (res.isSuccess()) {
             ArrayList<Sessions> sessions = res.getData();
 
-            if (!sessions.isEmpty()) {
-                Sessions session = sessions.get(0);
+            for (Sessions session : sessions) {
+                Response<Void> matchRes = match(Map.of("sessionToken", sessionToken), session);
 
-                if (session.isActive()) {
+                if (matchRes.isSuccess()) {
                     session.setActive(false);
-                    session.setEndTime(LocalDate.now());
+                    session.setEndTime(LocalDateTime.now());
                     session.setTerminationReason("User logged out");
                     session.setIsAuthenticated(false);
+
+                    session.setDuration(Duration.between(session.getStartTime(), session.getEndTime()).toMillis());
+
+                    InetAddress localhost = InetAddress.getLocalHost();
+                    session.setIpAddress(localhost.getHostAddress());
 
                     Response<Void> saveRes = saveAllSessions(sessions);
 
@@ -101,12 +140,11 @@ public class Auth {
                     } else {
                         return Response.failure(saveRes.getMessage());
                     }
-                } else {
-                    return Response.failure("Session is not active");
                 }
-            } else {
-                return Response.failure("Session not found");
             }
+
+            return Response.failure("Session not found");
+
         } else {
             return Response.failure(res.getMessage());
         }
@@ -135,9 +173,6 @@ public class Auth {
     }
 
     private static Users getUserByUsername(String username) {
-        // Implement a method to retrieve a user by username from your Users database
-        // For simplicity, we assume you have such a method here
-        // Example:
         ArrayList<Users> users = User.read(Map.of("username", username)).getData();
         if (!users.isEmpty()) {
             return users.get(0);
