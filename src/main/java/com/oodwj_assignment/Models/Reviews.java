@@ -2,7 +2,7 @@ package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Reviews {
@@ -11,10 +11,10 @@ public class Reviews {
     private UUID userId;
     private String reviewContent;
     private reviewRating reviewRating;
-    private LocalDate updatedAt;
-    private LocalDate createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
 
-    public Reviews(UUID reviewId, UUID orderId, UUID userId, String reviewContent, reviewRating reviewRating, LocalDate updatedAt, LocalDate createdAt) {
+    public Reviews(UUID reviewId, UUID orderId, UUID userId, String reviewContent, reviewRating reviewRating, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.reviewId = reviewId;
         this.orderId = orderId;
         this.userId = userId;
@@ -44,11 +44,11 @@ public class Reviews {
         return reviewRating;
     }
 
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -85,11 +85,11 @@ public class Reviews {
         this.reviewRating = reviewRating;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -136,16 +136,16 @@ public class Reviews {
                 }
             }
             case "updatedAt" -> {
-                if (newValue instanceof LocalDate) {
-                    setUpdatedAt((LocalDate) newValue);
+                if (newValue instanceof LocalDateTime) {
+                    setUpdatedAt((LocalDateTime) newValue);
                     yield Response.success("Updated at set successfully");
                 } else {
                     yield Response.failure("Invalid newValue type");
                 }
             }
             case "createdAt" -> {
-                if (newValue instanceof LocalDate) {
-                    setCreatedAt((LocalDate) newValue);
+                if (newValue instanceof LocalDateTime) {
+                    setCreatedAt((LocalDateTime) newValue);
                     yield Response.success("Created at set successfully");
                 } else {
                     yield Response.failure("Invalid newValue type");

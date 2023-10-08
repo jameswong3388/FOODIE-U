@@ -3,7 +3,7 @@ package com.oodwj_assignment.APIs;
 import com.oodwj_assignment.Models.Transactions;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -39,14 +39,18 @@ public class Transaction {
                     Transactions.transactionStatus status = Transactions.transactionStatus.valueOf(parts[3]);
                     UUID payerId = UUID.fromString(parts[4]);
                     UUID payeeId = UUID.fromString(parts[5]);
-                    LocalDate updatedAt = LocalDate.parse(parts[6]);
-                    LocalDate createdAt = LocalDate.parse(parts[7]);
+                    LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
 
                     transactions.add(new Transactions(transactionId, amount, type, status, payerId, payeeId, updatedAt, createdAt));
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read transactions: " + e.getMessage());
+        }
+
+        if (transactions.isEmpty()) {
+            return Response.success("Transactions read successfully", transactions);
         }
 
         if (query.isEmpty()) {
@@ -67,29 +71,35 @@ public class Transaction {
     }
 
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
-        Response<ArrayList<Transactions>> transactions = read(query);
+        Response<ArrayList<Transactions>> transactions = read(Map.of());
 
         if (transactions.isSuccess()) {
             for (Transactions transaction : transactions.getData()) {
-                for (Map.Entry<String, Object> entry : newValue.entrySet()) {
-                    String attributeName = entry.getKey();
-                    Object expectedValue = entry.getValue();
+                Response<Void> matchRes = match(query, transaction);
 
-                    Response<Void> updateRes = transaction.setAttributeValue(attributeName, expectedValue);
+                if (matchRes.isSuccess()) {
+                    for (Map.Entry<String, Object> entry : newValue.entrySet()) {
+                        String attributeName = entry.getKey();
+                        Object expectedValue = entry.getValue();
 
-                    if (!updateRes.isSuccess()) {
-                        return Response.failure(updateRes.getMessage());
+                        Response<Void> updateRes = transaction.setAttributeValue(attributeName, expectedValue);
+
+                        if (!updateRes.isSuccess()) {
+                            return Response.failure(updateRes.getMessage());
+                        }
+                    }
+
+                    Response<Void> saveRes = saveAllTransactions(transactions.getData());
+
+                    if (saveRes.isSuccess()) {
+                        return Response.success("Transaction updated successfully");
+                    } else {
+                        return Response.failure(saveRes.getMessage());
                     }
                 }
             }
 
-            Response<Void> saveRes = saveAllTransactions(transactions.getData());
-
-            if (saveRes.isSuccess()) {
-                return Response.success("Transactions updated successfully");
-            } else {
-                return Response.failure(saveRes.getMessage());
-            }
+            return Response.failure("Transaction not found");
         } else {
             return Response.failure(transactions.getMessage());
         }

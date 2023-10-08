@@ -4,7 +4,7 @@ import com.oodwj_assignment.Models.Notifications;
 import com.oodwj_assignment.Models.Orders;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -61,13 +61,17 @@ public class Notification {
                     Notifications.notificationStatus status = Notifications.notificationStatus.valueOf(parts[2]);
                     Notifications.notificationType type = Notifications.notificationType.valueOf(parts[3]);
                     UUID userid = UUID.fromString(parts[4]);
-                    LocalDate createdAt = LocalDate.parse(parts[5]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[5]);
 
                     notifications.add(new Notifications(notificationId, message, status, type, userid, createdAt));
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read notifications: " + e.getMessage());
+        }
+
+        if (notifications.isEmpty()) {
+            return Response.failure("No notifications found");
         }
 
         if (query.isEmpty()) {

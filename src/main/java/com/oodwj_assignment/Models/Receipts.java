@@ -2,17 +2,17 @@ package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Receipts {
     private UUID receiptId;
     private final UUID userId;
     private final Double credit;
-    private final LocalDate updatedAt;
-    private final LocalDate createdAt;
+    private final LocalDateTime updatedAt;
+    private final LocalDateTime createdAt;
 
-    public Receipts(UUID receiptId, UUID userId, Double credit, LocalDate updatedAt, LocalDate createdAt) {
+    public Receipts(UUID receiptId, UUID userId, Double credit, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.receiptId = receiptId;
         this.userId = userId;
         this.credit = credit;
@@ -32,11 +32,11 @@ public class Receipts {
         return credit;
     }
 
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 

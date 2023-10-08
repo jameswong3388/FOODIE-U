@@ -3,7 +3,7 @@ package com.oodwj_assignment.APIs;
 import com.oodwj_assignment.Models.Receipts;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -36,14 +36,18 @@ public class Reciept {
                     UUID receiptId = UUID.fromString(parts[0]);
                     UUID userId = UUID.fromString(parts[1]);
                     Double credit = Double.parseDouble(parts[2]);
-                    LocalDate updatedAt = LocalDate.parse(parts[3]);
-                    LocalDate createdAt = LocalDate.parse(parts[4]);
+                    LocalDateTime updatedAt = LocalDateTime.parse(parts[3]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[4]);
 
                     receipts.add(new Receipts(receiptId, userId, credit, updatedAt, createdAt));
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read receipts: " + e.getMessage());
+        }
+
+        if (receipts.isEmpty()) {
+            return Response.success("Receipts read successfully", receipts);
         }
 
         if (query.isEmpty()) {

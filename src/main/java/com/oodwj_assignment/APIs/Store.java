@@ -3,7 +3,7 @@ package com.oodwj_assignment.APIs;
 import com.oodwj_assignment.Models.Stores;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -37,14 +37,18 @@ public class Store {
                     UUID storeId = UUID.fromString(parts[0]);
                     String name = parts[1];
                     UUID vendorId = UUID.fromString(parts[2]);
-                    LocalDate updatedAt = LocalDate.parse(parts[3]);
-                    LocalDate createdAt = LocalDate.parse(parts[4]);
+                    LocalDateTime updatedAt = LocalDateTime.parse(parts[3]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[4]);
 
                     stores.add(new Stores(storeId, name, vendorId, updatedAt, createdAt));
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read stores: " + e.getMessage());
+        }
+
+        if (stores.isEmpty()) {
+            return Response.success("Stores read successfully", stores);
         }
 
         if (query.isEmpty()) {
@@ -65,29 +69,35 @@ public class Store {
     }
 
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
-        Response<ArrayList<Stores>> stores = read(query);
+        Response<ArrayList<Stores>> stores = read(Map.of());
 
         if (stores.isSuccess()) {
             for (Stores store : stores.getData()) {
-                for (Map.Entry<String, Object> entry : newValue.entrySet()) {
-                    String attributeName = entry.getKey();
-                    Object expectedValue = entry.getValue();
+                Response<Void> matchRes = match(query, store);
 
-                    Response<Void> updateRes = store.setAttributeValue(attributeName, expectedValue);
+                if (matchRes.isSuccess()) {
+                    for (Map.Entry<String, Object> entry : newValue.entrySet()) {
+                        String attributeName = entry.getKey();
+                        Object expectedValue = entry.getValue();
 
-                    if (!updateRes.isSuccess()) {
-                        return Response.failure(updateRes.getMessage());
+                        Response<Void> updateRes = store.setAttributeValue(attributeName, expectedValue);
+
+                        if (!updateRes.isSuccess()) {
+                            return Response.failure(updateRes.getMessage());
+                        }
+                    }
+
+                    Response<Void> saveRes = saveAllStores(stores.getData());
+
+                    if (saveRes.isSuccess()) {
+                        return Response.success("Store updated successfully");
+                    } else {
+                        return Response.failure(saveRes.getMessage());
                     }
                 }
             }
 
-            Response<Void> saveRes = saveAllStores(stores.getData());
-
-            if (saveRes.isSuccess()) {
-                return Response.success("Stores updated successfully");
-            } else {
-                return Response.failure(saveRes.getMessage());
-            }
+            return Response.failure("Store not found");
         } else {
             return Response.failure(stores.getMessage());
         }
