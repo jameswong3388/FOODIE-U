@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class OrderFood {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Database/orderFoods.txt";
+    private static final String FILE_NAME = "database/orderFoods.txt";
 
     public static Response<UUID> create(OrderFoods orderFood) {
         UUID orderFoodId = UUID.randomUUID();
@@ -48,7 +48,7 @@ public class OrderFood {
         }
 
         if (orderFoods.isEmpty()) {
-            return Response.success("OrderFoods read successfully", orderFoods);
+            return Response.success("No orderFoods found");
         }
 
         if (query.isEmpty()) {

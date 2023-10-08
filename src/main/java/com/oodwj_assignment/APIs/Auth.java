@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class Auth {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/sessions.txt";
+    private static final String FILE_NAME = "database/sessions.txt";
 
     public static Response<ArrayList<Sessions>> read(Map<String, Object> query) {
         ArrayList<Sessions> sessions = new ArrayList<>();

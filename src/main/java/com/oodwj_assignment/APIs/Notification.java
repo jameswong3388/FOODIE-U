@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Notification {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/notifications.txt";
+    private static final String FILE_NAME = "database/notifications.txt";
 
     public static Response<UUID> send(Notifications notification) {
         UUID notificationId = UUID.randomUUID();

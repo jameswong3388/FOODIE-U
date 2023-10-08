@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Store {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/stores.txt";
+    private static final String FILE_NAME = "database/stores.txt";
 
     public static Response<UUID> create(Stores store) {
         UUID storeId = UUID.randomUUID();
@@ -48,7 +48,7 @@ public class Store {
         }
 
         if (stores.isEmpty()) {
-            return Response.success("Stores read successfully", stores);
+            return Response.success("No stores found");
         }
 
         if (query.isEmpty()) {

@@ -3,13 +3,13 @@ package com.oodwj_assignment.APIs;
 import com.oodwj_assignment.Models.Wallets;
 
 import java.io.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
 public class Wallet {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/wallets.txt";
+    private static final String FILE_NAME = "database/wallets.txt";
 
     public static Response<UUID> create(Wallets wallet) {
         UUID walletId = UUID.randomUUID();
@@ -34,14 +34,18 @@ public class Wallet {
                     UUID walletId = UUID.fromString(parts[0]);
                     UUID userId = UUID.fromString(parts[1]);
                     double balance = Double.parseDouble(parts[2]);
-                    LocalDate createdAt = LocalDate.parse(parts[3]);
-                    LocalDate updatedAt = LocalDate.parse(parts[4]);
+                    LocalDateTime createdAt = LocalDateTime.parse(parts[3]);
+                    LocalDateTime updatedAt = LocalDateTime.parse(parts[4]);
 
                     wallets.add(new Wallets(walletId, userId, balance, createdAt, updatedAt));
                 }
             }
         } catch (IOException e) {
-            return Response.failure("Failed to read wallets: " + e.getMessage());
+            return Response.failure("Failed to read wallets.txt: " + e.getMessage());
+        }
+
+        if (wallets.isEmpty()) {
+            return Response.failure("No wallets found");
         }
 
         if (query.isEmpty()) {

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class User {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/users.txt";
+    private static final String FILE_NAME = "database/users.txt";
 
     public static Response<UUID> create(Users user) {
         if (isUsernameTaken(user.getUsername()).getData()) {
