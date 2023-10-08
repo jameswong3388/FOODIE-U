@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Review {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Database/reviews.txt";
+    private static final String FILE_NAME = "database/reviews.txt";
 
     public static Response<UUID> create(Reviews review) {
         UUID reviewId = UUID.randomUUID();
@@ -50,7 +50,7 @@ public class Review {
         }
 
         if (reviews.isEmpty()) {
-            return Response.success("Reviews read successfully", reviews);
+            return Response.success("No reviews found");
         }
 
         if (query.isEmpty()) {

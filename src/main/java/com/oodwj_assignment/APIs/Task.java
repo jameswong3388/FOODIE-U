@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Task {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/tasks.txt";
+    private static final String FILE_NAME = "database/tasks.txt";
 
     public static Response<UUID> create(Tasks task) {
         UUID taskId = UUID.randomUUID();

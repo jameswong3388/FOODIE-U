@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Attachment {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/attachments.txt";
+    private static final String FILE_NAME = "database/attachments.txt";
 
     public static Response<UUID> create(Attachments attachment) {
         UUID attachmentId = UUID.randomUUID();

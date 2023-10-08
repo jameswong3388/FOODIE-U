@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Reciept {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/receipts.txt";
+    private static final String FILE_NAME = "database/receipts.txt";
 
     public static Response<UUID> create(Receipts receipt) {
         UUID receiptId = UUID.randomUUID();
@@ -47,7 +47,7 @@ public class Reciept {
         }
 
         if (receipts.isEmpty()) {
-            return Response.success("Receipts read successfully", receipts);
+            return Response.success("No receipts found");
         }
 
         if (query.isEmpty()) {

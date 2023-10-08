@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Transaction {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/transactions.txt";
+    private static final String FILE_NAME = "database/transactions.txt";
 
     public static Response<UUID> create(Transactions transaction) {
         UUID transactionId = UUID.randomUUID();
@@ -50,7 +50,7 @@ public class Transaction {
         }
 
         if (transactions.isEmpty()) {
-            return Response.success("Transactions read successfully", transactions);
+            return Response.success("No transactions found");
         }
 
         if (query.isEmpty()) {

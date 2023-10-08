@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.oodwj_assigment/com.oodwj_assignment.HelloApplication</mainClass>
+                            <mainClass>com.oodwj_assigment/com.oodwj_assignment.main</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -72,5 +72,10 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>database</directory>
+            </resource>
+        </resources>
     </build>
 </project>

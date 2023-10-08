@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Order {
-    private static final String FILE_NAME = "src/main/java/com/oodwj_assignment/Databases/orders.txt";
+    private static final String FILE_NAME = "database/orders.txt";
 
     public static Response<UUID> create(Orders order) {
         UUID orderId = UUID.randomUUID();
