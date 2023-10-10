@@ -1,4 +1,4 @@
-package com.oodwj_assignment;
+package com.oodwj_assignment.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
