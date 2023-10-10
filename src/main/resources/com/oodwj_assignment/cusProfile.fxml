@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusProfileController">
+   <children>
+      <Pane layoutX="69.0" layoutY="48.0" prefHeight="433.0" prefWidth="702.0" styleClass="background-color-2">
+         <children>
+            <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="66.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/Lion.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="351.0" layoutY="171.0" prefHeight="19.0" prefWidth="123.0" text="Name">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="351.0" layoutY="52.0" prefHeight="19.0" prefWidth="123.0" text="ID">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="351.0" layoutY="297.0" prefHeight="19.0" prefWidth="123.0" text="Phone Number">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="351.0" layoutY="355.0" prefHeight="19.0" prefWidth="123.0" text="Email">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="351.0" layoutY="109.0" prefHeight="19.0" prefWidth="123.0" text="Password">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="351.0" layoutY="232.0" prefHeight="19.0" prefWidth="123.0" text="Age">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Button layoutX="66.0" layoutY="344.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/edit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+            </Button>
+            <Label layoutX="500.0" layoutY="109.0" prefHeight="19.0" prefWidth="123.0" text="1234">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="500.0" layoutY="52.0" prefHeight="19.0" prefWidth="123.0" text="0011">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="500.0" layoutY="171.0" prefHeight="19.0" prefWidth="123.0" text="Jeremy">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="500.0" layoutY="232.0" prefHeight="19.0" prefWidth="123.0" text="20">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="500.0" layoutY="297.0" prefHeight="19.0" prefWidth="123.0" text="0123456789">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="500.0" layoutY="355.0" prefHeight="19.0" prefWidth="123.0" text="jj@gmail.com">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

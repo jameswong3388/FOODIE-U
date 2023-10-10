@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusMenuController">
+   <children>
+      <TabPane layoutX="11.0" layoutY="74.0" prefHeight="444.0" prefWidth="467.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Food">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="360.0" prefWidth="467.0" styleClass="background-color-2">
+                     <children>
+                        <ScrollPane prefHeight="411.0" prefWidth="467.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="482.0" prefWidth="467.0" />
+                          </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Dessert">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="534.0" />
+            </content>
+          </Tab>
+            <Tab text="Beverage">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <AnchorPane layoutX="488.0" layoutY="74.0" prefHeight="444.0" prefWidth="337.0">
+         <children>
+            <TableView layoutX="3.0" prefHeight="294.0" prefWidth="338.0" styleClass="background-color-2">
+              <columns>
+                <TableColumn prefWidth="28.0" resizable="false" text="No" />
+                <TableColumn prefWidth="114.39996337890625" resizable="false" text="Item" />
+                  <TableColumn prefWidth="28.800048828125" resizable="false" text="Qty" />
+                  <TableColumn prefWidth="67.20001220703125" resizable="false" text="Price" />
+                  <TableColumn prefWidth="70.0" resizable="false" text="Amount" />
+                  <TableColumn prefWidth="40.0" resizable="false" />
+              </columns>
+            </TableView>
+            <Label layoutX="89.0" layoutY="310.0" prefHeight="23.0" prefWidth="56.0" text="Total: ">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="14.0" layoutY="399.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #FFE8CC;" text="Receipt" textFill="#ff8a00">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font></Button>
+            <Button layoutX="14.0" layoutY="349.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="315.0" text="Place Order" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font></Button>
+            <Button layoutX="178.0" layoutY="399.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #c8c8c8;" text="Cancel">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <Label layoutX="346.0" layoutY="22.0" text="Restaurant Name">
+         <font>
+            <Font name="Segoe UI Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button alignment="BASELINE_CENTER" contentDisplay="RIGHT" layoutX="733.0" layoutY="18.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Review">
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/next.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnBack" layoutY="8.0" mnemonicParsing="false" onAction="#backHome" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
