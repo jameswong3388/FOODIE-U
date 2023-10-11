@@ -182,9 +182,7 @@ public class Auth {
     }
 
     private static UUID generateSessionToken() {
-        // Implement a method to generate a unique session token
-        // You can use UUID or other secure methods to generate tokens
-        return UUID.randomUUID();
+        return UniqueId.generateType1UUID();
     }
 
     private static Response<Void> match(Map<String, Object> query, Sessions session) {
