@@ -17,6 +17,8 @@ JDK - [Adoptium 20](https://adoptium.net/en-GB/temurin/releases/?arch=any&versio
 │   │   ├── resources
 │   │   │   ├── com.oodwj_assignment
 │   │   │   │   └── <views>
+│   │   |   ├── images
+│   │   |   ├── styles
 └── README.md
 ```
 
