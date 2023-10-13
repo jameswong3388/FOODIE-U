@@ -16,6 +16,7 @@ public class main extends Application {
         Scene sc = new Scene(root);
         //primarystage.initStyle(StageStyle.UNDECORATED);
         primarystage.setScene(sc);
+        primarystage.setTitle("FooDieU");
         primarystage.show();
     }
 
