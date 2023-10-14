@@ -25,7 +25,7 @@ public class Store {
     }
 
     public static Response<ArrayList<Stores>> read(Map<String, Object> query) {
-        ArrayList<Stores> stores = new ArrayList<>();
+        ArrayList<Stores> matchedStores = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
@@ -33,36 +33,24 @@ public class Store {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
 
-                if (parts.length == 5) {
-                    UUID storeId = UUID.fromString(parts[0]);
-                    String name = parts[1];
-                    UUID vendorId = UUID.fromString(parts[2]);
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[3]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[4]);
+                if (parts.length != 5) {
+                    continue;
+                }
 
-                    stores.add(new Stores(storeId, name, vendorId, updatedAt, createdAt));
+                Stores store = parseStore(parts);
+
+                if (store != null) {
+                    if (query.isEmpty() || match(query, store).isSuccess()) {
+                        matchedStores.add(store);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read stores: " + e.getMessage());
         }
 
-        if (stores.isEmpty()) {
-            return Response.success("No stores found");
-        }
-
-        if (query.isEmpty()) {
-            return Response.success("Stores read successfully", stores);
-        }
-
-        ArrayList<Stores> matchedStores = new ArrayList<>();
-
-        for (Stores store : stores) {
-            Response<Void> matchRes = match(query, store);
-
-            if (matchRes.isSuccess()) {
-                matchedStores.add(store);
-            }
+        if (matchedStores.isEmpty()) {
+            return Response.failure("No stores match the query", matchedStores);
         }
 
         return Response.success("Stores read successfully", matchedStores);
@@ -162,6 +150,20 @@ public class Store {
             return Response.success("Stores saved successfully");
         } catch (IOException e) {
             return Response.failure("Failed to save stores: " + e.getMessage());
+        }
+    }
+
+    private static Stores parseStore(String[] parts) {
+        try {
+            UUID storeId = UUID.fromString(parts[0]);
+            String name = parts[1];
+            UUID vendorId = UUID.fromString(parts[2]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[3]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[4]);
+
+            return new Stores(storeId, name, vendorId, updatedAt, createdAt);
+        } catch (Exception e) {
+            return null;
         }
     }
 }

@@ -22,12 +22,6 @@ public class User {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(user);
 
-//            Response<Void> createRes = Wallet.create(new Wallets(null, userId, 0.00, LocalDate.now(), LocalDate.now()));
-//
-//            if (!createRes.isSuccess()) {
-//                return Response.failure(createRes.getMessage());
-//            }
-
             return Response.success("User created successfully", userId);
         } catch (IOException e) {
             return Response.failure("Failed to create user: " + e.getMessage());
@@ -35,48 +29,32 @@ public class User {
     }
 
     public static Response<ArrayList<Users>> read(Map<String, Object> query) {
-        ArrayList<Users> users = new ArrayList<>();
+        ArrayList<Users> matchedUsers = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
-                if (parts.length == 8) {
-                    UUID uuid = UUID.fromString(parts[0]);
-                    String username = parts[1];
-                    String password = parts[2];
-                    String email = parts[3];
-                    int age = Integer.parseInt(parts[4]);
-                    Users.Role role = Users.Role.valueOf(parts[5]); // Parse the role from the string.
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[7]);
+                if (parts.length != 8) {
+                    continue; // Skip invalid lines
+                }
 
-                    users.add(new Users(uuid, username, password, email, age, role, updatedAt, createdAt));
+                Users user = parseUser(parts);
+                if (user != null) {
+                    if (query.isEmpty() || match(query, user).isSuccess()) {
+                        matchedUsers.add(user);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read users: " + e.getMessage());
         }
 
-        if (users.isEmpty()) {
-            return Response.failure("No users found");
+        if (matchedUsers.isEmpty()) {
+            return Response.failure("No users match the query", matchedUsers);
         }
 
-        if (query.isEmpty()) {
-            return Response.success("Users read successfully", users);
-        }
-
-        ArrayList<Users> matchedUsers = new ArrayList<>();
-
-        for (Users user : users) {
-            Response<Void> matchRes = match(query, user);
-
-            if (matchRes.isSuccess()) {
-                matchedUsers.add(user);
-            }
-        }
-
-        return Response.success("User found", matchedUsers);
+        return Response.success("Users read successfully", matchedUsers);
     }
 
     public static Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
@@ -174,6 +152,23 @@ public class User {
         }
 
         return Response.success("Users saved successfully");
+    }
+
+    private static Users parseUser(String[] parts) {
+        try {
+            UUID uuid = UUID.fromString(parts[0]);
+            String username = parts[1];
+            String password = parts[2];
+            String email = parts[3];
+            int age = Integer.parseInt(parts[4]);
+            Users.Role role = Users.Role.valueOf(parts[5]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[7]);
+
+            return new Users(uuid, username, password, email, age, role, createdAt, updatedAt);
+        } catch (Exception e) {
+            return null; // Return null if parsing fails
+        }
     }
 
     private static Response<Boolean> isUsernameTaken(String username) {

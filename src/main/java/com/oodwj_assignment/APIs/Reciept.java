@@ -24,7 +24,7 @@ public class Reciept {
     }
 
     public static Response<ArrayList<Receipts>> read(Map<String, Object> query) {
-        ArrayList<Receipts> receipts = new ArrayList<>();
+        ArrayList<Receipts> matchedReceipts = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
@@ -32,36 +32,24 @@ public class Reciept {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
 
-                if (parts.length == 5) {
-                    UUID receiptId = UUID.fromString(parts[0]);
-                    UUID userId = UUID.fromString(parts[1]);
-                    Double credit = Double.parseDouble(parts[2]);
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[3]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[4]);
+                if (parts.length != 5) {
+                    continue;
+                }
 
-                    receipts.add(new Receipts(receiptId, userId, credit, updatedAt, createdAt));
+                Receipts receipt = parseReceipt(parts);
+
+                if (receipt != null) {
+                    if (query.isEmpty() || match(query, receipt).isSuccess()) {
+                        matchedReceipts.add(receipt);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read receipts: " + e.getMessage());
         }
 
-        if (receipts.isEmpty()) {
-            return Response.success("No receipts found");
-        }
-
-        if (query.isEmpty()) {
-            return Response.success("Receipts read successfully", receipts);
-        }
-
-        ArrayList<Receipts> matchedReceipts = new ArrayList<>();
-
-        for (Receipts receipt : receipts) {
-            Response<Void> matchRes = match(query, receipt);
-
-            if (matchRes.isSuccess()) {
-                matchedReceipts.add(receipt);
-            }
+        if (matchedReceipts.isEmpty()) {
+            return Response.failure("No receipts match the query", matchedReceipts);
         }
 
         return Response.success("Receipts read successfully", matchedReceipts);
@@ -152,4 +140,17 @@ public class Reciept {
         return Response.success("Users saved successfully");
     }
 
+    private static Receipts parseReceipt(String[] parts) {
+        try {
+            UUID receiptId = UUID.fromString(parts[0]);
+            UUID userId = UUID.fromString(parts[1]);
+            Double credit = Double.parseDouble(parts[2]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[3]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[4]);
+
+            return new Receipts(receiptId, userId, credit, updatedAt, createdAt);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

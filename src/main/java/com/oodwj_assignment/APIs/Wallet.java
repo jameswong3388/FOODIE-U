@@ -24,42 +24,31 @@ public class Wallet {
     }
 
     public static Response<ArrayList<Wallets>> read(Map<String, Object> query) {
-        ArrayList<Wallets> wallets = new ArrayList<>();
+        ArrayList<Wallets> matchWallets = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
-                if (parts.length == 5) {
-                    UUID walletId = UUID.fromString(parts[0]);
-                    UUID userId = UUID.fromString(parts[1]);
-                    double balance = Double.parseDouble(parts[2]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[3]);
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[4]);
 
-                    wallets.add(new Wallets(walletId, userId, balance, createdAt, updatedAt));
+                if (parts.length != 5) {
+                    continue;
+                }
+
+                Wallets wallet = parseWallet(parts);
+
+                if (wallet != null) {
+                    if (query.isEmpty() || match(query, wallet).isSuccess()) {
+                        matchWallets.add(wallet);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read wallets.txt: " + e.getMessage());
         }
 
-        if (wallets.isEmpty()) {
-            return Response.failure("No wallets found");
-        }
-
-        if (query.isEmpty()) {
-            return Response.success("Wallets read successfully", wallets);
-        }
-
-        ArrayList<Wallets> matchWallets = new ArrayList<>();
-
-        for (Wallets wallet : wallets) {
-            Response<Void> matchRes = match(query, wallet);
-
-            if (matchRes.isSuccess()) {
-                matchWallets.add(wallet);
-            }
+        if (matchWallets.isEmpty()) {
+            return Response.failure("No wallets match the query", matchWallets);
         }
 
         return Response.success("Wallets read successfully", matchWallets);
@@ -159,5 +148,17 @@ public class Wallet {
         return Response.success("Wallets saved successfully");
     }
 
+    private static Wallets parseWallet(String[] parts) {
+        try {
+            UUID walletId = UUID.fromString(parts[0]);
+            UUID userId = UUID.fromString(parts[1]);
+            double balance = Double.parseDouble(parts[2]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[3]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[4]);
 
+            return new Wallets(walletId, userId, balance, createdAt, updatedAt);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

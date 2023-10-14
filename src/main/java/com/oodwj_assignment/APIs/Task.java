@@ -25,45 +25,31 @@ public class Task {
     }
 
     public static Response<ArrayList<Tasks>> read(Map<String, Object> query) {
-        ArrayList<Tasks> tasks = new ArrayList<>();
+        ArrayList<Tasks> matchTasks = new ArrayList<>();
+
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
-                if (parts.length == 7) {
-                    UUID taskId = UUID.fromString(parts[0]);
-                    UUID runnerId = UUID.fromString(parts[1]);
-                    UUID orderId = UUID.fromString(parts[2]);
-                    Integer deliveryFee = Integer.parseInt(parts[3]);
-                    Tasks.taskStatus status = Tasks.taskStatus.valueOf(parts[4]);
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[5]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
+                if (parts.length != 7) {
+                    continue;
+                }
 
-                    tasks.add(new Tasks(taskId, runnerId, orderId, deliveryFee, status, updatedAt, createdAt));
+                Tasks task = parseTask(parts);
 
+                if (task != null) {
+                    if (query.isEmpty() || match(query, task).isSuccess()) {
+                        matchTasks.add(task);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read tasks: " + e.getMessage());
         }
 
-        if (tasks.isEmpty()) {
-            return Response.failure("No tasks found");
-        }
-
-        if (query.isEmpty()) {
-            return Response.success("Tasks read successfully", tasks);
-        }
-
-        ArrayList<Tasks> matchTasks = new ArrayList<>();
-
-        for (Tasks task : tasks) {
-            Response<Void> matchRes = match(query, task);
-
-            if (matchRes.isSuccess()) {
-                matchTasks.add(task);
-            }
+        if (matchTasks.isEmpty()) {
+            return Response.failure("No tasks match the query", matchTasks);
         }
 
         return Response.success("Tasks read successfully", matchTasks);
@@ -163,5 +149,21 @@ public class Task {
         }
 
         return Response.success("Tasks saved successfully");
+    }
+
+    private static Tasks parseTask(String[] parts) {
+        try {
+            UUID taskId = UUID.fromString(parts[0]);
+            UUID runnerId = UUID.fromString(parts[1]);
+            UUID orderId = UUID.fromString(parts[2]);
+            Integer deliveryFee = Integer.parseInt(parts[3]);
+            Tasks.taskStatus status = Tasks.taskStatus.valueOf(parts[4]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[5]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
+
+            return new Tasks(taskId, runnerId, orderId, deliveryFee, status, updatedAt, createdAt);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
