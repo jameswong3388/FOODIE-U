@@ -44,7 +44,7 @@ public class Auth {
         }
 
         if (sessions.isEmpty()) {
-            return Response.failure("No sessions found");
+            return Response.failure("No sessions found", sessions);
         }
 
         if (query.isEmpty()) {
@@ -67,48 +67,53 @@ public class Auth {
     public static Response<UUID> login(String username, String password) throws UnknownHostException {
         Users user = getUserByUsername(username);
 
-        if (user != null) {
-            if (user.getPassword().equals(password)) {
-                Response<ArrayList<Sessions>> sessions = read(Map.of());
-                boolean hasSession = false;
-                UUID newSessionToken = generateSessionToken();
-
-                for (Sessions session : sessions.getData()) {
-                    Response<Void> matchRes = match(Map.of("userId", user.getUserId()), session);
-
-                    if (matchRes.isSuccess()) {
-                        hasSession = true;
-                        session.setStartTime(LocalDateTime.now());
-                        session.setEndTime(null);
-                        session.setDuration(0);
-
-                        InetAddress localhost = InetAddress.getLocalHost();
-                        session.setIpAddress(localhost.getHostAddress());
-
-                        session.setIsAuthenticated(true);
-                        session.setTerminationReason(null);
-                        session.setActive(true);
-                        session.setSessionToken(newSessionToken);
-                    }
-                }
-
-                if (!hasSession) {
-                    Sessions newSession = new Sessions(UUID.randomUUID(), user.getUserId(), LocalDateTime.now(), null, 0, null, null, null, null, false, null, null, true, newSessionToken);
-                    InetAddress localhost = InetAddress.getLocalHost();
-                    newSession.setIpAddress(localhost.getHostAddress());
-                    sessions.getData().add(newSession);
-                }
-                Response<Void> saveRes = saveAllSessions(sessions.getData());
-                if (saveRes.isSuccess()) {
-                    return Response.success("User logged in successfully", newSessionToken);
-                } else {
-                    return Response.failure(saveRes.getMessage());
-                }
-            } else {
-                return Response.failure("Incorrect password");
-            }
-        } else {
+        if (user == null) {
             return Response.failure("User not found");
+        }
+
+
+        if (!user.getPassword().equals(password)) {
+            return Response.failure("Incorrect password");
+        }
+
+        Response<ArrayList<Sessions>> sessions = read(Map.of());
+
+        UUID newSessionToken = generateSessionToken();
+        InetAddress localhost = InetAddress.getLocalHost();
+        String hostAddress = localhost.getHostAddress();
+
+        boolean hasSession = false;
+
+        for (Sessions session : sessions.getData()) {
+            Response<Void> matchRes = match(Map.of("userId", user.getUserId()), session);
+
+            if (matchRes.isSuccess()) {
+                hasSession = true;
+                session.setStartTime(LocalDateTime.now());
+                session.setEndTime(null);
+                session.setDuration(0);
+
+                session.setIpAddress(hostAddress);
+
+                session.setIsAuthenticated(true);
+                session.setTerminationReason(null);
+                session.setActive(true);
+                session.setSessionToken(newSessionToken);
+            }
+        }
+
+        if (!hasSession) {
+            Sessions newSession = new Sessions(UUID.randomUUID(), user.getUserId(), LocalDateTime.now(), null, 0, null, null, null, null, false, null, null, true, newSessionToken);
+            newSession.setIpAddress(hostAddress);
+            sessions.getData().add(newSession);
+        }
+
+        Response<Void> saveRes = saveAllSessions(sessions.getData());
+
+        if (saveRes.isSuccess()) {
+            return Response.success("User logged in successfully", newSessionToken);
+        } else {
+            return Response.failure(saveRes.getMessage());
         }
     }
 
