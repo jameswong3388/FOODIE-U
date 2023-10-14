@@ -14,54 +14,32 @@ public class Auth {
     private static final String FILE_NAME = "database/sessions.txt";
 
     public static Response<ArrayList<Sessions>> read(Map<String, Object> query) {
-        ArrayList<Sessions> sessions = new ArrayList<>();
+        ArrayList<Sessions> matchedSessions = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
-                if (parts.length == 14) {
-                    UUID sessionId = UUID.fromString(parts[0]);
-                    UUID userId = UUID.fromString(parts[1]);
-                    LocalDateTime startTime = LocalDateTime.parse(parts[2]);
-                    LocalDateTime endTime = parts[3].equals("null") ? null : LocalDateTime.parse(parts[3]);
-                    long duration = Long.parseLong(parts[4]);
-                    String ipAddress = parts[5];
-                    String userAgent = parts[6];
-                    String location = parts[7];
-                    String deviceInfo = parts[8];
-                    boolean isAuthenticated = Boolean.parseBoolean(parts[9]);
-                    String referer = parts[10];
-                    String terminationReason = parts[11];
-                    boolean isActive = Boolean.parseBoolean(parts[12]);
-                    UUID sessionToken = UUID.fromString(parts[13]);
+                if (parts.length != 14) {
+                    continue; // Skip invalid lines
+                }
 
-                    sessions.add(new Sessions(sessionId, userId, startTime, endTime, duration, ipAddress, userAgent, location, deviceInfo, isAuthenticated, referer, terminationReason, isActive, sessionToken));
+                Sessions session = parseSession(parts);
+                if (session != null) {
+                    if (query.isEmpty() || match(query, session).isSuccess()) {
+                        matchedSessions.add(session);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read sessions: " + e.getMessage());
         }
 
-        if (sessions.isEmpty()) {
-            return Response.failure("No sessions found", sessions);
+        if (matchedSessions.isEmpty()) {
+            return Response.failure("No sessions match the query", matchedSessions);
         }
 
-        if (query.isEmpty()) {
-            return Response.success("Sessions read successfully", sessions);
-        }
-
-        ArrayList<Sessions> matchedSessions = new ArrayList<>();
-
-        for (Sessions session : sessions) {
-            Response<Void> matchRes = match(query, session);
-
-            if (matchRes.isSuccess()) {
-                matchedSessions.add(session);
-            }
-        }
-
-        return Response.success("Session found", matchedSessions);
+        return Response.success("Sessions read successfully", matchedSessions);
     }
 
     public static Response<UUID> login(String username, String password) throws UnknownHostException {
@@ -225,6 +203,29 @@ public class Auth {
         }
 
         return Response.success("Sessions saved successfully");
+    }
+
+    private static Sessions parseSession(String[] parts) {
+        try {
+            UUID sessionId = UUID.fromString(parts[0]);
+            UUID userId = UUID.fromString(parts[1]);
+            LocalDateTime startTime = LocalDateTime.parse(parts[2]);
+            LocalDateTime endTime = parts[3].equals("null") ? null : LocalDateTime.parse(parts[3]);
+            long duration = Long.parseLong(parts[4]);
+            String ipAddress = parts[5];
+            String userAgent = parts[6];
+            String location = parts[7];
+            String deviceInfo = parts[8];
+            boolean isAuthenticated = Boolean.parseBoolean(parts[9]);
+            String referer = parts[10];
+            String terminationReason = parts[11];
+            boolean isActive = Boolean.parseBoolean(parts[12]);
+            UUID sessionToken = UUID.fromString(parts[13]);
+
+            return new Sessions(sessionId, userId, startTime, endTime, duration, ipAddress, userAgent, location, deviceInfo, isAuthenticated, referer, terminationReason, isActive, sessionToken);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
 

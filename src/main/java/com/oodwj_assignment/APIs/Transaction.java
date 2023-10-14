@@ -1,5 +1,6 @@
 package com.oodwj_assignment.APIs;
 
+import com.oodwj_assignment.Models.Tasks;
 import com.oodwj_assignment.Models.Transactions;
 
 import java.io.*;
@@ -24,7 +25,7 @@ public class Transaction {
     }
 
     public static Response<ArrayList<Transactions>> read(Map<String, Object> query) {
-        ArrayList<Transactions> transactions = new ArrayList<>();
+        ArrayList<Transactions> matchedTransactions = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
@@ -32,39 +33,24 @@ public class Transaction {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
 
-                if (parts.length == 8) {
-                    UUID transactionId = UUID.fromString(parts[0]);
-                    Double amount = Double.parseDouble(parts[1]);
-                    Transactions.transactionType type = Transactions.transactionType.valueOf(parts[2]);
-                    Transactions.transactionStatus status = Transactions.transactionStatus.valueOf(parts[3]);
-                    UUID payerId = UUID.fromString(parts[4]);
-                    UUID payeeId = UUID.fromString(parts[5]);
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+                if (parts.length != 8) {
+                    continue;
+                }
 
-                    transactions.add(new Transactions(transactionId, amount, type, status, payerId, payeeId, updatedAt, createdAt));
+                Transactions transaction = parseTransaction(parts);
+
+                if (transaction != null) {
+                    if (query.isEmpty() || match(query, transaction).isSuccess()) {
+                        matchedTransactions.add(transaction);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read transactions: " + e.getMessage());
         }
 
-        if (transactions.isEmpty()) {
-            return Response.success("No transactions found");
-        }
-
-        if (query.isEmpty()) {
-            return Response.success("Transactions read successfully", transactions);
-        }
-
-        ArrayList<Transactions> matchedTransactions = new ArrayList<>();
-
-        for (Transactions transaction : transactions) {
-            Response<Void> matchRes = match(query, transaction);
-
-            if (matchRes.isSuccess()) {
-                matchedTransactions.add(transaction);
-            }
+        if (matchedTransactions.isEmpty()) {
+            return Response.failure("No transactions match the query", matchedTransactions);
         }
 
         return Response.success("Transactions read successfully", matchedTransactions);
@@ -129,6 +115,7 @@ public class Transaction {
             return Response.failure(transactions.getMessage());
         }
     }
+
     public static Response<Void> deleteAll(Map<String, Object> query) {
         Response<ArrayList<Transactions>> transactions = read(Map.of());
 
@@ -188,4 +175,20 @@ public class Transaction {
         }
     }
 
+    private static Transactions parseTransaction(String[] parts) {
+        try {
+            UUID transactionId = UUID.fromString(parts[0]);
+            Double amount = Double.parseDouble(parts[1]);
+            Transactions.transactionType type = Transactions.transactionType.valueOf(parts[2]);
+            Transactions.transactionStatus status = Transactions.transactionStatus.valueOf(parts[3]);
+            UUID payerId = UUID.fromString(parts[4]);
+            UUID payeeId = UUID.fromString(parts[5]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+
+            return new Transactions(transactionId, amount, type, status, payerId, payeeId, updatedAt, createdAt);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

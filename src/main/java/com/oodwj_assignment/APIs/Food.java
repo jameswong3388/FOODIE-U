@@ -25,7 +25,7 @@ public class Food {
     }
 
     public static Response<ArrayList<Foods>> read(Map<String, Object> query) {
-        ArrayList<Foods> foods = new ArrayList<>();
+        ArrayList<Foods> matchedFoods = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
@@ -33,39 +33,24 @@ public class Food {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
 
-                if (parts.length == 8) {
-                    UUID foodId = UUID.fromString(parts[0]);
-                    UUID storeId = UUID.fromString(parts[1]);
-                    String foodName = parts[2];
-                    Foods.foodType foodType = Foods.foodType.valueOf(parts[3]);
-                    String foodDescription = parts[4];
-                    String foodPrice = parts[5];
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+                if (parts.length != 8) {
+                    continue;
+                }
 
-                    foods.add(new Foods(foodId, storeId, foodName, foodType, foodDescription, foodPrice, updatedAt, createdAt));
+                Foods food = parseFood(parts);
+
+                if (food != null) {
+                    if (query.isEmpty() || match(query, food).isSuccess()) {
+                        matchedFoods.add(food);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read foods: " + e.getMessage());
         }
 
-        if (foods.isEmpty()) {
-            return Response.failure("No foods found");
-        }
-
-        if (query.isEmpty()) {
-            return Response.success("Foods read successfully", foods);
-        }
-
-        ArrayList<Foods> matchedFoods = new ArrayList<>();
-
-        for (Foods food : foods) {
-            Response<Void> matchRes = match(query, food);
-
-            if (matchRes.isSuccess()) {
-                matchedFoods.add(food);
-            }
+        if (matchedFoods.isEmpty()) {
+            return Response.failure("No foods match the query", matchedFoods);
         }
 
         return Response.success("Foods read successfully", matchedFoods);
@@ -165,6 +150,23 @@ public class Food {
             return Response.success("Foods saved successfully");
         } catch (IOException e) {
             return Response.failure("Failed to save foods: " + e.getMessage());
+        }
+    }
+
+    private static Foods parseFood(String[] parts) {
+        try {
+            UUID foodId = UUID.fromString(parts[0]);
+            UUID storeId = UUID.fromString(parts[1]);
+            String foodName = parts[2];
+            Foods.foodType foodType = Foods.foodType.valueOf(parts[3]);
+            String foodDescription = parts[4];
+            String foodPrice = parts[5];
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+
+            return new Foods(foodId, storeId, foodName, foodType, foodDescription, foodPrice, updatedAt, createdAt);
+        } catch (Exception e) {
+            return null;
         }
     }
 }

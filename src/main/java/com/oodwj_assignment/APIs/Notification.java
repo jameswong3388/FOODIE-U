@@ -1,7 +1,6 @@
 package com.oodwj_assignment.APIs;
 
 import com.oodwj_assignment.Models.Notifications;
-import com.oodwj_assignment.Models.Orders;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -49,44 +48,33 @@ public class Notification {
     }
 
     public static Response<ArrayList<Notifications>> read(Map<String, Object> query) {
-        ArrayList<Notifications> notifications = new ArrayList<>();
+        ArrayList<Notifications> matchedNotifications = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
-                if (parts.length == 6) {
-                    UUID notificationId = UUID.fromString(parts[0]);
-                    String message = parts[1];
-                    Notifications.notificationStatus status = Notifications.notificationStatus.valueOf(parts[2]);
-                    Notifications.notificationType type = Notifications.notificationType.valueOf(parts[3]);
-                    UUID userid = UUID.fromString(parts[4]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[5]);
 
-                    notifications.add(new Notifications(notificationId, message, status, type, userid, createdAt));
+                if (parts.length != 6) {
+                    continue;
+                }
+
+                Notifications notification = parseNotification(parts);
+
+                if (notification != null) {
+                    if (query.isEmpty() || match(query, notification).isSuccess()) {
+                        matchedNotifications.add(notification);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read notifications: " + e.getMessage());
         }
 
-        if (notifications.isEmpty()) {
-            return Response.failure("No notifications found");
+        if (matchedNotifications.isEmpty()) {
+            return Response.failure("No notifications match the query", matchedNotifications);
         }
 
-        if (query.isEmpty()) {
-            return Response.success("Notifications read successfully", notifications);
-        }
-
-        ArrayList<Notifications> matchedNotifications = new ArrayList<>();
-
-        for (Notifications notification : notifications) {
-            Response<Void> matchRes = match(query, notification);
-
-            if (matchRes.isSuccess()) {
-                matchedNotifications.add(notification);
-            }
-        }
         return Response.success("Notification found", matchedNotifications);
     }
 
@@ -172,6 +160,21 @@ public class Notification {
         }
 
         return Response.success("Users saved successfully");
+    }
+
+    private static Notifications parseNotification(String[] parts) {
+        try {
+            UUID notificationId = UUID.fromString(parts[0]);
+            String message = parts[1];
+            Notifications.notificationStatus status = Notifications.notificationStatus.valueOf(parts[2]);
+            Notifications.notificationType type = Notifications.notificationType.valueOf(parts[3]);
+            UUID userid = UUID.fromString(parts[4]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[5]);
+
+            return new Notifications(notificationId, message, status, type, userid, createdAt);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }
