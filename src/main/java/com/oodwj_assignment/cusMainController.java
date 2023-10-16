@@ -62,8 +62,6 @@ public class cusMainController {
         profileIcon.setImage(profile);
         Image logout = new Image(getClass().getResourceAsStream("/images/logout-grey.png"));
         logoutIcon.setImage(logout);
-        Image notification = new Image(getClass().getResourceAsStream("/image/notification.png"));
-        notificationIcon.setImage(notification);
     }
 
     public void btnHomeClicked(ActionEvent event) throws IOException {
@@ -128,12 +126,13 @@ public class cusMainController {
         if (result.isPresent() && result.get() == logoutButton) {
             Parent loginRoot = FXMLLoader.load(getClass().getResource("login.fxml"));
             Stage loginStage = new Stage();
-            loginStage.setTitle("Customer Main Page");
+            loginStage.setTitle("Login Page");
             loginStage.setScene(new Scene(loginRoot));
             loginStage.show();
+
+            cusStage.close();
         }
 
-        cusStage.close();
     }
     public void btnNotificationClicked(ActionEvent event) throws IOException {
         AnchorPane view = FXMLLoader.load(getClass().getResource("cusNotification.fxml"));
