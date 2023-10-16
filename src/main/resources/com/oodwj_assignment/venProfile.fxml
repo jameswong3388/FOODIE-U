@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.venProfileController">
+   <children>
+      <Pane layoutX="282.0" layoutY="48.0" prefHeight="434.0" prefWidth="513.0" styleClass="background-color-2">
+         <children>
+            <Label layoutX="29.0" layoutY="99.0" prefHeight="19.0" prefWidth="134.0" text="Restaurant Name">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="207.0" prefHeight="19.0" prefWidth="134.0" text="Phone Number">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="264.0" prefHeight="19.0" prefWidth="134.0" text="Email">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="154.0" prefHeight="19.0" prefWidth="134.0" text="Description">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Button layoutX="297.0" layoutY="376.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="194.0" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/edit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+            </Button>
+            <Label layoutX="196.0" layoutY="99.0" prefHeight="19.0" prefWidth="278.0" text="Ahma Restaurant">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="195.0" layoutY="154.0" prefHeight="19.0" prefWidth="278.0" text="This is a restaurant that sells zhafan">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="195.0" layoutY="207.0" prefHeight="19.0" prefWidth="123.0" text="0123456789">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="195.0" layoutY="264.0" prefHeight="19.0" prefWidth="123.0" text="jj@gmail.com">
+               <font>
+                  <Font name="Segoe UI" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="22.0" prefHeight="23.0" prefWidth="211.0" text="Restaurant Information">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="40.0" layoutY="48.0" prefHeight="434.0" prefWidth="221.0" styleClass="background-color-2">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="36.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/Lion.jpg" />
+               </image>
+            </ImageView>
+            <Button layoutX="24.0" layoutY="217.0" mnemonicParsing="false" text="Restaurant Information" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="24.0" layoutY="265.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="174.0" text="Login &amp; Password" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
