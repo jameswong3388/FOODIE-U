@@ -25,7 +25,7 @@ public class Review {
     }
 
     public static Response<ArrayList<Reviews>> read(Map<String, Object> query) {
-        ArrayList<Reviews> reviews = new ArrayList<>();
+        ArrayList<Reviews> matchedReviews = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
@@ -33,38 +33,24 @@ public class Review {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
 
-                if (parts.length == 8) {
-                    UUID reviewId = UUID.fromString(parts[0]);
-                    UUID foodId = UUID.fromString(parts[1]);
-                    UUID userId = UUID.fromString(parts[2]);
-                    String reviewContent = parts[4];
-                    Reviews.reviewRating reviewRating = Reviews.reviewRating.valueOf(parts[5]);
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+                if (parts.length != 8) {
+                    continue;
+                }
 
-                    reviews.add(new Reviews(reviewId, foodId, userId, reviewContent, reviewRating, updatedAt, createdAt));
+                Reviews review = parseReview(parts);
+
+                if (review != null) {
+                    if (query.isEmpty() || match(query, review).isSuccess()) {
+                        matchedReviews.add(review);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read reviews: " + e.getMessage());
         }
 
-        if (reviews.isEmpty()) {
-            return Response.success("No reviews found");
-        }
-
-        if (query.isEmpty()) {
-            return Response.success("Reviews read successfully", reviews);
-        }
-
-        ArrayList<Reviews> matchedReviews = new ArrayList<>();
-
-        for (Reviews review : reviews) {
-            Response<Void> matchRes = match(query, review);
-
-            if (matchRes.isSuccess()) {
-                matchedReviews.add(review);
-            }
+        if (matchedReviews.isEmpty()) {
+            return Response.failure("No reviews match the query", matchedReviews);
         }
 
         return Response.success("Reviews read successfully", matchedReviews);
@@ -186,6 +172,22 @@ public class Review {
             return Response.success("Reviews saved successfully");
         } catch (IOException e) {
             return Response.failure("Failed to save reviews: " + e.getMessage());
+        }
+    }
+
+    private static Reviews parseReview(String[] parts) {
+        try {
+            UUID reviewId = UUID.fromString(parts[0]);
+            UUID foodId = UUID.fromString(parts[1]);
+            UUID userId = UUID.fromString(parts[2]);
+            String reviewContent = parts[4];
+            Reviews.reviewRating reviewRating = Reviews.reviewRating.valueOf(parts[5]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+
+            return new Reviews(reviewId, foodId, userId, reviewContent, reviewRating, updatedAt, createdAt);
+        } catch (Exception e) {
+            return null;
         }
     }
 }

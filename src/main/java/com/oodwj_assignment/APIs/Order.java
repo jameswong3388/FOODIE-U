@@ -24,45 +24,31 @@ public class Order {
     }
 
     public static Response<ArrayList<Orders>> read(Map<String, Object> query)  {
-        ArrayList<Orders> orders = new ArrayList<>();
+        ArrayList<Orders> matchOrders = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
-                if (parts.length == 8) {
-                    UUID orderId = UUID.fromString(parts[0]);
-                    UUID userId = UUID.fromString(parts[1]);
-                    Integer totalPrice = Integer.parseInt(parts[2]);
-                    Integer totalQuantity = Integer.parseInt(parts[3]);
-                    Orders.oderStatus status = Orders.oderStatus.valueOf(parts[4]); // Parse the role from the string.
-                    Orders.orderType type = Orders.orderType.valueOf(parts[5]); // Parse the role from the string.
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
 
-                    orders.add(new Orders(orderId, userId, totalPrice, totalQuantity, status, type, updatedAt, createdAt));
+                if (parts.length != 8) {
+                    continue;
+                }
+
+                Orders order = parseOrder(parts);
+
+                if (order != null) {
+                    if (query.isEmpty() || match(query, order).isSuccess()) {
+                        matchOrders.add(order);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read orders: " + e.getMessage());
         }
 
-        if (orders.isEmpty()) {
-            return Response.failure("No orders found");
-        }
-
-        if (query.isEmpty()) {
-            return Response.success("Orders read successfully", orders);
-        }
-
-        ArrayList<Orders> matchOrders = new ArrayList<>();
-
-        for (Orders order : orders) {
-            Response<Void> matchRes = match(query, order);
-
-            if (matchRes.isSuccess()) {
-                matchOrders.add(order);
-            }
+        if (matchOrders.isEmpty()) {
+            return Response.failure("No orders match the query", matchOrders);
         }
 
         return Response.success("Orders read successfully", matchOrders);
@@ -185,5 +171,22 @@ public class Order {
         }
 
         return Response.success("Orders saved successfully");
+    }
+
+    private static Orders parseOrder(String[] parts) {
+        try {
+            UUID orderId = UUID.fromString(parts[0]);
+            UUID userId = UUID.fromString(parts[1]);
+            Integer totalPrice = Integer.parseInt(parts[2]);
+            Integer totalQuantity = Integer.parseInt(parts[3]);
+            Orders.oderStatus status = Orders.oderStatus.valueOf(parts[4]); // Parse the role from the string.
+            Orders.orderType type = Orders.orderType.valueOf(parts[5]); // Parse the role from the string.
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+
+            return new Orders(orderId, userId, totalPrice, totalQuantity, status, type, updatedAt, createdAt);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

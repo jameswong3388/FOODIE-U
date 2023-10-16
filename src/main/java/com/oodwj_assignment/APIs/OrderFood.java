@@ -24,45 +24,30 @@ public class OrderFood {
     }
 
     public static Response<ArrayList<OrderFoods>> read(Map<String, Object> query) {
-        ArrayList<OrderFoods> orderFoods = new ArrayList<>();
+        ArrayList<OrderFoods> matchOrderFoods = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
-                if (parts.length == 8) {
-                    UUID orderFoodId = UUID.fromString(parts[0]);
-                    UUID foodId = UUID.fromString(parts[1]);
-                    UUID orderId = UUID.fromString(parts[2]);
-                    String foodName = parts[3];
-                    String foodPrice = parts[4];
-                    Integer foodQuantity = Integer.parseInt(parts[5]);
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+                if (parts.length != 8) {
+                    continue;
+                }
 
-                    orderFoods.add(new OrderFoods(orderFoodId, foodId, orderId, foodName, foodPrice, foodQuantity, updatedAt, createdAt));
+                OrderFoods orderFood = parseOrderFood(parts);
+
+                if (orderFood != null) {
+                    if (query.isEmpty() || match(query, orderFood).isSuccess()) {
+                        matchOrderFoods.add(orderFood);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read orderFoods: " + e.getMessage());
         }
 
-        if (orderFoods.isEmpty()) {
-            return Response.success("No orderFoods found");
-        }
-
-        if (query.isEmpty()) {
-            return Response.success("OrderFoods read successfully", orderFoods);
-        }
-
-        ArrayList<OrderFoods> matchOrderFoods = new ArrayList<>();
-
-        for (OrderFoods orderFood : orderFoods) {
-            Response<Void> matchRes = match(query, orderFood);
-
-            if (matchRes.isSuccess()) {
-                matchOrderFoods.add(orderFood);
-            }
+        if (matchOrderFoods.isEmpty()) {
+            return Response.failure("No orderFoods match the query", matchOrderFoods);
         }
 
         return Response.success("OrderFoods read successfully", matchOrderFoods);
@@ -185,5 +170,22 @@ public class OrderFood {
         }
 
         return Response.success("OrderFoods saved successfully");
+    }
+
+    private static OrderFoods parseOrderFood(String[] parts) {
+        try {
+            UUID orderFoodId = UUID.fromString(parts[0]);
+            UUID foodId = UUID.fromString(parts[1]);
+            UUID orderId = UUID.fromString(parts[2]);
+            String foodName = parts[3];
+            String foodPrice = parts[4];
+            Integer foodQuantity = Integer.parseInt(parts[5]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+
+            return new OrderFoods(orderFoodId, foodId, orderId, foodName, foodPrice, foodQuantity, updatedAt, createdAt);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

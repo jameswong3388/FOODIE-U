@@ -5,5 +5,4 @@ module com.oodwj_assigment {
 
     opens com.oodwj_assignment to javafx.fxml;
     exports com.oodwj_assignment;
-
 }

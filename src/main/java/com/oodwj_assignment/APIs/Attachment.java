@@ -24,7 +24,7 @@ public class Attachment {
     }
 
     public static Response<ArrayList<Attachments>> read(Map<String, Object> query) {
-        ArrayList<Attachments> attachments = new ArrayList<>();
+        ArrayList<Attachments> matchedAttachments = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
@@ -32,37 +32,24 @@ public class Attachment {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
 
-                if (parts.length == 6) {
-                    UUID attachmentId = UUID.fromString(parts[0]);
-                    UUID userId = UUID.fromString(parts[1]);
-                    UUID notificationId = UUID.fromString(parts[2]);
-                    Attachments.attachmentType attachment = Attachments.attachmentType.valueOf(parts[3]);
-                    LocalDateTime updatedAt = LocalDateTime.parse(parts[4]);
-                    LocalDateTime createdAt = LocalDateTime.parse(parts[5]);
+                if (parts.length != 6) {
+                    continue;
+                }
 
-                    attachments.add(new Attachments(attachmentId, userId, notificationId, attachment, updatedAt, createdAt));
+                Attachments attachment = parseAttachment(parts);
+
+                if (attachment != null) {
+                    if (query.isEmpty() || match(query, attachment).isSuccess()) {
+                        matchedAttachments.add(attachment);
+                    }
                 }
             }
         } catch (IOException e) {
             return Response.failure("Failed to read attachments: " + e.getMessage());
         }
 
-        if (attachments.isEmpty()) {
-            return Response.failure("No attachments found");
-        }
-
-        if (query.isEmpty()) {
-            return Response.success("Attachments read successfully", attachments);
-        }
-
-        ArrayList<Attachments> matchedAttachments = new ArrayList<>();
-
-        for (Attachments attachment : attachments) {
-            Response<Void> matchRes = match(query, attachment);
-
-            if (matchRes.isSuccess()) {
-                matchedAttachments.add(attachment);
-            }
+        if (matchedAttachments.isEmpty()) {
+            return Response.failure("No attachments match the query", matchedAttachments);
         }
 
         return Response.success("Attachments read successfully", matchedAttachments);
@@ -90,6 +77,21 @@ public class Attachment {
             return Response.success("Notification found");
         } else {
             return Response.failure("Notification not found");
+        }
+    }
+
+    private static Attachments parseAttachment(String[] parts) {
+        try {
+            UUID attachmentId = UUID.fromString(parts[0]);
+            UUID userId = UUID.fromString(parts[1]);
+            UUID notificationId = UUID.fromString(parts[2]);
+            Attachments.attachmentType attachment = Attachments.attachmentType.valueOf(parts[3]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[4]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[5]);
+
+            return new Attachments(attachmentId, userId, notificationId, attachment, updatedAt, createdAt);
+        } catch (Exception e) {
+            return null;
         }
     }
 }
