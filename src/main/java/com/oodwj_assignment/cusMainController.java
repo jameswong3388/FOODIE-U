@@ -126,13 +126,11 @@ public class cusMainController {
         if (result.isPresent() && result.get() == logoutButton) {
             Parent loginRoot = FXMLLoader.load(getClass().getResource("login.fxml"));
             Stage loginStage = new Stage();
-            loginStage.setTitle("Login Page");
+            loginStage.setTitle("Customer Main Page");
             loginStage.setScene(new Scene(loginRoot));
             loginStage.show();
-
             cusStage.close();
         }
-
     }
     public void btnNotificationClicked(ActionEvent event) throws IOException {
         AnchorPane view = FXMLLoader.load(getClass().getResource("cusNotification.fxml"));

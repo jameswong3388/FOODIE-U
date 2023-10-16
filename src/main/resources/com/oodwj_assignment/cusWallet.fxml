@@ -42,7 +42,7 @@
             </Label>
             <ComboBox layoutX="540.0" layoutY="49.0" prefHeight="26.0" prefWidth="185.0" promptText="Year" styleClass="background-color-1" />
             <ComboBox layoutX="540.0" layoutY="84.0" prefHeight="26.0" prefWidth="185.0" promptText="Type" styleClass="background-color-1" />
-            <Button layoutX="191.0" layoutY="94.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="125.0" text="Request Topup" textFill="WHITE">
+            <Button layoutX="191.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnTopUpClicked" prefHeight="26.0" prefWidth="125.0" text="Request Topup" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
