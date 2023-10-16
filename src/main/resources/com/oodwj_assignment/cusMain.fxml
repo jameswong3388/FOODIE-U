@@ -133,10 +133,15 @@
             </Pane>
             <TextField prefHeight="30.0" prefWidth="197.0" promptText="Search for food &amp; restaurants" style="-fx-background-color: #ffffff;" />
             <Pane prefHeight="70.0" prefWidth="346.0" />
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/notification.png" />
-               </image></ImageView>
+            <Button fx:id="notifcation" mnemonicParsing="false" onAction="#btnNotificationClicked" styleClass="menu-button">
+               <graphic>
+                  <ImageView fx:id="notificationIcon" accessibleRole="BUTTON" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="menu-button">
+                     <image>
+                        <Image url="@../../images/notification.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <Pane prefHeight="70.0" prefWidth="22.0" />
             <Label alignment="BASELINE_LEFT" prefHeight="16.0" prefWidth="150.0" styleClass="primary-text-color" text="Jeremy Lau">
                <font>

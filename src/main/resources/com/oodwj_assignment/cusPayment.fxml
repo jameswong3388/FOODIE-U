@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="361.0" prefWidth="612.0" style="-fx-background-color: ffffff; -fx-border-width: 10px 10px 10px 10px" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusPaymentController">
+   <children>
+      <Line endX="510.0" endY="-0.9999980926513672" layoutX="102.0" layoutY="1.0" startX="-102.0" startY="-1.0" stroke="#ff8c00" strokeWidth="2.0" />
+      <Pane layoutX="361.0" layoutY="88.0" prefHeight="93.0" prefWidth="232.0" style="-fx-background-color: #666564;">
+         <children>
+            <GridPane layoutY="-1.0" prefHeight="93.0" prefWidth="232.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="118.0" text="Discount :" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="118.0" text="Total :" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="118.0" text="SubTotal :" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="   0.00" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Text>
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Button layoutX="58.0" layoutY="51.0" mnemonicParsing="false" style="-fx-background-color: transparent;" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="251.0" layoutY="17.0" prefHeight="28.0" prefWidth="101.0" text="Payment" textAlignment="CENTER" textFill="#ff8000" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="Arial Nova Bold" size="22.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.17870722711086273" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Label>
+      <AnchorPane layoutX="40.0" layoutY="59.0" prefHeight="314.0" prefWidth="220.0">
+         <children>
+            <TableView prefHeight="294.0" prefWidth="311.0" styleClass="background-color-2">
+               <columns>
+                  <TableColumn prefWidth="28.0" resizable="false" text="No" />
+                  <TableColumn prefWidth="114.39996337890625" resizable="false" text="Item" />
+                  <TableColumn prefWidth="28.800048828125" resizable="false" text="Qty" />
+                  <TableColumn prefWidth="67.20001220703125" resizable="false" text="Price" />
+                  <TableColumn prefWidth="70.0" resizable="false" text="Amount" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Button fx:id="btnCancel" layoutX="367.0" layoutY="305.0" mnemonicParsing="false" onAction="#backOrder" prefHeight="45.0" prefWidth="221.0" style="-fx-background-color: ffb265;" text="Cancel" textFill="#7a7a7a" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="Segoe UI Bold Italic" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="367.0" layoutY="246.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="221.0" style="-fx-background-color: ff8800;" text="Confirm Payment" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+         <font>
+            <Font name="Segoe UI Bold Italic" size="15.0" />
+         </font>
+      </Button>
+      <Label alignment="CENTER" contentDisplay="TOP" layoutX="354.0" layoutY="58.0" prefHeight="27.0" prefWidth="152.0" text="Order Summary" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+   <opaqueInsets>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </opaqueInsets>
+</AnchorPane>

@@ -29,12 +29,12 @@
                   <Insets left="5.0" />
                </padding>
             </ComboBox>
-            <Button layoutX="184.0" layoutY="429.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="111.0" styleClass="rounded-shape" text="Clear" textFill="WHITE">
+            <Button layoutX="184.0" layoutY="429.0" mnemonicParsing="false" onAction="#clearComment" prefHeight="33.0" prefWidth="111.0" styleClass="rounded-shape" text="Clear" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="15.0" />
                </font>
             </Button>
-            <TextArea layoutX="33.0" layoutY="213.0" prefHeight="168.0" prefWidth="459.0" />
+            <TextArea fx:id="comment" layoutX="33.0" layoutY="213.0" prefHeight="168.0" prefWidth="459.0" />
             <Label layoutX="35.0" layoutY="14.0" text="Review and Rating">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
