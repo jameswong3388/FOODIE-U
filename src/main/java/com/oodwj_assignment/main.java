@@ -12,15 +12,12 @@ import java.util.Objects;
 public class main extends Application {
     @Override
     public void start(Stage primarystage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venMain.fxml")));
         Scene sc = new Scene(root);
         //primarystage.initStyle(StageStyle.UNDECORATED);
         primarystage.setScene(sc);
-        primarystage.setTitle("FooDieU");
         primarystage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
+    public static void main(String[] args) {launch();}
 }

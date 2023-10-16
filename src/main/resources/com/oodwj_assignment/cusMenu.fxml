@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.Controllers.cusMenuController">
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusMenuController">
    <children>
       <TabPane layoutX="11.0" layoutY="74.0" prefHeight="444.0" prefWidth="467.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -65,7 +65,7 @@
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font></Button>
-            <Button layoutX="178.0" layoutY="399.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #c8c8c8;" text="Cancel">
+            <Button layoutX="178.0" layoutY="399.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
