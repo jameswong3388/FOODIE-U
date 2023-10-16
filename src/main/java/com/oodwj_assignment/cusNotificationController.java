@@ -1,4 +1,4 @@
-package com.oodwj_assignment.Controllers;
+package com.oodwj_assignment;
 
 public class cusNotificationController {
 }

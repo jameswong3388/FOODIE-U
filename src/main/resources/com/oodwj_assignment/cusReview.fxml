@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.Controllers.cusReviewController">
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusReviewController">
    <children>
       <Pane layoutX="282.0" layoutY="27.0" prefHeight="476.0" prefWidth="524.0" styleClass="background-color-2">
          <children>
@@ -29,12 +29,12 @@
                   <Insets left="5.0" />
                </padding>
             </ComboBox>
-            <Button layoutX="184.0" layoutY="429.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="111.0" styleClass="rounded-shape" text="Clear" textFill="WHITE">
+            <Button layoutX="184.0" layoutY="429.0" mnemonicParsing="false" onAction="#clearComment" prefHeight="33.0" prefWidth="111.0" styleClass="rounded-shape" text="Clear" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="15.0" />
                </font>
             </Button>
-            <TextArea layoutX="33.0" layoutY="213.0" prefHeight="168.0" prefWidth="459.0" />
+            <TextArea fx:id="comment" layoutX="33.0" layoutY="213.0" prefHeight="168.0" prefWidth="459.0" />
             <Label layoutX="35.0" layoutY="14.0" text="Review and Rating">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />

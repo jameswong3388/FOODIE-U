@@ -1,4 +1,4 @@
-package com.oodwj_assignment.Controllers;
+package com.oodwj_assignment;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +36,9 @@ public class cusMainController {
     private ImageView profileIcon;
     @FXML
     private ImageView logoutIcon;
+    @FXML
+    private ImageView notificationIcon;
+
 
     public void initialize() throws IOException {
         // Load an image file and set it to the ImageView
@@ -59,6 +62,8 @@ public class cusMainController {
         profileIcon.setImage(profile);
         Image logout = new Image(getClass().getResourceAsStream("/images/logout-grey.png"));
         logoutIcon.setImage(logout);
+        Image notification = new Image(getClass().getResourceAsStream("/image/notification.png"));
+        notificationIcon.setImage(notification);
     }
 
     public void btnHomeClicked(ActionEvent event) throws IOException {
@@ -126,10 +131,13 @@ public class cusMainController {
             loginStage.setTitle("Customer Main Page");
             loginStage.setScene(new Scene(loginRoot));
             loginStage.show();
-
-            cusStage.close();
         }
+
+        cusStage.close();
     }
-
-
+    public void btnNotificationClicked(ActionEvent event) throws IOException {
+        AnchorPane view = FXMLLoader.load(getClass().getResource("cusNotification.fxml"));
+        borderpane.setCenter(view);
+        defaultSettings();
+    }
 }
