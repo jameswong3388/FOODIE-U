@@ -31,7 +31,7 @@ public class loginController {
     public void loginButtonAction(ActionEvent event) throws IOException {
         Parent customerRoot = FXMLLoader.load(getClass().getResource("cusMain.fxml"));
         Stage customerStage = new Stage();
-        customerStage.setTitle("Customer Main Page");
+        customerStage.setTitle("Customer Page");
         customerStage.setScene(new Scene(customerRoot));
         customerStage.show();
 
