@@ -20,7 +20,7 @@ public class cusWalletController {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Request Top UP");
         dialog.setHeaderText(null);
-        dialog.setContentText("Please enter your name:");
+        dialog.setContentText("Please enter the Values:");
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
         }
