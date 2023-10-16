@@ -27,9 +27,7 @@ public class venMainController {
     @FXML
     private ImageView homeIcon;
     @FXML
-    private ImageView historyIcon;
-    @FXML
-    private ImageView productIcon;
+    private ImageView menuIcon;
     @FXML
     private ImageView statisticIcon;
     @FXML
@@ -51,10 +49,8 @@ public class venMainController {
         // Load an image file and set it to the ImageView
         Image home = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/home-grey.png")));
         homeIcon.setImage(home);
-        Image history = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/history-grey.png")));
-        historyIcon.setImage(history);
-        Image product = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/product-grey.png")));
-        productIcon.setImage(product);
+        Image menu = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/menu-grey.png")));
+        menuIcon.setImage(menu);
         Image statistic = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/statistic-grey.png")));
         statisticIcon.setImage(statistic);
         Image review = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/review-grey.png")));
@@ -73,41 +69,33 @@ public class venMainController {
         homeIcon.setImage(home);
     }
 
-    public void btnHistoryClicked(ActionEvent event) throws IOException {
-        //AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venHistory.fxml")));
-        //borderpane.setCenter(view);
+    public void btnMenuClicked(ActionEvent event) throws IOException {
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venMenu.fxml")));
+        borderpane.setCenter(view);
         defaultSettings();
-        Image history = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/history-orange.png")));
-        historyIcon.setImage(history);
-    }
-
-    public void btnProductClicked(ActionEvent event) throws IOException {
-        //AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venProduct.fxml")));
-        //borderpane.setCenter(view);
-        defaultSettings();
-        Image product = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/product-orange.png")));
-        productIcon.setImage(product);
+        Image product = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/menu-orange.png")));
+        menuIcon.setImage(product);
     }
 
     public void btnStatisticClicked(ActionEvent event) throws IOException {
-        //AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("cusWallet.fxml")));
-        //borderpane.setCenter(view);
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venStatistic.fxml")));
+        borderpane.setCenter(view);
         defaultSettings();
         Image wallet = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/statistic-orange.png")));
         statisticIcon.setImage(wallet);
     }
 
     public void btnReviewClicked(ActionEvent event) throws IOException {
-        //AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venReview.fxml")));
-        //borderpane.setCenter(view);
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venReview.fxml")));
+        borderpane.setCenter(view);
         defaultSettings();
         Image review = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/review-orange.png")));
         reviewIcon.setImage(review);
     }
 
     public void btnProfileClicked(ActionEvent event) throws IOException {
-        //AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venProfile.fxml")));
-        //borderpane.setCenter(view);
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venProfile.fxml")));
+        borderpane.setCenter(view);
         defaultSettings();
         Image profile = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/profile-orange.png")));
         profileIcon.setImage(profile);
@@ -135,7 +123,7 @@ public class venMainController {
         if (result.isPresent() && result.get() == logoutButton) {
             Parent loginRoot = FXMLLoader.load(getClass().getResource("login.fxml"));
             Stage loginStage = new Stage();
-            loginStage.setTitle("Customer Main Page");
+            loginStage.setTitle("Login Page");
             loginStage.setScene(new Scene(loginRoot));
             loginStage.show();
 

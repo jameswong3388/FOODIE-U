@@ -15,6 +15,7 @@ public class main extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         Scene sc = new Scene(root);
         //primarystage.initStyle(StageStyle.UNDECORATED);
+        primarystage.setTitle("Login Page");
         primarystage.setScene(sc);
         primarystage.show();
     }
