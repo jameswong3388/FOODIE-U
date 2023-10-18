@@ -11,11 +11,11 @@ public class Foods {
     private String foodName;
     private Foods.foodType foodType;
     private String foodDescription;
-    private String foodPrice;
+    private Double foodPrice;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public Foods(UUID foodId, UUID storeId, String foodName, Foods.foodType foodType, String foodDescription, String foodPrice, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Foods(UUID foodId, UUID storeId, String foodName, Foods.foodType foodType, String foodDescription, Double foodPrice, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.foodId = foodId;
         this.storeId = storeId;
         this.foodName = foodName;
@@ -46,7 +46,7 @@ public class Foods {
         return foodDescription;
     }
 
-    public String getFoodPrice() {
+    public Double getFoodPrice() {
         return foodPrice;
     }
 
@@ -110,7 +110,7 @@ public class Foods {
         this.foodDescription = foodDescription;
     }
 
-    public void setFoodPrice(String foodPrice) {
+    public void setFoodPrice(Double foodPrice) {
         this.foodPrice = foodPrice;
     }
 
@@ -165,8 +165,8 @@ public class Foods {
                 }
             }
             case "foodPrice" -> {
-                if (newValue instanceof String) {
-                    setFoodPrice((String) newValue);
+                if (newValue instanceof Double) {
+                    setFoodPrice((Double) newValue);
                     return Response.success("Food price updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
