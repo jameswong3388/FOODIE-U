@@ -10,12 +10,12 @@ public class OrderFoods {
     private UUID foodId;
     private UUID orderId;
     private String foodName;
-    private String foodPrice;
+    private Double foodPrice;
     private Integer foodQuantity;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public OrderFoods(UUID oderFoodId, UUID foodId, UUID orderId, String foodName, String foodPrice, Integer foodQuantity, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public OrderFoods(UUID oderFoodId, UUID foodId, UUID orderId, String foodName, Double foodPrice, Integer foodQuantity, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.oderFoodId = oderFoodId;
         this.foodId = foodId;
         this.orderId = orderId;
@@ -42,7 +42,7 @@ public class OrderFoods {
         return foodName;
     }
 
-    public String getFoodPrice() {
+    public Double getFoodPrice() {
         return foodPrice;
     }
 
@@ -88,7 +88,7 @@ public class OrderFoods {
         this.foodName = foodName;
     }
 
-    public void setFoodPrice(String foodPrice) {
+    public void setFoodPrice(Double foodPrice) {
         this.foodPrice = foodPrice;
     }
 
@@ -139,8 +139,8 @@ public class OrderFoods {
                 }
             }
             case "foodPrice" -> {
-                if (newValue instanceof String) {
-                    setFoodPrice((String) newValue);
+                if (newValue instanceof Double) {
+                    setFoodPrice((Double) newValue);
                     yield Response.success("foodPrice updated successfully");
                 } else {
                     yield Response.failure("foodPrice must be a String");

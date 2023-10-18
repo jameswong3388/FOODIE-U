@@ -177,7 +177,7 @@ public class Order {
         try {
             UUID orderId = UUID.fromString(parts[0]);
             UUID userId = UUID.fromString(parts[1]);
-            Integer totalPrice = Integer.parseInt(parts[2]);
+            Double totalPrice = Double.parseDouble(parts[2]);
             Integer totalQuantity = Integer.parseInt(parts[3]);
             Orders.oderStatus status = Orders.oderStatus.valueOf(parts[4]); // Parse the role from the string.
             Orders.orderType type = Orders.orderType.valueOf(parts[5]); // Parse the role from the string.

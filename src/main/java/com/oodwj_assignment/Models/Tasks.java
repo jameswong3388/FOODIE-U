@@ -9,12 +9,12 @@ public class Tasks {
     private UUID taskId;
     private UUID runnerId; // may be null
     private UUID orderId;
-    private Integer deliveryFee;
+    private Double deliveryFee;
     private taskStatus status;
     public LocalDateTime updatedAt;
     public LocalDateTime createdAt;
 
-    public Tasks(UUID taskId, UUID runnerId, UUID orderId, Integer deliveryFee, taskStatus status, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Tasks(UUID taskId, UUID runnerId, UUID orderId, Double deliveryFee, taskStatus status, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.taskId = taskId;
         this.runnerId = runnerId;
         this.orderId = orderId;
@@ -36,7 +36,7 @@ public class Tasks {
         return orderId;
     }
 
-    public Integer getDeliveryFee() {
+    public Double getDeliveryFee() {
         return deliveryFee;
     }
 
@@ -77,7 +77,7 @@ public class Tasks {
         this.orderId = orderId;
     }
 
-    public void setDeliveryFee(Integer deliveryFee) {
+    public void setDeliveryFee(Double deliveryFee) {
         this.deliveryFee = deliveryFee;
     }
 
@@ -117,11 +117,11 @@ public class Tasks {
                     return Response.failure("Order ID must be a UUID");
                 }
             case "deliveryFee":
-                if (newValue instanceof Integer) {
-                    setDeliveryFee((Integer) newValue);
+                if (newValue instanceof Double) {
+                    setDeliveryFee((Double) newValue);
                     return Response.success("Delivery Fee updated successfully");
                 } else {
-                    return Response.failure("Delivery Fee must be an Integer");
+                    return Response.failure("Delivery Fee must be an Double");
                 }
             case "status":
                 if (newValue instanceof taskStatus) {
