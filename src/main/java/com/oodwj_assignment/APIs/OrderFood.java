@@ -178,7 +178,7 @@ public class OrderFood {
             UUID foodId = UUID.fromString(parts[1]);
             UUID orderId = UUID.fromString(parts[2]);
             String foodName = parts[3];
-            String foodPrice = parts[4];
+            Double foodPrice = Double.parseDouble(parts[4]);
             Integer foodQuantity = Integer.parseInt(parts[5]);
             LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
             LocalDateTime createdAt = LocalDateTime.parse(parts[7]);

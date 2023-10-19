@@ -8,14 +8,14 @@ import java.util.UUID;
 public class Orders {
     private UUID orderId;
     private  UUID userId;
-    private  Integer totalPrice;
+    private  Double totalPrice;
     private  Integer totalQuantity;
     private  oderStatus status;
     private  orderType type;
     private  LocalDateTime updatedAt;
     private  LocalDateTime createdAt;
 
-    public Orders(UUID orderId, UUID userId, Integer totalPrice, Integer totalQuantity, oderStatus status, orderType type, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Orders(UUID orderId, UUID userId, Double totalPrice, Integer totalQuantity, oderStatus status, orderType type, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.orderId = orderId;
         this.userId = userId;
         this.totalPrice = totalPrice;
@@ -34,7 +34,7 @@ public class Orders {
         return userId;
     }
 
-    public Integer getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
@@ -80,7 +80,7 @@ public class Orders {
         this.userId = userId;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -123,8 +123,8 @@ public class Orders {
                 }
             }
             case "totalPrice" -> {
-                if (newValue instanceof Integer) {
-                    setTotalPrice((Integer) newValue);
+                if (newValue instanceof Double) {
+                    setTotalPrice((Double) newValue);
                     yield Response.success("Total price updated successfully");
                 } else {
                     yield Response.failure("Total price must be an Integer");

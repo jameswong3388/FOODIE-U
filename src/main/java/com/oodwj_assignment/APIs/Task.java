@@ -1,5 +1,6 @@
 package com.oodwj_assignment.APIs;
 
+import com.oodwj_assignment.Models.Orders;
 import com.oodwj_assignment.Models.Tasks;
 
 import java.io.*;
@@ -114,6 +115,18 @@ public class Task {
         }
     }
 
+    public static Response<Double> calDeliveryFee(Order orderId) {
+        Response<ArrayList<Orders>> orders = Order.read(Map.of("orderId", orderId));
+
+        if (orders.isSuccess()) {
+            double totalPrice = orders.getData().get(0).getTotalPrice();
+
+            return Response.success("Delivery Fee calculated successfully", totalPrice * 0.1);
+        } else {
+            return Response.failure(orders.getMessage());
+        }
+    }
+
     private static Response<Void> match(Map<String, Object> query, Tasks task) {
         boolean match = true;
 
@@ -156,7 +169,7 @@ public class Task {
             UUID taskId = UUID.fromString(parts[0]);
             UUID runnerId = UUID.fromString(parts[1]);
             UUID orderId = UUID.fromString(parts[2]);
-            Integer deliveryFee = Integer.parseInt(parts[3]);
+            Double deliveryFee = Double.parseDouble(parts[3]);
             Tasks.taskStatus status = Tasks.taskStatus.valueOf(parts[4]);
             LocalDateTime updatedAt = LocalDateTime.parse(parts[5]);
             LocalDateTime createdAt = LocalDateTime.parse(parts[6]);

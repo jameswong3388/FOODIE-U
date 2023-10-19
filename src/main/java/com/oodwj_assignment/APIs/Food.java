@@ -160,7 +160,7 @@ public class Food {
             String foodName = parts[2];
             Foods.foodType foodType = Foods.foodType.valueOf(parts[3]);
             String foodDescription = parts[4];
-            String foodPrice = parts[5];
+            Double foodPrice = Double.parseDouble(parts[5]);
             LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
             LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
 
