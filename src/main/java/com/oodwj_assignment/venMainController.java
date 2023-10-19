@@ -130,6 +130,11 @@ public class venMainController {
             cusStage.close();
         }
     }
+    public void btnNotificationClicked(ActionEvent event) throws IOException {
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venNotification.fxml")));
+        borderpane.setCenter(view);
+        defaultSettings();
+    }
 
 
 }
