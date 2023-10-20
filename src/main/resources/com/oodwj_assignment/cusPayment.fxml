@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="361.0" prefWidth="612.0" style="-fx-background-color: ffffff; -fx-border-width: 10px 10px 10px 10px" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusPaymentController">
+<AnchorPane prefHeight="361.0" prefWidth="612.0" style="-fx-background-color: ffffff; -fx-border-width: 10px 10px 10px 10px" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusPaymentController">
    <children>
-      <Line endX="510.0" endY="-0.9999980926513672" layoutX="102.0" layoutY="1.0" startX="-102.0" startY="-1.0" stroke="#ff8c00" strokeWidth="2.0" />
       <Pane layoutX="361.0" layoutY="88.0" prefHeight="93.0" prefWidth="232.0" style="-fx-background-color: #666564;">
          <children>
             <GridPane layoutY="-1.0" prefHeight="93.0" prefWidth="232.0">
@@ -34,17 +24,17 @@
                <children>
                   <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="118.0" text="Discount :" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
                      <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="Segoe UI Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="118.0" text="Total :" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="2">
                      <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="Segoe UI Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="118.0" text="SubTotal :" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="Segoe UI Bold" size="15.0" />
                      </font>
                   </Label>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="   0.00" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -56,10 +46,9 @@
             </GridPane>
          </children>
       </Pane>
-      <Button layoutX="58.0" layoutY="51.0" mnemonicParsing="false" style="-fx-background-color: transparent;" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="251.0" layoutY="17.0" prefHeight="28.0" prefWidth="101.0" text="Payment" textAlignment="CENTER" textFill="#ff8000" textOverrun="CENTER_ELLIPSIS">
          <font>
-            <Font name="Arial Nova Bold" size="22.0" />
+            <Font name="Segoe UI Bold" size="22.0" />
          </font>
          <effect>
             <DropShadow>
@@ -82,19 +71,19 @@
             </TableView>
          </children>
       </AnchorPane>
-      <Button fx:id="btnCancel" layoutX="367.0" layoutY="305.0" mnemonicParsing="false" onAction="#backOrder" prefHeight="45.0" prefWidth="221.0" style="-fx-background-color: ffb265;" text="Cancel" textFill="#7a7a7a" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="btnCancel" focusTraversable="false" layoutX="367.0" layoutY="305.0" mnemonicParsing="false" onAction="#backOrder" prefHeight="45.0" prefWidth="221.0" style="-fx-background-color: ffb265;" text="Cancel" textFill="#7a7a7a" textOverrun="CENTER_ELLIPSIS">
          <font>
-            <Font name="Segoe UI Bold Italic" size="15.0" />
+            <Font name="Segoe UI Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="367.0" layoutY="246.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="221.0" style="-fx-background-color: ff8800;" text="Confirm Payment" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+      <Button focusTraversable="false" layoutX="367.0" layoutY="246.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="221.0" style="-fx-background-color: ff8800;" text="Confirm Payment" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
          <font>
-            <Font name="Segoe UI Bold Italic" size="15.0" />
+            <Font name="Segoe UI Bold" size="15.0" />
          </font>
       </Button>
       <Label alignment="CENTER" contentDisplay="TOP" layoutX="354.0" layoutY="58.0" prefHeight="27.0" prefWidth="152.0" text="Order Summary" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Segoe UI Bold" size="18.0" />
          </font>
       </Label>
    </children>

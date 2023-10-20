@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusMenuController">
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusMenuController">
    <children>
       <TabPane layoutX="11.0" layoutY="74.0" prefHeight="444.0" prefWidth="467.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -57,15 +50,15 @@
                   <Font name="Segoe UI Bold" size="18.0" />
                </font>
             </Label>
-            <Button layoutX="14.0" layoutY="349.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="37.0" prefWidth="315.0" text="Place Order" textFill="WHITE">
+            <Button focusTraversable="false" layoutX="14.0" layoutY="349.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="37.0" prefWidth="315.0" text="Place Order" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font></Button>
-            <Button layoutX="14.0" layoutY="399.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #FFE8CC;" text="Receipt" textFill="#ff8a00">
+            <Button focusTraversable="false" layoutX="14.0" layoutY="399.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #FFE8CC;" text="Receipt" textFill="#ff8a00">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font></Button>
-            <Button layoutX="178.0" layoutY="399.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE">
+            <Button focusTraversable="false" layoutX="178.0" layoutY="399.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
@@ -77,7 +70,7 @@
             <Font name="Segoe UI Bold" size="18.0" />
          </font>
       </Label>
-      <Button alignment="BASELINE_CENTER" contentDisplay="RIGHT" layoutX="733.0" layoutY="18.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Review">
+      <Button alignment="BASELINE_CENTER" contentDisplay="RIGHT" focusTraversable="false" layoutX="733.0" layoutY="18.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Review">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -89,7 +82,7 @@
             <Font name="Segoe UI Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnBack" layoutY="8.0" mnemonicParsing="false" onAction="#backHome" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+      <Button fx:id="btnBack" focusTraversable="false" layoutY="8.0" mnemonicParsing="false" onAction="#backHome" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>

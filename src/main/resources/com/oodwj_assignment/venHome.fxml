@@ -32,7 +32,7 @@
          </font>
       </Label>
       <ComboBox layoutX="25.0" layoutY="52.0" prefHeight="26.0" prefWidth="170.0" promptText="Filter by Status" styleClass="background-color-2" />
-      <Button layoutX="401.0" layoutY="52.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="98.0" text="Apply" textFill="WHITE">
+      <Button focusTraversable="false" layoutX="401.0" layoutY="52.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="98.0" text="Apply" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -49,12 +49,12 @@
                                   <Font name="Segoe UI Bold" size="12.0" />
                               </font>
                           </Label>
-                          <Button layoutX="583.0" layoutY="20.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Accept" textFill="WHITE">
+                          <Button focusTraversable="false" layoutX="583.0" layoutY="20.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Accept" textFill="WHITE">
                               <font>
                                   <Font name="System Bold" size="12.0" />
                               </font>
                           </Button>
-                          <Button layoutX="583.0" layoutY="68.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" style="-fx-background-color: #c8c8c8;" text="Reject" textFill="WHITE">
+                          <Button focusTraversable="false" layoutX="583.0" layoutY="68.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" style="-fx-background-color: #c8c8c8;" text="Reject" textFill="WHITE">
                               <font>
                                   <Font name="System Bold" size="12.0" />
                               </font>
@@ -78,12 +78,12 @@
                               <Font name="Segoe UI Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Button layoutX="583.0" layoutY="20.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Update" textFill="WHITE">
+                        <Button focusTraversable="false" layoutX="583.0" layoutY="20.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Update" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button layoutX="583.0" layoutY="68.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE">
+                        <Button focusTraversable="false" layoutX="583.0" layoutY="68.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -94,7 +94,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button layoutX="777.0" layoutY="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0">
+      <Button focusTraversable="false" layoutX="777.0" layoutY="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -104,7 +104,7 @@
          </graphic>
       </Button>
       <ComboBox layoutX="209.0" layoutY="52.0" prefHeight="26.0" prefWidth="170.0" promptText="Filter by Date" styleClass="background-color-2" />
-      <Button layoutX="515.0" layoutY="52.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="98.0" text="Clear" textFill="WHITE">
+      <Button focusTraversable="false" layoutX="515.0" layoutY="52.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="98.0" text="Clear" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

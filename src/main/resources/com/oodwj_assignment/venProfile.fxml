@@ -2,92 +2,197 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.venProfileController">
    <children>
-      <Pane layoutX="282.0" layoutY="48.0" prefHeight="434.0" prefWidth="513.0" styleClass="background-color-2">
+      <StackPane layoutX="278.0" layoutY="27.0" prefHeight="475.0" prefWidth="530.0">
          <children>
-            <Label layoutX="29.0" layoutY="99.0" prefHeight="19.0" prefWidth="134.0" text="Restaurant Name">
-               <font>
-                  <Font name="Segoe UI Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="29.0" layoutY="207.0" prefHeight="19.0" prefWidth="134.0" text="Phone Number">
-               <font>
-                  <Font name="Segoe UI Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="29.0" layoutY="264.0" prefHeight="19.0" prefWidth="134.0" text="Email">
-               <font>
-                  <Font name="Segoe UI Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="29.0" layoutY="154.0" prefHeight="19.0" prefWidth="134.0" text="Description">
-               <font>
-                  <Font name="Segoe UI Bold" size="16.0" />
-               </font>
-            </Label>
-            <Button layoutX="297.0" layoutY="376.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="194.0" text="Update" textFill="WHITE">
-               <font>
-                  <Font name="Segoe UI Bold" size="16.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="27.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/edit.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-            </Button>
-            <Label layoutX="196.0" layoutY="99.0" prefHeight="19.0" prefWidth="278.0" text="Ahma Restaurant">
-               <font>
-                  <Font name="Segoe UI" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="195.0" layoutY="154.0" prefHeight="19.0" prefWidth="278.0" text="This is a restaurant that sells zhafan">
-               <font>
-                  <Font name="Segoe UI" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="195.0" layoutY="207.0" prefHeight="19.0" prefWidth="123.0" text="0123456789">
-               <font>
-                  <Font name="Segoe UI" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="195.0" layoutY="264.0" prefHeight="19.0" prefWidth="123.0" text="jj@gmail.com">
-               <font>
-                  <Font name="Segoe UI" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="29.0" layoutY="22.0" prefHeight="23.0" prefWidth="211.0" text="Restaurant Information">
-               <font>
-                  <Font name="Segoe UI Bold" size="18.0" />
-               </font>
-            </Label>
+            <Pane prefHeight="475.0" prefWidth="530.0" styleClass="background-color-2">
+               <children>
+                  <Label layoutX="27.0" layoutY="88.0" prefHeight="19.0" prefWidth="134.0" text="Username">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="27.0" layoutY="183.0" prefHeight="19.0" prefWidth="134.0" text="Password">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button alignment="CENTER" focusTraversable="false" layoutX="294.0" layoutY="421.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="194.0" text="Save Changes" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </Button>
+                  <Label layoutX="30.0" layoutY="28.0" prefHeight="23.0" prefWidth="211.0" text="Login &amp; Password">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button alignment="CENTER" focusTraversable="false" layoutX="38.0" layoutY="421.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="194.0" text="Discard Changes" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </Button>
+                  <TextField layoutX="27.0" layoutY="113.0" prefHeight="30.0" prefWidth="217.0" text="Ven001">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField layoutX="27.0" layoutY="208.0" prefHeight="30.0" prefWidth="217.0" text="vendor123">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="27.0" layoutY="284.0" prefHeight="19.0" prefWidth="134.0" text="Confirm Password">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="27.0" layoutY="309.0" prefHeight="30.0" prefWidth="217.0" text="vendor123">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
+            <Pane prefHeight="475.0" prefWidth="530.0" styleClass="background-color-2">
+               <children>
+                  <Label layoutX="30.0" layoutY="73.0" prefHeight="19.0" prefWidth="134.0" text="Restaurant Name">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="238.0" prefHeight="19.0" prefWidth="134.0" text="Phone Number">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="283.0" layoutY="238.0" prefHeight="19.0" prefWidth="134.0" text="Email">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="29.0" layoutY="154.0" prefHeight="19.0" prefWidth="134.0" text="Description">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button alignment="CENTER" focusTraversable="false" layoutX="294.0" layoutY="421.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="194.0" text="Save Changes" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </Button>
+                  <Label layoutX="30.0" layoutY="28.0" prefHeight="23.0" prefWidth="211.0" text="Restaurant Information">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button alignment="CENTER" focusTraversable="false" layoutX="38.0" layoutY="421.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="194.0" text="Discard Changes" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </Button>
+                  <TextField layoutX="30.0" layoutY="100.0" prefHeight="30.0" prefWidth="217.0" text="Campus Café Collective">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField layoutX="29.0" layoutY="179.0" prefHeight="30.0" prefWidth="473.0" text="We are the ultimate dining destination at your academic home.">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField layoutX="30.0" layoutY="263.0" prefHeight="30.0" prefWidth="217.0" text="010-9876543">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField layoutX="283.0" layoutY="263.0" prefHeight="30.0" prefWidth="217.0" text="contact@campuscafe.edu">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="283.0" layoutY="73.0" prefHeight="19.0" prefWidth="134.0" text="Category">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox layoutX="283.0" layoutY="100.0" prefHeight="30.0" prefWidth="217.0" />
+                  <Label layoutX="29.0" layoutY="322.0" prefHeight="19.0" prefWidth="134.0" text="Operating Hours">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField alignment="CENTER" layoutX="44.0" layoutY="349.0" prefHeight="30.0" prefWidth="59.0" promptText="start" text="08:00">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField alignment="CENTER" layoutX="164.0" layoutY="349.0" prefHeight="30.0" prefWidth="59.0" promptText="start" text="16:00">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label alignment="CENTER" layoutX="44.0" layoutY="381.0" prefHeight="15.0" prefWidth="59.0" text="Start Time">
+                     <font>
+                        <Font name="Segoe UI Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="164.0" layoutY="381.0" prefHeight="15.0" prefWidth="59.0" text="End Time">
+                     <font>
+                        <Font name="Segoe UI Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <ComboBox layoutX="283.0" layoutY="349.0" prefHeight="30.0" prefWidth="217.0" />
+                  <Label layoutX="283.0" layoutY="322.0" prefHeight="19.0" prefWidth="134.0" text="Profile">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
-      </Pane>
-      <Pane layoutX="40.0" layoutY="48.0" prefHeight="434.0" prefWidth="221.0" styleClass="background-color-2">
+      </StackPane>
+      <Pane layoutX="32.0" layoutY="27.0" prefHeight="475.0" prefWidth="230.0" styleClass="background-color-2">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="36.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="36.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/Lion.jpg" />
                </image>
             </ImageView>
-            <Button layoutX="24.0" layoutY="217.0" mnemonicParsing="false" text="Restaurant Information" textFill="WHITE">
+            <Button alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="298.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="174.0" text="Login &amp; Password" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="24.0" layoutY="265.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="174.0" text="Login &amp; Password" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="20.0" layoutY="186.0" prefHeight="19.0" prefWidth="181.0" text="Campus Café Collective" textAlignment="CENTER">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="249.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="174.0" text="Restaurant Information" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
