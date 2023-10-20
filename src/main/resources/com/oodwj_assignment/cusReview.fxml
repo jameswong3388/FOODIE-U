@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusReviewController">
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusReviewController">
    <children>
       <Pane layoutX="282.0" layoutY="27.0" prefHeight="476.0" prefWidth="524.0" styleClass="background-color-2">
          <children>
-            <Button layoutX="34.0" layoutY="429.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="111.0" styleClass="rounded-shape" text="Submit" textFill="WHITE">
+            <Button focusTraversable="false" layoutX="34.0" layoutY="429.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="111.0" styleClass="rounded-shape" text="Submit" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
@@ -29,7 +23,7 @@
                   <Insets left="5.0" />
                </padding>
             </ComboBox>
-            <Button layoutX="184.0" layoutY="429.0" mnemonicParsing="false" onAction="#clearComment" prefHeight="33.0" prefWidth="111.0" styleClass="rounded-shape" text="Clear" textFill="WHITE">
+            <Button focusTraversable="false" layoutX="184.0" layoutY="429.0" mnemonicParsing="false" onAction="#clearComment" prefHeight="33.0" prefWidth="111.0" styleClass="rounded-shape" text="Clear" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="15.0" />
                </font>

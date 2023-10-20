@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.venMainController">
+<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.runMainController">
    <left>
       <VBox prefHeight="530.0" prefWidth="160.0" styleClass="background-color-2" stylesheets="@../../styles/styles.css" BorderPane.alignment="CENTER">
          <children>
@@ -32,14 +32,14 @@
                   <Insets left="10.0" />
                </padding>
             </Button>
-            <Button fx:id="menu" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#btnMenuClicked" prefHeight="45.0" prefWidth="186.0" styleClass="menu-button" text="Menu">
+            <Button fx:id="task" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#btnTaskClicked" prefHeight="45.0" prefWidth="186.0" styleClass="menu-button" text="Task">
                <font>
                   <Font name="Trebuchet MS" size="14.0" />
                </font>
                <graphic>
-                  <ImageView fx:id="menuIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="taskIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/menu-grey.png" />
+                        <Image url="@../../images/task-grey.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -70,7 +70,8 @@
                   <ImageView fx:id="reviewIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/review-grey.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                </graphic>
                <padding>
                   <Insets left="10.0" />
@@ -84,7 +85,8 @@
                   <ImageView fx:id="profileIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/profile-grey.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                </graphic>
                <padding>
                   <Insets left="10.0" />
@@ -99,7 +101,8 @@
                   <ImageView fx:id="logoutIcon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/logout-grey.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                </graphic>
                <padding>
                   <Insets left="10.0" />
@@ -145,7 +148,7 @@
                </graphic>
             </Button>
             <Pane prefHeight="70.0" prefWidth="22.0" />
-            <Label alignment="BASELINE_LEFT" prefHeight="16.0" prefWidth="150.0" styleClass="primary-text-color" text="Foong Yi Hen">
+            <Label alignment="BASELINE_LEFT" prefHeight="16.0" prefWidth="150.0" styleClass="primary-text-color" text="James Wong">
                <font>
                   <Font name="Trebuchet MS" size="14.0" />
                </font>

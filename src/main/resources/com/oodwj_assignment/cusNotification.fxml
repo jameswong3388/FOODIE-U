@@ -22,7 +22,7 @@
    <children>
       <Pane layoutX="13.0" layoutY="14.0" prefHeight="487.0" prefWidth="814.0" styleClass="background-color-2">
          <children>
-            <Text fill="#ffa100" layoutX="25.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notifications">
+            <Text fill="#ff8a00" layoutX="25.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notifications">
                <font>
                   <Font name="System Bold Italic" size="29.0" />
                </font>

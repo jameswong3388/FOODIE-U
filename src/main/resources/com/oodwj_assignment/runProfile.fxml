@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusProfileController">
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.runProfileController">
    <children>
       <StackPane layoutX="278.0" layoutY="27.0" prefHeight="475.0" prefWidth="530.0">
          <children>
@@ -112,7 +112,7 @@
                         <Insets right="5.0" />
                      </padding>
                   </Button>
-                  <TextField layoutX="30.0" layoutY="100.0" prefHeight="30.0" prefWidth="217.0" text="Jeremy Lau">
+                  <TextField layoutX="30.0" layoutY="100.0" prefHeight="30.0" prefWidth="217.0" text="James Wong">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -122,7 +122,7 @@
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="283.0" layoutY="182.0" prefHeight="30.0" prefWidth="217.0" text="jeremy@gmail.com">
+                  <TextField layoutX="283.0" layoutY="182.0" prefHeight="30.0" prefWidth="217.0" text="jameswong@gmail.com">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -150,13 +150,13 @@
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <DatePicker layoutX="27.0" layoutY="272.0" prefHeight="30.0" prefWidth="217.0" />
-                  <ComboBox layoutX="283.0" layoutY="272.0" prefHeight="30.0" prefWidth="217.0" />
                   <Label layoutX="283.0" layoutY="244.0" prefHeight="19.0" prefWidth="134.0" text="Profile">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
+                  <DatePicker layoutX="27.0" layoutY="272.0" prefHeight="30.0" prefWidth="217.0" />
+                  <ComboBox layoutX="282.0" layoutY="272.0" prefHeight="30.0" prefWidth="217.0" />
                </children>
             </Pane>
          </children>
@@ -173,7 +173,7 @@
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Button>
-            <Label alignment="CENTER" layoutX="20.0" layoutY="186.0" prefHeight="19.0" prefWidth="181.0" text="Jeremy Lau" textAlignment="CENTER">
+            <Label alignment="CENTER" layoutX="20.0" layoutY="186.0" prefHeight="19.0" prefWidth="181.0" text="James Wong" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
