@@ -63,7 +63,7 @@ public class Auth {
         boolean hasSession = false;
 
         for (Sessions session : sessions.getData()) {
-            Response<Void> matchRes = match(Map.of("userId", user.getUserId()), session);
+            Response<Void> matchRes = match(Map.of("userId", user.getId()), session);
 
             if (matchRes.isSuccess()) {
                 hasSession = true;
@@ -81,7 +81,7 @@ public class Auth {
         }
 
         if (!hasSession) {
-            Sessions newSession = new Sessions(UUID.randomUUID(), user.getUserId(), LocalDateTime.now(), null, 0, null, null, null, null, false, null, null, true, newSessionToken);
+            Sessions newSession = new Sessions(UUID.randomUUID(), user.getId(), LocalDateTime.now(), null, 0, null, null, null, null, false, null, null, true, newSessionToken);
             newSession.setIpAddress(hostAddress);
             sessions.getData().add(newSession);
         }

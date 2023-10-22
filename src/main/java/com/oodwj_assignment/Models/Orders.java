@@ -1,34 +1,27 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Orders {
-    private UUID orderId;
+public class Orders extends Model {
     private  UUID userId;
     private  Double totalPrice;
     private  Integer totalQuantity;
     private  oderStatus status;
     private  orderType type;
-    private  LocalDateTime updatedAt;
-    private  LocalDateTime createdAt;
 
     public Orders(UUID orderId, UUID userId, Double totalPrice, Integer totalQuantity, oderStatus status, orderType type, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.orderId = orderId;
+        super(orderId, updatedAt, createdAt);
         this.userId = userId;
         this.totalPrice = totalPrice;
         this.totalQuantity = totalQuantity;
         this.status = status;
         this.type = type;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
     }
 
-    public UUID getOrderId() {
-        return orderId;
-    }
 
     public UUID getUserId() {
         return userId;
@@ -50,17 +43,9 @@ public class Orders {
         return type;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         return switch (attributeName) {
-            case "orderId" -> Response.success("Order ID found", getOrderId());
+            case "orderId" -> Response.success("Order ID found", getId());
             case "userId" -> Response.success("User ID found", getUserId());
             case "totalPrice" -> Response.success("Total price found", getTotalPrice());
             case "totalQuantity" -> Response.success("Total quantity found", getTotalQuantity());
@@ -70,10 +55,6 @@ public class Orders {
             case "createdAt" -> Response.success("Created at found", getCreatedAt());
             default -> Response.failure("Attribute not found");
         };
-    }
-
-    public void setOrderId(UUID orderId) {
-        this.orderId = orderId;
     }
 
     public void setUserId(UUID userId) {
@@ -96,19 +77,11 @@ public class Orders {
         this.type = type;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         return switch (attributeName) {
             case "orderId" -> {
                 if (newValue instanceof UUID) {
-                    setOrderId((UUID) newValue);
+                    setId((UUID) newValue);
                     yield Response.success("Order ID updated successfully");
                 } else {
                     yield Response.failure("Order ID must be a UUID");
@@ -192,6 +165,6 @@ public class Orders {
 
     @Override
     public String toString() {
-        return orderId + ";" + userId + ";" + totalPrice + ";" + totalQuantity + ";" + updatedAt + ";" + createdAt;
+        return getId() + ";" + userId + ";" + totalPrice + ";" + totalQuantity + ";" + status + ";" + type + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

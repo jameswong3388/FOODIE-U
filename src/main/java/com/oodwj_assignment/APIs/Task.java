@@ -14,7 +14,7 @@ public class Task {
 
     public static Response<UUID> create(Tasks task) {
         UUID taskId = UUID.randomUUID();
-        task.setTaskId(taskId);
+        task.setId(taskId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(task);

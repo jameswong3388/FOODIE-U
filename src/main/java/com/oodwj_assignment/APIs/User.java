@@ -17,7 +17,7 @@ public class User {
         }
 
         UUID userId = UUID.randomUUID();
-        user.setUserId(userId);
+        user.setId(userId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(user);

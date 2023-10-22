@@ -1,34 +1,27 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Foods {
-    private UUID foodId;
+public class Foods extends Model {
     private UUID storeId;
     private String foodName;
     private Foods.foodType foodType;
     private String foodDescription;
     private Double foodPrice;
-    private LocalDateTime updatedAt;
-    private LocalDateTime createdAt;
 
     public Foods(UUID foodId, UUID storeId, String foodName, Foods.foodType foodType, String foodDescription, Double foodPrice, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.foodId = foodId;
+        super(foodId, updatedAt, createdAt);
         this.storeId = storeId;
         this.foodName = foodName;
         this.foodType = foodType;
         this.foodDescription = foodDescription;
         this.foodPrice = foodPrice;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
     }
 
-    public UUID getFoodId() {
-        return foodId;
-    }
 
     public UUID getStoreId() {
         return storeId;
@@ -50,18 +43,10 @@ public class Foods {
         return foodPrice;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         switch (attributeName) {
             case "foodId" -> {
-                return Response.success("Food ID retrieved successfully", getFoodId());
+                return Response.success("Food ID retrieved successfully", getId());
             }
             case "storeId" -> {
                 return Response.success("Store ID retrieved successfully", getStoreId());
@@ -90,12 +75,8 @@ public class Foods {
         }
     }
 
-    public void setFoodId(UUID foodId) {
-        this.foodId = foodId;
-    }
-
     public void setStoreId(UUID storeId) {
-        this.foodId = storeId;
+        this.storeId = storeId;
     }
 
     public void setFoodName(String foodName) {
@@ -114,19 +95,11 @@ public class Foods {
         this.foodPrice = foodPrice;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         switch (attributeName) {
             case "foodId" -> {
                 if (newValue instanceof UUID) {
-                    setFoodId((UUID) newValue);
+                    setId((UUID) newValue);
                     return Response.success("Food ID updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
@@ -203,6 +176,6 @@ public class Foods {
 
     @Override
     public String toString() {
-        return foodId + ";" + storeId + ";" + foodName + ";" + foodType + ";" + foodDescription + ";" + foodPrice + ";" + updatedAt + ";" + createdAt;
+        return getId() + ";" + storeId + ";" + foodName + ";" + foodType + ";" + foodDescription + ";" + foodPrice + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

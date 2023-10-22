@@ -1,31 +1,23 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Reviews {
-    private UUID reviewId;
+public class Reviews extends Model {
     private UUID orderId;
     private UUID userId;
     private String reviewContent;
     private reviewRating reviewRating;
-    private LocalDateTime updatedAt;
-    private LocalDateTime createdAt;
 
     public Reviews(UUID reviewId, UUID orderId, UUID userId, String reviewContent, reviewRating reviewRating, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.reviewId = reviewId;
+        super(reviewId, updatedAt, createdAt);
         this.orderId = orderId;
         this.userId = userId;
         this.reviewContent = reviewContent;
         this.reviewRating = reviewRating;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
-    }
-
-    public UUID getReviewId() {
-        return reviewId;
     }
 
     public UUID getOrderId() {
@@ -44,17 +36,9 @@ public class Reviews {
         return reviewRating;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attribute) {
         return switch (attribute) {
-            case "reviewId" -> Response.success("Review ID retrieved successfully", getReviewId());
+            case "reviewId" -> Response.success("Review ID retrieved successfully", getId());
             case "orderId" -> Response.success("Order ID retrieved successfully", getOrderId());
             case "userId" -> Response.success("User ID retrieved successfully", getUserId());
             case "reviewContent" -> Response.success("Review content retrieved successfully", getReviewContent());
@@ -63,10 +47,6 @@ public class Reviews {
             case "createdAt" -> Response.success("Created at retrieved successfully", getCreatedAt());
             default -> Response.failure("Invalid attribute name");
         };
-    }
-
-    public void setReviewId(UUID reviewId) {
-        this.reviewId = reviewId;
     }
 
     public void setOrderId(UUID orderId) {
@@ -85,19 +65,11 @@ public class Reviews {
         this.reviewRating = reviewRating;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Response<Void> setAttributeValue(String attribute, Object newValue) {
         return switch (attribute) {
             case "reviewId" -> {
                 if (newValue instanceof UUID) {
-                    setReviewId((UUID) newValue);
+                    setId((UUID) newValue);
                     yield Response.success("Review ID set successfully");
                 } else {
                     yield Response.failure("Invalid newValue type");
@@ -166,6 +138,6 @@ public class Reviews {
 
     @Override
     public String toString() {
-        return reviewId + ";" + orderId + ";" + userId + ";" + reviewContent + ";" + reviewRating + ";" + updatedAt + ";" + createdAt;
+        return getId() + ";" + orderId + ";" + userId + ";" + reviewContent + ";" + reviewRating + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

@@ -13,7 +13,7 @@ public class Attachment {
 
     public static Response<UUID> create(Attachments attachment) {
         UUID attachmentId = UUID.randomUUID();
-        attachment.setAttachmentId(attachmentId);
+        attachment.setId(attachmentId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(attachment);

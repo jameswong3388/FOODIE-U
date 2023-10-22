@@ -1,34 +1,25 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Transactions {
-    public UUID transactionId;
+public class Transactions extends Model {
     public Double amount;
     public transactionType type;
     public transactionStatus status;
     public UUID payerId;
     public UUID payeeId;
-    public LocalDateTime updatedAt;
-    public LocalDateTime createdAt;
-
 
     public Transactions(UUID transactionId, Double amount, transactionType type, transactionStatus status, UUID payerId, UUID payeeId, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.transactionId = transactionId;
+        super(transactionId, updatedAt, createdAt);
         this.amount = amount;
         this.type = type;
         this.status = status;
         this.payerId = payerId;
         this.payeeId = payeeId;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
-    }
-
-    public UUID getTransactionId() {
-        return transactionId;
     }
 
     public Double getAmount() {
@@ -51,30 +42,18 @@ public class Transactions {
         return payeeId;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         return switch (attributeName) {
-            case "transactionId" -> Response.success("TransactionId found", transactionId);
-            case "amount" -> Response.success("Amount found", amount);
-            case "type" -> Response.success("Type found", type);
-            case "status" -> Response.success("Status found", status);
-            case "payerId" -> Response.success("PayerId found", payerId);
-            case "payeeId" -> Response.success("PayeeId found", payeeId);
-            case "updatedAt" -> Response.success("UpdatedAt found", updatedAt);
-            case "createdAt" -> Response.success("CreatedAt found", createdAt);
+            case "transactionId" -> Response.success("TransactionId found", getId());
+            case "amount" -> Response.success("Amount found", getAmount());
+            case "type" -> Response.success("Type found", getType());
+            case "status" -> Response.success("Status found", getStatus());
+            case "payerId" -> Response.success("PayerId found", getPayerId());
+            case "payeeId" -> Response.success("PayeeId found", getPayeeId());
+            case "updatedAt" -> Response.success("UpdatedAt found", getUpdatedAt());
+            case "createdAt" -> Response.success("CreatedAt found", getCreatedAt());
             default -> Response.failure("Invalid attribute name");
         };
-    }
-
-    public void setTransactionId(UUID transactionId) {
-        this.transactionId = transactionId;
     }
 
     public void setAmount(Double amount) {
@@ -97,19 +76,11 @@ public class Transactions {
         this.payeeId = payeeId;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         switch (attributeName) {
             case "transactionId" -> {
                 if (newValue instanceof UUID) {
-                    setTransactionId((UUID) newValue);
+                    setId((UUID) newValue);
                     return Response.success("TransactionId updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
@@ -187,6 +158,6 @@ public class Transactions {
 
     @Override
     public String toString() {
-        return transactionId + ";" + amount + ";" + type + ";" + status + ";" + payerId + ";" + payeeId + ";" + updatedAt + ";" + createdAt;
+        return getId() + ";" + amount + ";" + type + ";" + status + ";" + payerId + ";" + payeeId + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }
