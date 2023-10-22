@@ -13,7 +13,7 @@ public class Reciept {
 
     public static Response<UUID> create(Receipts receipt) {
         UUID receiptId = UUID.randomUUID();
-        receipt.setReceiptId(receiptId);
+        receipt.setId(receiptId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(receipt);

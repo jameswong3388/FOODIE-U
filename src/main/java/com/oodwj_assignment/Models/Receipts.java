@@ -1,27 +1,19 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Receipts {
-    private UUID receiptId;
+public class Receipts extends Model {
     private final UUID userId;
     private final Double credit;
-    private final LocalDateTime updatedAt;
-    private final LocalDateTime createdAt;
 
     public Receipts(UUID receiptId, UUID userId, Double credit, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.receiptId = receiptId;
+        super(receiptId, updatedAt, createdAt);
         this.userId = userId;
         this.credit = credit;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
-    }
-
-    public UUID getReceiptId() {
-        return receiptId;
     }
 
     public UUID getUserId() {
@@ -32,18 +24,10 @@ public class Receipts {
         return credit;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         switch (attributeName) {
             case "receiptId" -> {
-                return Response.success("Receipt ID", getReceiptId());
+                return Response.success("Receipt ID", getId());
             }
             case "userId" -> {
                 return Response.success("User ID", getUserId());
@@ -63,14 +47,8 @@ public class Receipts {
         }
     }
 
-    public void setReceiptId(UUID receiptId) {
-        this.receiptId = receiptId;
-    }
-
     @Override
     public String toString() {
-        return receiptId + " " + userId + " " + credit + " " + updatedAt + " " + createdAt;
+        return getId() + ";" + userId + ";" + credit + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
-
-
 }

@@ -1,38 +1,27 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 
-public class Users {
-    private UUID userId;
+public class Users extends Model {
     private String username;
     private String password;
     private String email;
     private Integer age;
     private Role role;
-    private LocalDateTime updatedAt;
-    private LocalDateTime createdAt;
 
-    public Users(UUID userId, String username, String password, String email, int age, Role role, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.userId = userId;
+    public Users(UUID userId, String username, String password, String email, Integer age, Role role, LocalDateTime updatedAt, LocalDateTime createdAt) {
+        super(userId, updatedAt, createdAt);
         this.username = username;
         this.password = password;
         this.email = email;
         this.age = age;
         this.role = role;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
-
-    // Getters and setters for API.User attributes would go here...
-
-    public UUID getUserId() {
-        return userId;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -53,18 +42,10 @@ public class Users {
         return role;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         switch (attributeName) {
             case "userId" -> {
-                return Response.success("User ID", getUserId());
+                return Response.success("User ID", getId());
             }
             case "username" -> {
                 return Response.success("Username", getUsername());
@@ -81,14 +62,16 @@ public class Users {
             case "role" -> {
                 return Response.success("Role", getRole());
             }
+            case "updatedAt" -> {
+                return Response.success("Updated at", getUpdatedAt());
+            }
+            case "createdAt" -> {
+                return Response.success("Created at", getCreatedAt());
+            }
             default -> {
                 return Response.failure("Invalid attribute name");
             }
         }
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
     }
 
     public void setUsername(String username) {
@@ -111,19 +94,11 @@ public class Users {
         this.role = role;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         switch (attributeName) {
             case "userId" -> {
                 if (newValue instanceof UUID) {
-                    setUserId((UUID) newValue);
+                    setId((UUID) newValue);
                     return Response.success("User ID updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
@@ -201,6 +176,6 @@ public class Users {
 
     @Override
     public String toString() {
-        return userId + ";" + username + ";" + password + ";" + email + ";" + age + ";" + role.name() + ";" + updatedAt + ";" + createdAt;
+        return getId() + ";" + username + ";" + password + ";" + email + ";" + age + ";" + role.name() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

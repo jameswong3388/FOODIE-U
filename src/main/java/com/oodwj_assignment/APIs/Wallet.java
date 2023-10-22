@@ -13,7 +13,7 @@ public class Wallet {
 
     public static Response<UUID> create(Wallets wallet) {
         UUID walletId = UUID.randomUUID();
-        wallet.setWalletId(walletId);
+        wallet.setId(walletId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(wallet);

@@ -13,7 +13,7 @@ public class Store {
 
     public static Response<UUID> create(Stores store) {
         UUID storeId = UUID.randomUUID();
-        store.setStoreId(storeId);
+        store.setId(storeId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(store);

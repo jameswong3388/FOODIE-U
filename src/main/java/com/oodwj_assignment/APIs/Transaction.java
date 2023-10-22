@@ -14,7 +14,7 @@ public class Transaction {
 
     public static Response<UUID> create(Transactions transaction) {
         UUID transactionId = UUID.randomUUID();
-        transaction.setTransactionId(transactionId);
+        transaction.setId(transactionId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(transaction);

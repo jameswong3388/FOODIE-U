@@ -1,30 +1,25 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Notifications {
-    private UUID notificationId;
+public class Notifications extends Model {
     private final String message;
     private notificationStatus status;
     private final notificationType type;
     public final UUID userid;
-    public final LocalDateTime createdAt;
 
-    public Notifications(UUID notificationId, String message, notificationStatus status, notificationType type, UUID userid, LocalDateTime createdAt) {
-        this.notificationId = notificationId;
+    public Notifications(UUID notificationId, String message, notificationStatus status, notificationType type, UUID userid, LocalDateTime updatedAt, LocalDateTime createdAt) {
+        super(notificationId, updatedAt, createdAt);
         this.message = message;
         this.status = status;
         this.type = type;
         this.userid = userid;
-        this.createdAt = createdAt;
     }
 
-    public UUID getNotificationId() {
-        return notificationId;
-    }
 
     public String getMessage() {
         return message;
@@ -42,14 +37,10 @@ public class Notifications {
         return userid;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         switch (attributeName) {
             case "notificationId" -> {
-                return Response.success("Notification ID", getNotificationId());
+                return Response.success("Notification ID", getId());
             }
             case "message" -> {
                 return Response.success("Message", getMessage());
@@ -63,6 +54,9 @@ public class Notifications {
             case "userid" -> {
                 return Response.success("Recipient ID", getUserid());
             }
+            case "updatedAt" -> {
+                return Response.success("Updated At", getUpdatedAt());
+            }
             case "createdAt" -> {
                 return Response.success("Created At", getCreatedAt());
             }
@@ -70,10 +64,6 @@ public class Notifications {
                 return Response.failure("Invalid attribute name");
             }
         }
-    }
-
-    public void setNotificationId(UUID notificationId) {
-        this.notificationId = notificationId;
     }
 
     public void setStatus(notificationStatus status) {
@@ -100,7 +90,7 @@ public class Notifications {
 
     @Override
     public String toString() {
-        return notificationId + ";" + message + ";" + status + ";" + type + ";" + userid + ";" + ";" + createdAt;
+        return getId() + ";" + message + ";" + status + ";" + type + ";" + userid + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }
 

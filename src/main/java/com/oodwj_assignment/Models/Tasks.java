@@ -1,31 +1,23 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Tasks {
-    private UUID taskId;
+public class Tasks extends Model {
     private UUID runnerId; // may be null
     private UUID orderId;
     private Double deliveryFee;
     private taskStatus status;
-    public LocalDateTime updatedAt;
-    public LocalDateTime createdAt;
 
     public Tasks(UUID taskId, UUID runnerId, UUID orderId, Double deliveryFee, taskStatus status, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.taskId = taskId;
+        super(taskId, updatedAt, createdAt);
         this.runnerId = runnerId;
         this.orderId = orderId;
         this.deliveryFee = deliveryFee;
         this.status = status;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
-    }
-
-    public UUID getTaskId() {
-        return taskId;
     }
 
     public UUID getRunnerId() {
@@ -44,17 +36,9 @@ public class Tasks {
         return status;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         return switch (attributeName) {
-            case "taskId" -> Response.success("Task ID read successfully", getTaskId());
+            case "taskId" -> Response.success("Task ID read successfully", getId());
             case "runnerId" -> Response.success("Runner ID read successfully", getRunnerId());
             case "orderId" -> Response.success("Order ID read successfully", getOrderId());
             case "deliveryFee" -> Response.success("Delivery Fee read successfully", getDeliveryFee());
@@ -63,10 +47,6 @@ public class Tasks {
             case "createdAt" -> Response.success("Created At read successfully", getCreatedAt());
             default -> Response.failure("No such attribute");
         };
-    }
-
-    public void setTaskId(UUID taskId) {
-        this.taskId = taskId;
     }
 
     public void setRunnerId(UUID runnerId) {
@@ -85,19 +65,11 @@ public class Tasks {
         this.status = status;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         switch (attributeName) {
             case "taskId":
                 if (newValue instanceof UUID) {
-                    setTaskId((UUID) newValue);
+                    setId((UUID) newValue);
                     return Response.success("Task ID updated successfully");
                 } else {
                     return Response.failure("Task ID must be a UUID");
@@ -161,7 +133,7 @@ public class Tasks {
 
     @Override
     public String toString() {
-        return taskId + ";" + runnerId + ";" + orderId + ";" + deliveryFee + ":" + status + ":" + updatedAt + ";" + createdAt;
+        return getId() + ";" + runnerId + ";" + orderId + ";" + deliveryFee + ";" + status + ";" + getUpdatedAt() + ":" + getCreatedAt();
     }
 
 }
