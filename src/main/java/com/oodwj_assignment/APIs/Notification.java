@@ -13,7 +13,7 @@ public class Notification {
 
     public static Response<UUID> send(Notifications notification) {
         UUID notificationId = UUID.randomUUID();
-        notification.setNotificationId(notificationId);
+        notification.setId(notificationId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(notification);
@@ -55,7 +55,7 @@ public class Notification {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
 
-                if (parts.length != 6) {
+                if (parts.length != 7) {
                     continue;
                 }
 
@@ -169,9 +169,10 @@ public class Notification {
             Notifications.notificationStatus status = Notifications.notificationStatus.valueOf(parts[2]);
             Notifications.notificationType type = Notifications.notificationType.valueOf(parts[3]);
             UUID userid = UUID.fromString(parts[4]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[5]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[5]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
 
-            return new Notifications(notificationId, message, status, type, userid, createdAt);
+            return new Notifications(notificationId, message, status, type, userid, updatedAt, createdAt);
         } catch (Exception e) {
             return null;
         }

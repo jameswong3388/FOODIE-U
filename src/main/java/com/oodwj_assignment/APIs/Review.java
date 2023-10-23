@@ -13,7 +13,7 @@ public class Review {
 
     public static Response<UUID> create(Reviews review) {
         UUID reviewId = UUID.randomUUID();
-        review.setReviewId(reviewId);
+        review.setId(reviewId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(review);

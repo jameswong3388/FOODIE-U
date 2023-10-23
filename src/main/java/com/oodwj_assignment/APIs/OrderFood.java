@@ -13,7 +13,7 @@ public class OrderFood {
 
     public static Response<UUID> create(OrderFoods orderFood) {
         UUID orderFoodId = UUID.randomUUID();
-        orderFood.setOderFoodId(orderFoodId);
+        orderFood.setId(orderFoodId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(orderFood);

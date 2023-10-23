@@ -1,27 +1,19 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Wallets {
-    public UUID walletId;
+public class Wallets extends Model {
     public UUID userId;
     public Double credit;
-    private LocalDateTime updatedAt;
-    private LocalDateTime createdAt;
 
     public Wallets(UUID walletId, UUID userId, Double credit, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.walletId = walletId;
+        super(walletId, updatedAt, createdAt);
         this.userId = userId;
         this.credit = credit;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
-    }
-
-    public UUID getWalletId() {
-        return walletId;
     }
 
     public UUID getUserId() {
@@ -32,18 +24,10 @@ public class Wallets {
         return credit;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         switch (attributeName) {
             case "walletId" -> {
-                return Response.success("Wallet ID", getWalletId());
+                return Response.success("Wallet ID", getId());
             }
             case "userId" -> {
                 return Response.success("Users ID", getUserId());
@@ -63,10 +47,6 @@ public class Wallets {
         }
     }
 
-    public void setWalletId(UUID walletId) {
-        this.walletId = walletId;
-    }
-
     public void setUserId(UUID userId) {
         this.userId = userId;
     }
@@ -75,18 +55,10 @@ public class Wallets {
         this.credit = credit;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         switch (attributeName) {
             case "walletId" -> {
-                setWalletId((UUID) newValue);
+                setId((UUID) newValue);
                 return Response.success("Wallet ID updated successfully");
             }
             case "userId" -> {
@@ -114,6 +86,6 @@ public class Wallets {
 
     @Override
     public String toString() {
-        return walletId + ";" + userId + ";" + credit + ";" + updatedAt + ";" + createdAt;
+        return getId() + ";" + userId + ";" + credit + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

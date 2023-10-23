@@ -1,29 +1,21 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Attachments {
-    private UUID attachmentId;
+public class Attachments extends Model {
     private final UUID NotificationId;
     private final UUID attachedId;
     private final attachmentType attachmentType;
-    private final LocalDateTime updatedAt;
-    private final LocalDateTime createdAt;
 
     public Attachments(UUID attachmentId, UUID NotificationId, UUID attachedId, attachmentType attachmentType, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.attachmentId = attachmentId;
+        super(attachmentId, updatedAt, createdAt);
         this.NotificationId = NotificationId;
         this.attachedId = attachedId;
         this.attachmentType = attachmentType;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
-    }
-
-    public UUID getAttachmentId() {
-        return attachmentId;
     }
 
     public UUID getNotificationId() {
@@ -38,28 +30,16 @@ public class Attachments {
         return attachmentType;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         return switch (attributeName) {
-            case "attachmentId" -> Response.success("Attachment ID found", attachmentId);
-            case "NotificationId" -> Response.success("Notification ID found", NotificationId);
-            case "attachedId" -> Response.success("Attached ID found", attachedId);
-            case "attachmentType" -> Response.success("Attachment type found", attachmentType);
-            case "updatedAt" -> Response.success("Updated at found", updatedAt);
-            case "createdAt" -> Response.success("Created at found", createdAt);
+            case "attachmentId" -> Response.success("Attachment ID found", getId());
+            case "NotificationId" -> Response.success("Notification ID found", getNotificationId());
+            case "attachedId" -> Response.success("Attached ID found", getAttachedId());
+            case "attachmentType" -> Response.success("Attachment type found", getAttachmentType());
+            case "updatedAt" -> Response.success("Updated at found", getUpdatedAt());
+            case "createdAt" -> Response.success("Created at found", getCreatedAt());
             default -> Response.failure("Invalid attribute name");
         };
-    }
-
-    public void setAttachmentId(UUID attachmentId) {
-        this.attachmentId = attachmentId;
     }
 
     public enum attachmentType {
@@ -69,6 +49,6 @@ public class Attachments {
 
     @Override
     public String toString() {
-        return attachmentId + ";" + NotificationId + ";" + attachedId + ";" + attachmentType + ";" + updatedAt + ";" + createdAt;
+        return getId() + ";" + NotificationId + ";" + attachedId + ";" + attachmentType + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

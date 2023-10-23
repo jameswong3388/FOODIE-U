@@ -1,27 +1,19 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Stores {
-    private UUID storeId;
+public class Stores extends Model {
     private String name;
     private UUID vendorId;
-    private LocalDateTime updatedAt;
-    private LocalDateTime createdAt;
 
     public Stores(UUID storeId, String name, UUID vendorId, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.storeId = storeId;
+        super(storeId, updatedAt, createdAt);
         this.name = name;
         this.vendorId = vendorId;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
-    }
-
-    public UUID getStoreId() {
-        return storeId;
     }
 
     public String getName() {
@@ -32,27 +24,15 @@ public class Stores {
         return vendorId;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         return switch (attributeName) {
-            case "storeId" -> Response.success("Store ID", getStoreId());
+            case "storeId" -> Response.success("Store ID", getId());
             case "name" -> Response.success("Name", getName());
             case "vendorId" -> Response.success("Vendor ID", getVendorId());
             case "updatedAt" -> Response.success("Updated At", getUpdatedAt());
             case "createdAt" -> Response.success("Created At", getCreatedAt());
             default -> Response.failure("Invalid attribute name");
         };
-    }
-
-    public void setStoreId(UUID storeId) {
-        this.storeId = storeId;
     }
 
     public void setName(String name) {
@@ -63,19 +43,11 @@ public class Stores {
         this.vendorId = vendorId;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         switch (attributeName) {
             case "storeId" -> {
                 if (newValue instanceof UUID) {
-                    setStoreId((UUID) newValue);
+                    setId((UUID) newValue);
                     return Response.success("Store ID updated successfully");
                 } else {
                     return Response.failure("Invalid value type");
@@ -121,6 +93,6 @@ public class Stores {
 
     @Override
     public String toString() {
-        return storeId + ";" + name + ";" + vendorId + ";" + updatedAt + ";" + createdAt;
+        return getId() + ";" + name + ";" + vendorId + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

@@ -1,33 +1,25 @@
 package com.oodwj_assignment.Models;
 
 import com.oodwj_assignment.APIs.Response;
+import com.oodwj_assignment.Helpers.Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class OrderFoods {
-    private UUID oderFoodId;
+public class OrderFoods extends Model {
     private UUID foodId;
     private UUID orderId;
     private String foodName;
     private Double foodPrice;
     private Integer foodQuantity;
-    private LocalDateTime updatedAt;
-    private LocalDateTime createdAt;
 
     public OrderFoods(UUID oderFoodId, UUID foodId, UUID orderId, String foodName, Double foodPrice, Integer foodQuantity, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.oderFoodId = oderFoodId;
+        super(oderFoodId, updatedAt, createdAt);
         this.foodId = foodId;
         this.orderId = orderId;
         this.foodName = foodName;
         this.foodPrice = foodPrice;
         this.foodQuantity = foodQuantity;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
-    }
-
-    public UUID getOderFoodId() {
-        return oderFoodId;
     }
 
     public UUID getFoodId() {
@@ -50,17 +42,9 @@ public class OrderFoods {
         return foodQuantity;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Response<Object> getAttributeValue(String attributeName) {
         return switch (attributeName) {
-            case "oderFoodId" -> Response.success("oderFoodId", getOderFoodId());
+            case "oderFoodId" -> Response.success("oderFoodId", getId());
             case "foodId" -> Response.success("foodId", getFoodId());
             case "orderId" -> Response.success("orderId", getOrderId());
             case "foodName" -> Response.success("foodName", getFoodName());
@@ -70,10 +54,6 @@ public class OrderFoods {
             case "createdAt" -> Response.success("createdAt", getCreatedAt());
             default -> Response.failure("Attribute not found");
         };
-    }
-
-    public void setOderFoodId(UUID oderFoodId) {
-        this.oderFoodId = oderFoodId;
     }
 
     public void setFoodId(UUID foodId) {
@@ -96,19 +76,11 @@ public class OrderFoods {
         this.foodQuantity = foodQuantity;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Response<Void> setAttributeValue(String attributeName, Object newValue) {
         return switch (attributeName) {
             case "oderFoodId" -> {
                 if (newValue instanceof UUID) {
-                    setOderFoodId((UUID) newValue);
+                    setId((UUID) newValue);
                     yield Response.success("oderFoodId updated successfully");
                 } else {
                     yield Response.failure("oderFoodId must be a UUID");
@@ -176,6 +148,6 @@ public class OrderFoods {
 
     @Override
     public String toString() {
-        return oderFoodId + ";" + foodId + ";" + orderId + ";" + foodName + ";" + foodPrice + ";" + foodQuantity + ";" + updatedAt + ";" + createdAt;
+        return getId() + ";" + foodId + ";" + orderId + ";" + foodName + ";" + foodPrice + ";" + foodQuantity + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

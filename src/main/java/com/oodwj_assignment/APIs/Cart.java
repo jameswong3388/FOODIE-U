@@ -13,7 +13,7 @@ public class Cart {
 
     public static Response<UUID> create(Carts cart) {
         UUID cartId = UUID.randomUUID();
-        cart.setCartId(cartId);
+        cart.setId(cartId);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
             writer.println(cart);
