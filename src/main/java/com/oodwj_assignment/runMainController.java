@@ -20,14 +20,14 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-public class venMainController {
+public class runMainController {
 
     @FXML
     private BorderPane borderpane;
     @FXML
     private ImageView homeIcon;
     @FXML
-    private ImageView menuIcon;
+    private ImageView taskIcon;
     @FXML
     private ImageView revenueIcon;
     @FXML
@@ -43,7 +43,7 @@ public class venMainController {
         // Load an image file and set it to the ImageView
         Image home = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/home-orange.png")));
         homeIcon.setImage(home);
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venHome.fxml")));
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("runHome.fxml")));
         borderpane.setCenter(view);
     }
 
@@ -51,8 +51,8 @@ public class venMainController {
         // Load an image file and set it to the ImageView
         Image home = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/home-grey.png")));
         homeIcon.setImage(home);
-        Image menu = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/menu-grey.png")));
-        menuIcon.setImage(menu);
+        Image task = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/task-grey.png")));
+        taskIcon.setImage(task);
         Image revenue = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/revenue-grey.png")));
         revenueIcon.setImage(revenue);
         Image review = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/review-grey.png")));
@@ -61,28 +61,28 @@ public class venMainController {
         profileIcon.setImage(profile);
         Image logout = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/logout-grey.png")));
         logoutIcon.setImage(logout);
-        Image notification = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/notification-grey.png")));
+        Image notification= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/notification-grey.png")));
         notificationIcon.setImage(notification);
     }
 
     public void btnHomeClicked(ActionEvent event) throws IOException {
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venHome.fxml")));
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("runHome.fxml")));
         borderpane.setCenter(view);
         defaultSettings();
         Image home = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/home-orange.png")));
         homeIcon.setImage(home);
     }
 
-    public void btnMenuClicked(ActionEvent event) throws IOException {
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venMenu.fxml")));
+    public void btnTaskClicked(ActionEvent event) throws IOException {
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("runTask.fxml")));
         borderpane.setCenter(view);
         defaultSettings();
-        Image product = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/menu-orange.png")));
-        menuIcon.setImage(product);
+        Image task= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/task-orange.png")));
+        taskIcon.setImage(task);
     }
 
     public void btnRevenueClicked(ActionEvent event) throws IOException {
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venRevenue.fxml")));
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("runRevenue.fxml")));
         borderpane.setCenter(view);
         defaultSettings();
         Image wallet = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/revenue-orange.png")));
@@ -90,7 +90,7 @@ public class venMainController {
     }
 
     public void btnReviewClicked(ActionEvent event) throws IOException {
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venReview.fxml")));
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("runReview.fxml")));
         borderpane.setCenter(view);
         defaultSettings();
         Image review = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/review-orange.png")));
@@ -98,7 +98,7 @@ public class venMainController {
     }
 
     public void btnProfileClicked(ActionEvent event) throws IOException {
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venProfile.fxml")));
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("runProfile.fxml")));
         borderpane.setCenter(view);
         defaultSettings();
         Image profile = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/profile-orange.png")));
@@ -135,10 +135,10 @@ public class venMainController {
         }
     }
     public void btnNotificationClicked(ActionEvent event) throws IOException {
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venNotification.fxml")));
-        borderpane.setCenter(view);
+        //AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("runNotification.fxml")));
+        //borderpane.setCenter(view);
         defaultSettings();
-        Image notification = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/notification-orange.png")));
+        Image notification= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/notification-orange.png")));
         notificationIcon.setImage(notification);
     }
 

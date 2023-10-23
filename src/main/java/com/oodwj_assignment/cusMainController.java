@@ -38,6 +38,8 @@ public class cusMainController {
     private ImageView logoutIcon;
     @FXML
     private ImageView notificationIcon;
+    @FXML
+    private ImageView cartIcon;
 
 
     public void initialize() throws IOException {
@@ -62,6 +64,10 @@ public class cusMainController {
         profileIcon.setImage(profile);
         Image logout = new Image(getClass().getResourceAsStream("/images/logout-grey.png"));
         logoutIcon.setImage(logout);
+        Image notification = new Image(getClass().getResourceAsStream("/images/notification-grey.png"));
+        notificationIcon.setImage(notification);
+        Image cart = new Image(getClass().getResourceAsStream("/images/cart-grey.png"));
+        cartIcon.setImage(cart);
     }
 
     public void btnHomeClicked(ActionEvent event) throws IOException {
@@ -136,5 +142,22 @@ public class cusMainController {
         AnchorPane view = FXMLLoader.load(getClass().getResource("cusNotification.fxml"));
         borderpane.setCenter(view);
         defaultSettings();
+        Image notification = new Image(getClass().getResourceAsStream("/images/notification-orange.png"));
+        notificationIcon.setImage(notification);
     }
+
+    public void btnCartClicked(ActionEvent event) throws IOException {
+        //AnchorPane view = FXMLLoader.load(getClass().getResource("cusNotification.fxml"));
+        //borderpane.setCenter(view);
+        defaultSettings();
+        Image cart = new Image(getClass().getResourceAsStream("/images/cart-orange.png"));
+        cartIcon.setImage(cart);
+    }
+
+    public void btnProfileCliked(ActionEvent event) throws IOException  {
+        AnchorPane view = FXMLLoader.load(getClass().getResource("cusProfile.fxml"));
+        borderpane.setCenter(view);
+        defaultSettings();
+    }
+
 }

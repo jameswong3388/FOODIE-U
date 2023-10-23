@@ -132,12 +132,21 @@
                </children>
             </Pane>
             <TextField prefHeight="30.0" prefWidth="197.0" promptText="Search for food &amp; restaurants" style="-fx-background-color: #ffffff;" />
-            <Pane prefHeight="70.0" prefWidth="346.0" />
-            <Button fx:id="notifcation" mnemonicParsing="false" onAction="#btnNotificationClicked" styleClass="menu-button">
+            <Pane prefHeight="70.0" prefWidth="280.0" />
+            <Button fx:id="cart" mnemonicParsing="false" onAction="#btnCartClicked" style="-fx-background-color: transparent;">
                <graphic>
-                  <ImageView fx:id="notificationIcon" accessibleRole="BUTTON" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="menu-button">
+                  <ImageView fx:id="cartIcon" accessibleRole="BUTTON" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/notification.png" />
+                        <Image url="@../../images/cart-grey.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="notifcation" mnemonicParsing="false" onAction="#btnNotificationClicked" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fx:id="notificationIcon" accessibleRole="BUTTON" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/notification-grey.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -148,10 +157,15 @@
                   <Font name="Trebuchet MS" size="14.0" />
                </font>
             </Label>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/sample-profile.png" />
-               </image></ImageView>
+            <Button mnemonicParsing="false" onAction="#btnProfileCliked" style="-fx-background-color: transparent;" styleClass="background-color-1">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="background-color-1">
+                     <image>
+                        <Image url="@../../images/sample-profile.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </HBox>
    </top>
