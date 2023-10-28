@@ -1,9 +1,11 @@
 package com.oodwj_assignment.dao.base;
 
 import com.oodwj_assignment.helpers.Response;
+import com.oodwj_assignment.models.Medias;
 import com.oodwj_assignment.models.Model;
 
 import java.io.*;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -183,5 +185,45 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
             return s;
         }
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+    }
+
+    /***
+     * Add media to a defined disk, and record the media in the database
+     * @param file uploaded file
+     * @param disk disk to store the file
+     * @return null
+     */
+    public Void addMedia(File file, String disk, UUID modelUUID) {
+        // get current working directory
+        String currentDirectory = System.getProperty("user.dir");
+        File dest = new File(currentDirectory + "/src/main/resources/" + disk);
+
+        // check if directory exists, if not create it
+        if (!dest.exists()) {
+            dest.mkdir();
+        }
+
+        // copy file to destination
+        try {
+            java.nio.file.Files.copy(
+                    file.toPath(),
+                    dest.toPath().resolve(file.getName()),
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // get T className
+        String className = this.getClass().getSimpleName();
+        System.out.println(className);
+
+        // create media object
+        Medias media = new Medias(UUID.randomUUID(), className, modelUUID, "asd", file.getName(), file.getName(), "pdf", disk, "asd", "asd", null, null);
+
+        // save media object to database
+        DaoFactory.getMediaDao().create(media);
+
+        return null;
     }
 }

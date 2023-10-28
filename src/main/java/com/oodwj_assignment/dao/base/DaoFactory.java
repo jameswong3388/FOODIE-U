@@ -5,12 +5,12 @@ import com.oodwj_assignment.dao.AttachmentDaoImpl;
 
 /**
  * Factory method for singleton implementation of DAOs
- *
  */
 public class DaoFactory {
     private static final AttachmentDao attachmentDao = new AttachmentDaoImpl();
     private static final CartDao cartDao = new CartDaoImpl();
     private static final FoodDao foodDao = new FoodDaoImpl();
+    private static final MediaDao mediaDao = new MediaDaoImpl();
     private static final NotificationDao notificationDao = new NotificationDaoImpl();
     private static final OrderDao orderDao = new OrderDaoImpl();
     private static final OrderFoodDao orderFoodDao = new OrderFoodDaoImpl();
@@ -48,6 +48,15 @@ public class DaoFactory {
      */
     public static FoodDao getFoodDao() {
         return foodDao;
+    }
+
+    /**
+     * Media dao media dao.
+     *
+     * @return the media dao
+     */
+    public static MediaDao getMediaDao() {
+        return mediaDao;
     }
 
     /**
