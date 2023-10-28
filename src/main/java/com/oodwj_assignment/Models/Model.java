@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Model {
-    UUID id;
-    LocalDateTime updatedAt;
-    LocalDateTime createdAt;
+    private UUID id;
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
 
     public Model(UUID id, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
