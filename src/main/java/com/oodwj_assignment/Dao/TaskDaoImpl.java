@@ -1,9 +1,14 @@
 package com.oodwj_assignment.Dao;
 
 import com.oodwj_assignment.Dao.Base.AbstractDao;
+import com.oodwj_assignment.Dao.Base.DaoFactory;
+import com.oodwj_assignment.Helpers.Response;
+import com.oodwj_assignment.Models.Orders;
 import com.oodwj_assignment.Models.Tasks;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 
 public class TaskDaoImpl extends AbstractDao<Tasks> implements TaskDao {
@@ -27,6 +32,18 @@ public class TaskDaoImpl extends AbstractDao<Tasks> implements TaskDao {
             return new Tasks(taskId, runnerId, orderId, deliveryFee, status, updatedAt, createdAt);
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    public Response<Double> calDeliveryFee(Orders orderId) {
+        Response<ArrayList<Orders>> orders = DaoFactory.getOrderDao().read(Map.of("orderId", orderId));
+
+        if (orders.isSuccess()) {
+            double totalPrice = orders.getData().get(0).getTotalPrice();
+
+            return Response.success("Delivery Fee calculated successfully", totalPrice * 0.15);
+        } else {
+            return Response.failure(orders.getMessage());
         }
     }
 }
