@@ -1,12 +1,12 @@
-package com.oodwj_assignment.Helpers;
+package com.oodwj_assignment.Models;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Model {
-    private UUID id;
-    private LocalDateTime updatedAt;
-    private LocalDateTime createdAt;
+    UUID id;
+    LocalDateTime updatedAt;
+    LocalDateTime createdAt;
 
     public Model(UUID id, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
@@ -37,5 +37,4 @@ public class Model {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
 }

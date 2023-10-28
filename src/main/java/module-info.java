@@ -5,4 +5,6 @@ module com.oodwj_assigment {
 
     opens com.oodwj_assignment to javafx.fxml;
     exports com.oodwj_assignment;
+    exports com.oodwj_assignment.Dao;
+    opens com.oodwj_assignment.Dao to javafx.fxml;
 }
