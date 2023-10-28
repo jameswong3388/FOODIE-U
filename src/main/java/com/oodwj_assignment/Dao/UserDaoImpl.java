@@ -5,6 +5,9 @@ import com.oodwj_assignment.Dao.Base.DaoFactory;
 import com.oodwj_assignment.Helpers.Response;
 import com.oodwj_assignment.Models.Users;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,6 +19,24 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
 
     public UserDaoImpl() {
         super(FILE_NAME);
+    }
+
+    @Override
+    public Response<UUID> create(Users model) {
+        if (isUsernameTaken(model.getUsername()).getData()) {
+            return Response.failure("Username is taken");
+        }
+
+        UUID userId = UUID.randomUUID();
+        model.setId(userId);
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
+            writer.println(model);
+
+            return Response.success("User created successfully", userId);
+        } catch (IOException e) {
+            return Response.failure("Failed to create user: " + e.getMessage());
+        }
     }
 
     @Override
