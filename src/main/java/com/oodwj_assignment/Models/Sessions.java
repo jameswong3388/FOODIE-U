@@ -1,12 +1,9 @@
 package com.oodwj_assignment.Models;
 
-import com.oodwj_assignment.APIs.Response;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Sessions {
-    private UUID sessionId;
+public class Sessions extends Model {
     private UUID userId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -24,8 +21,9 @@ public class Sessions {
     public Sessions(UUID sessionId, UUID userId, LocalDateTime startTime, LocalDateTime endTime, long duration,
                     String ipAddress, String userAgent, String location, String deviceInfo,
                     boolean isAuthenticated, String referer, String terminationReason,
-                    boolean isActive, UUID sessionToken) {
-        this.sessionId = sessionId;
+                    boolean isActive, UUID sessionToken, LocalDateTime updatedAt, LocalDateTime createdAt) {
+
+        super(sessionId, updatedAt, createdAt);
         this.userId = userId;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -39,10 +37,6 @@ public class Sessions {
         this.terminationReason = terminationReason;
         this.isActive = isActive;
         this.sessionToken = sessionToken;
-    }
-
-    public UUID getSessionId() {
-        return sessionId;
     }
 
     public UUID getUserId() {
@@ -95,30 +89,6 @@ public class Sessions {
 
     public boolean isAuthenticated() {
         return isAuthenticated;
-    }
-
-    public Response<Object> getAttributeValue(String attributeName) {
-        return switch (attributeName) {
-            case "sessionId" -> Response.success("Session ID", getSessionId());
-            case "userId" -> Response.success("User ID", getUserId());
-            case "startTime" -> Response.success("Start time", getStartTime());
-            case "endTime" -> Response.success("End time", getEndTime());
-            case "duration" -> Response.success("Duration", getDuration());
-            case "ipAddress" -> Response.success("IP address", getIpAddress());
-            case "userAgent" -> Response.success("User agent", getUserAgent());
-            case "location" -> Response.success("Location", getLocation());
-            case "deviceInfo" -> Response.success("Device info", getDeviceInfo());
-            case "isAuthenticated" -> Response.success("Is authenticated", isAuthenticated());
-            case "referer" -> Response.success("Referer", getReferer());
-            case "terminationReason" -> Response.success("Termination reason", getTerminationReason());
-            case "isActive" -> Response.success("Is active", isActive());
-            case "sessionToken" -> Response.success("Session token", getSessionToken());
-            default -> Response.failure("Invalid attribute");
-        };
-    }
-
-    public void setSessionId(UUID sessionId) {
-        this.sessionId = sessionId;
     }
 
     public void setUserId(UUID userId) {
@@ -175,10 +145,10 @@ public class Sessions {
 
     @Override
     public String toString() {
-        return sessionId + ";" + userId + ";" + startTime + ";" + endTime + ";" + duration + ";" +
-                ipAddress + ";" + userAgent + ";" + location + ";" + deviceInfo + ";" +
-                isAuthenticated + ";" + referer + ";" + terminationReason + ";" + isActive + ";" +
-                sessionToken;
+        return getId() + ";" + getUserId() + ";" + getStartTime() + ";" + getEndTime() + ";" + getDuration() + ";" +
+                getIpAddress() + ";" + getUserAgent() + ";" + getLocation() + ";" + getDeviceInfo() + ";" +
+                isAuthenticated() + ";" + getReferer() + ";" + getTerminationReason() + ";" + isActive() + ";" +
+                getSessionToken() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }
 

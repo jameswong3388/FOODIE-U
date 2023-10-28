@@ -1,4 +1,4 @@
-package com.oodwj_assignment.APIs;
+package com.oodwj_assignment.Helpers;
 
 public class Response<Type> {
     private final boolean success;

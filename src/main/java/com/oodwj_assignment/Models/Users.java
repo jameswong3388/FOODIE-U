@@ -1,8 +1,5 @@
 package com.oodwj_assignment.Models;
 
-import com.oodwj_assignment.APIs.Response;
-import com.oodwj_assignment.Helpers.Model;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -42,38 +39,6 @@ public class Users extends Model {
         return role;
     }
 
-    public Response<Object> getAttributeValue(String attributeName) {
-        switch (attributeName) {
-            case "userId" -> {
-                return Response.success("User ID", getId());
-            }
-            case "username" -> {
-                return Response.success("Username", getUsername());
-            }
-            case "password" -> {
-                return Response.success("Password", getPassword());
-            }
-            case "email" -> {
-                return Response.success("Email", getEmail());
-            }
-            case "age" -> {
-                return Response.success("Age", getAge());
-            }
-            case "role" -> {
-                return Response.success("Role", getRole());
-            }
-            case "updatedAt" -> {
-                return Response.success("Updated at", getUpdatedAt());
-            }
-            case "createdAt" -> {
-                return Response.success("Created at", getCreatedAt());
-            }
-            default -> {
-                return Response.failure("Invalid attribute name");
-            }
-        }
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -94,79 +59,6 @@ public class Users extends Model {
         this.role = role;
     }
 
-    public Response<Void> setAttributeValue(String attributeName, Object newValue) {
-        switch (attributeName) {
-            case "userId" -> {
-                if (newValue instanceof UUID) {
-                    setId((UUID) newValue);
-                    return Response.success("User ID updated successfully");
-                } else {
-                    return Response.failure("Invalid value type");
-                }
-            }
-            case "username" -> {
-                if (newValue instanceof String) {
-                    setUsername((String) newValue);
-                    return Response.success("Username updated successfully");
-                } else {
-                    return Response.failure("Invalid value type");
-                }
-            }
-            case "password" -> {
-                if (newValue instanceof String) {
-                    setPassword((String) newValue);
-                    return Response.success("Password updated successfully");
-                } else {
-                    return Response.failure("Invalid value type");
-                }
-            }
-            case "email" -> {
-                if (newValue instanceof String) {
-                    setEmail((String) newValue);
-                    return Response.success("Email updated successfully");
-                } else {
-                    return Response.failure("Invalid value type");
-                }
-            }
-            case "age" -> {
-                if (newValue instanceof Integer) {
-                    setAge((Integer) newValue);
-                    return Response.success("Age updated successfully");
-                } else {
-                    return Response.failure("Invalid value type");
-                }
-            }
-            case "role" -> {
-                if (newValue instanceof Role) {
-                    setRole((Role) newValue);
-                    return Response.success("Role updated successfully");
-                } else {
-                    return Response.failure("Invalid value type");
-                }
-            }
-            case "updatedAt" -> {
-                if (newValue instanceof LocalDateTime) {
-                    setUpdatedAt((LocalDateTime) newValue);
-                    return Response.success("Updated at updated successfully");
-                } else {
-                    return Response.failure("Invalid value type");
-                }
-            }
-            case "createdAt" -> {
-                if (newValue instanceof LocalDateTime) {
-                    setCreatedAt((LocalDateTime) newValue);
-                    return Response.success("Created at updated successfully");
-                } else {
-                    return Response.failure("Invalid value type");
-                }
-            }
-            default -> {
-                return Response.failure("Invalid attribute name");
-            }
-        }
-    }
-
-    // Define an enum for user roles.
     public enum Role {
         Admin,
         Vendor,
@@ -176,6 +68,6 @@ public class Users extends Model {
 
     @Override
     public String toString() {
-        return getId() + ";" + username + ";" + password + ";" + email + ";" + age + ";" + role.name() + ";" + getUpdatedAt() + ";" + getCreatedAt();
+        return getId() + ";" + getUsername() + ";" + getPassword() + ";" + getEmail() + ";" + getAge() + ";" + getRole() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

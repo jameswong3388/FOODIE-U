@@ -1,4 +1,4 @@
-package com.oodwj_assignment.APIs;
+package com.oodwj_assignment.Helpers;
 
 import java.util.Random;
 import java.util.UUID;
