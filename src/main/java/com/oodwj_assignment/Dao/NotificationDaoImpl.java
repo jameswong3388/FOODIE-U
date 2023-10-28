@@ -14,7 +14,6 @@ public class NotificationDaoImpl extends AbstractDao<Notifications> implements N
         super(FILE_NAME);
     }
 
-    @Override
     public Notifications parse(String[] parts) {
         try {
             UUID notificationId = UUID.fromString(parts[0]);

@@ -13,7 +13,6 @@ public class TransactionDaoImpl extends AbstractDao<Transactions> implements Tra
         super(FILE_NAME);
     }
 
-    @Override
     public Transactions parse(String[] parts) {
         try {
             UUID transactionId = UUID.fromString(parts[0]);

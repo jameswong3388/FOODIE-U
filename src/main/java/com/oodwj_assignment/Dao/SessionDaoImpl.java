@@ -21,7 +21,6 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
         super(FILE_NAME);
     }
 
-    @Override
     public Sessions parse(String[] parts) {
         try {
             UUID sessionId = UUID.fromString(parts[0]);
@@ -47,7 +46,14 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
         }
     }
 
-    @Override
+    /***
+     * Authenticates user
+     *
+     * @param username username of user
+     * @param password password of user
+     * @return session token
+     * @throws UnknownHostException if host is unknown
+     */
     public Response<UUID> login(String username, String password) throws UnknownHostException {
         Response<Users> user = new UserDaoImpl().getByUsername(username);
 
@@ -102,6 +108,11 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
         }
     }
 
+    /***
+     * Logs out user
+     * @param sessionToken session token stored in global state
+     * @return a response object with status, message and data
+     */
     public Response<Void> logout(UUID sessionToken) throws UnknownHostException {
         Response<ArrayList<Sessions>> res = read(Map.of());
 
@@ -141,6 +152,11 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
         }
     }
 
+    /***
+     * Checks if user is authenticated
+     * @param sessionToken session token stored in global state
+     * @return a boolean indicating if user is authenticated
+     */
     public Response<Boolean> isAuthenticated(String sessionToken) {
         Response<ArrayList<Sessions>> res = read(Map.of("sessionToken", sessionToken));
 
@@ -163,6 +179,10 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
         }
     }
 
+    /***
+     * Generates a session token
+     * @return a session token in UUID format
+     */
     private  UUID generateSessionToken() {
         return UniqueId.generateType1UUID();
     }

@@ -39,7 +39,6 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
         }
     }
 
-    @Override
     public Users parse(String[] parts) {
         try {
             UUID uuid = UUID.fromString(parts[0]);
@@ -57,7 +56,12 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
         }
     }
 
-    @Override
+    /**
+     * Checks if username is taken.
+     *
+     * @param username username to be checked
+     * @return a boolean value indicating whether the username is taken or not
+     */
     public Response<Boolean> isUsernameTaken(String username) {
         Response<ArrayList<Users>> users = DaoFactory.getUserDao().read(Map.of("username", username));
 
@@ -74,14 +78,19 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
         return Response.success("Username is not taken", false);
     }
 
-    @Override
+    /**
+     * Gets user by username.
+     *
+     * @param username username of user to be fetched
+     * @return Response object containing user if found, or error message if not
+     */
     public Response<Users> getByUsername(String username) {
         Response<ArrayList<Users>> users = DaoFactory.getUserDao().read(Map.of("username", username));
 
         if (users.isSuccess()) {
             return Response.success("User found", users.getData().get(0));
         } else {
-            return null;
+            return Response.failure(users.getMessage());
         }
     }
 }

@@ -11,27 +11,43 @@ import java.util.Objects;
 import java.util.UUID;
 import java.lang.reflect.Method;
 
+/**
+ * Abstract class that implements core DAO CRUD methods for every entity
+ *
+ * @param <T> the type parameter
+ */
 public abstract class AbstractDao<T extends Model> implements Dao<T> {
     private final String fileName;
 
+    /**
+     * Instantiates a new Abstract dao.
+     *
+     * @param fileName the database file name
+     */
     public AbstractDao(String fileName) {
         this.fileName = fileName;
     }
 
+    /**
+     * Parses a line from the file into a T object
+     *
+     * @param parts a line from the file
+     * @return a T object
+     */
     public abstract T parse(String[] parts);
 
-    public Response<UUID> create(T model) {
+    public Response<UUID> create(T object) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName, true))) {
-            writer.println(model);
+            writer.println(object);
 
-            return Response.success("Model created successfully", null);
+            return Response.success("Object created successfully", null);
         } catch (IOException e) {
-            return Response.failure("Failed to create model: " + e.getMessage());
+            return Response.failure("Failed to create object: " + e.getMessage());
         }
     }
 
     public Response<ArrayList<T>> read(Map<String, Object> query) {
-        ArrayList<T> matchedModels = new ArrayList<>();
+        ArrayList<T> matchedObjects = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -39,29 +55,29 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
 
-                T model = parse(parts);
+                T object = parse(parts);
 
-                if (query.isEmpty() || match(query, model).isSuccess()) {
-                    matchedModels.add(model);
+                if (query.isEmpty() || match(query, object).isSuccess()) {
+                    matchedObjects.add(object);
                 }
             }
         } catch (IOException e) {
-            return Response.failure("Failed to read models: " + e.getMessage());
+            return Response.failure("Failed to read objects: " + e.getMessage());
         }
 
-        if (matchedModels.isEmpty()) {
-            return Response.failure("No models match the query", matchedModels);
+        if (matchedObjects.isEmpty()) {
+            return Response.failure("No objects match the query", matchedObjects);
         }
-        return Response.success("Models read successfully", matchedModels);
+        return Response.success("Objects read successfully", matchedObjects);
     }
 
     public Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
-        Response<ArrayList<T>> models = read(Map.of());
+        Response<ArrayList<T>> objects = read(Map.of());
 
-        if (models.isSuccess()) {
-            for (T model : models.getData()) {
+        if (objects.isSuccess()) {
+            for (T object : objects.getData()) {
 
-                Response<Void> matchRes = match(query, model);
+                Response<Void> matchRes = match(query, object);
 
                 if (matchRes.isSuccess()) {
                     for (Map.Entry<String, Object> entry : newValue.entrySet()) {
@@ -69,58 +85,56 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
                         Object expectedValue = entry.getValue();
 
                         try {
-                            Method setter = model.getClass().getMethod("set" + capitalizeFirstLetter(attributeName), expectedValue.getClass());
-                            setter.invoke(model, expectedValue);
-
-                            System.out.println(model);
+                            Method setter = object.getClass().getMethod("set" + capitalizeFirstLetter(attributeName), expectedValue.getClass());
+                            setter.invoke(object, expectedValue);
                         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                             return Response.failure("Error setting attribute value for " + attributeName);
                         }
                     }
 
-                    Response<Void> saveRes = saveAll(models.getData());
+                    Response<Void> saveRes = saveAll(objects.getData());
 
                     if (saveRes.isSuccess()) {
-                        return Response.success("Model updated successfully");
+                        return Response.success("Object updated successfully");
                     } else {
                         return Response.failure(saveRes.getMessage());
                     }
                 }
             }
 
-            return Response.failure("Model not found");
+            return Response.failure("Object not found");
         } else {
-            return Response.failure(models.getMessage());
+            return Response.failure(objects.getMessage());
         }
     }
 
     public Response<Void> delete(Map<String, Object> query) {
-        Response<ArrayList<T>> models = read(Map.of());
+        Response<ArrayList<T>> objects = read(Map.of());
 
-        if (models.isSuccess()) {
-            for (T model : models.getData()) {
-                Response<Void> matchRes = match(query, model);
+        if (objects.isSuccess()) {
+            for (T object : objects.getData()) {
+                Response<Void> matchRes = match(query, object);
 
                 if (matchRes.isSuccess()) {
-                    models.getData().remove(model);
+                    objects.getData().remove(object);
 
-                    Response<Void> saveRes = saveAll(models.getData());
+                    Response<Void> saveRes = saveAll(objects.getData());
 
                     if (saveRes.isSuccess()) {
-                        return Response.success("Model deleted successfully");
+                        return Response.success("Object deleted successfully");
                     } else {
                         return Response.failure(saveRes.getMessage());
                     }
                 }
             }
 
-            return Response.failure("Model not found");
+            return Response.failure("Object not found");
         } else {
-            return Response.failure(models.getMessage());
+            return Response.failure(objects.getMessage());
         }
     }
 
-    public Response<Void> match(Map<String, Object> query, T model) {
+    public Response<Void> match(Map<String, Object> query, T object) {
         boolean match = true;
 
         for (Map.Entry<String, Object> entry : query.entrySet()) {
@@ -129,8 +143,8 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
 
             // Use reflection to dynamically invoke the getter method
             try {
-                Method getter = model.getClass().getMethod("get" + capitalizeFirstLetter(attributeName));
-                Object actualValue = getter.invoke(model);
+                Method getter = object.getClass().getMethod("get" + capitalizeFirstLetter(attributeName));
+                Object actualValue = getter.invoke(object);
 
                 if (!Objects.equals(actualValue, expectedValue)) {
                     match = false;
@@ -141,30 +155,33 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
             }
         }
         if (match) {
-            return Response.success("Model matches the query");
+            return Response.success("Object matches the query");
         } else {
-            return Response.failure("Model does not match the query");
+            return Response.failure("Object does not match the query");
         }
     }
 
-    /*
-     * Helper method to capitalize the first letter of a string
+    public Response<Void> saveAll(ArrayList<T> objects) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
+            for (T object : objects) {
+                writer.println(object);
+            }
+            return Response.success("Objects saved successfully");
+        } catch (IOException e) {
+            return Response.failure("Failed to save objects: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Capitalize first letter of a string
+     *
+     * @param s the string
+     * @return the string with first letter capitalized
      */
     private String capitalizeFirstLetter(String s) {
         if (s == null || s.isEmpty()) {
             return s;
         }
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
-    }
-
-    public Response<Void> saveAll(ArrayList<T> models) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
-            for (T model : models) {
-                writer.println(model);
-            }
-            return Response.success("Models saved successfully");
-        } catch (IOException e) {
-            return Response.failure("Failed to save models: " + e.getMessage());
-        }
     }
 }

@@ -8,11 +8,11 @@ import java.util.UUID;
 
 public class FoodDaoImpl extends AbstractDao<Foods> implements FoodDao {
     private static final String FILE_NAME = "database/foods.txt";
+
     public FoodDaoImpl() {
         super(FILE_NAME);
     }
 
-    @Override
     public Foods parse(String[] parts) {
         try {
             UUID foodId = UUID.fromString(parts[0]);

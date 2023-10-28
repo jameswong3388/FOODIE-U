@@ -13,7 +13,6 @@ public class AttachmentDaoImpl extends AbstractDao<Attachments> implements Attac
         super(FILE_NAME);
     }
 
-    @Override
     public Attachments parse(String[] parts) {
         try {
             UUID attachmentId = UUID.fromString(parts[0]);

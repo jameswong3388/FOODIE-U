@@ -15,7 +15,6 @@ public class ReviewDaoImpl extends AbstractDao<Reviews> implements ReviewDao {
         super(FILE_NAME);
     }
 
-    @Override
     public Reviews parse(String[] parts) {
         try {
             UUID reviewId = UUID.fromString(parts[0]);

@@ -14,7 +14,6 @@ public class OrderFoodDaoImpl extends AbstractDao<OrderFoods> implements OrderFo
         super(FILE_NAME);
     }
 
-    @Override
     public OrderFoods parse(String[] parts) {
         try {
             UUID orderFoodId = UUID.fromString(parts[0]);

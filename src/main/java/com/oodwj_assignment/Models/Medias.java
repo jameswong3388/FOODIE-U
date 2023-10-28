@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Medias extends Model {
-    private Model Model;
+    private String Model;
     private UUID ModelUUID;
     private String Collection;
     private String name;
@@ -14,8 +14,8 @@ public class Medias extends Model {
     private String dimension;
     private String size;
 
-    public Medias(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, Model Model, UUID ModelUUID, String Collection, String name, String fileName, String mimeType, String disk, String dimension, String size) {
-        super(id, createdAt, updatedAt);
+    public Medias(UUID mediaId, String Model, UUID ModelUUID, String Collection, String name, String fileName, String mimeType, String disk, String dimension, String size, LocalDateTime updatedAt, LocalDateTime createdAt) {
+        super(mediaId, createdAt, updatedAt);
         this.Model = Model;
         this.ModelUUID = ModelUUID;
         this.Collection = Collection;
@@ -27,7 +27,7 @@ public class Medias extends Model {
         this.size = size;
     }
 
-    public Model getModel() {
+    public String getModel() {
         return Model;
     }
 
@@ -63,8 +63,8 @@ public class Medias extends Model {
         return size;
     }
 
-    public void setModel(Model Model) {
-        this.Model = Model;
+    public String setModel(String Model) {
+        return this.Model = Model;
     }
 
     public void setModelUUID(UUID ModelUUID) {

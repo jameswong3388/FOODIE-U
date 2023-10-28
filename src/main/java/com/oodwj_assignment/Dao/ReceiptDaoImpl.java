@@ -14,7 +14,6 @@ public class ReceiptDaoImpl extends AbstractDao<Receipts> implements ReceiptDao 
         super(FILE_NAME);
     }
 
-    @Override
     public Receipts parse(String[] parts) {
         try {
             UUID receiptId = UUID.fromString(parts[0]);

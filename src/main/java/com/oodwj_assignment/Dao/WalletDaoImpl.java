@@ -14,7 +14,6 @@ public class WalletDaoImpl extends AbstractDao<Wallets> implements WalletDao {
         super(FILE_NAME);
     }
 
-    @Override
     public Wallets parse(String[] parts) {
         try {
             UUID walletId = UUID.fromString(parts[0]);

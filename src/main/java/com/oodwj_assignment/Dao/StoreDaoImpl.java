@@ -14,7 +14,6 @@ public class StoreDaoImpl extends AbstractDao<Stores> implements StoreDao {
         super(FILE_NAME);
     }
 
-    @Override
     public Stores parse(String[] parts) {
         try {
             UUID storeId = UUID.fromString(parts[0]);
