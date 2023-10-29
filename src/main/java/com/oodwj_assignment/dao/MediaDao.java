@@ -3,6 +3,7 @@ package com.oodwj_assignment.dao;
 import com.oodwj_assignment.dao.base.Dao;
 import com.oodwj_assignment.models.Medias;
 
+import java.io.File;
 import java.util.Optional;
 
 public interface MediaDao extends Dao<Medias> {
@@ -16,4 +17,12 @@ public interface MediaDao extends Dao<Medias> {
      * @return String extension
      */
     String getExtensionByStringHandling(String filename);
+
+    /***
+     * Calculate the size of a file in megabytes
+     *
+     * @param file file to calculate the size of
+     * @return Double size in megabytes
+     */
+    Double getMediaSizeMegaBytes(File file);
 }

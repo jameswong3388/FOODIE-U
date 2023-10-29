@@ -11,9 +11,9 @@ public class Medias extends Model {
     private String mimeType;
     private String disk;
     private String dimension;
-    private String size;
+    private Double size;
 
-    public Medias(UUID mediaId, String Model, UUID ModelUUID, String Collection, String fileName, String mimeType, String disk, String dimension, String size, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Medias(UUID mediaId, String Model, UUID ModelUUID, String Collection, String fileName, String mimeType, String disk, String dimension, Double size, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(mediaId, createdAt, updatedAt);
         this.Model = Model;
         this.ModelUUID = ModelUUID;
@@ -53,7 +53,7 @@ public class Medias extends Model {
         return dimension;
     }
 
-    public String getSize() {
+    public Double getSize() {
         return size;
     }
 
@@ -85,7 +85,7 @@ public class Medias extends Model {
         this.dimension = dimension;
     }
 
-    public void setSize(String size) {
+    public void setSize(Double size) {
         this.size = size;
     }
 
