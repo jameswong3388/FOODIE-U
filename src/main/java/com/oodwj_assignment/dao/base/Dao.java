@@ -39,12 +39,20 @@ public interface Dao<T> extends HasMedia {
     Response<Void> update(Map<String, Object> query, Map<String, Object> newValue);
 
     /***
-     * Deletes object from database
+     * Delete one object from database
      *
      * @param query query to be executed
      * @return Void returned a response object with status, message and data
      */
-    Response<Void> delete(Map<String, Object> query);
+    Response<Void> deleteOne(Map<String, Object> query);
+
+    /***
+     * Delete all objects from database
+     *
+     * @param query query to be executed
+     * @return Void returned a response object with status, message and data
+     */
+    Response<Void> deleteAll(Map<String, Object> query);
 
     /***
      * Save all given objects to database

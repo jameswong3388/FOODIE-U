@@ -213,7 +213,6 @@ create table Medias
     model      varchar(255) not null,
     modelUUID  varchar(255) not null,
     collection varchar(255) not null,
-    name       varchar(255) not null,
     fileName   varchar(255) not null,
     mimeType   varchar(255) not null,
     disk       varchar(255) not null,
