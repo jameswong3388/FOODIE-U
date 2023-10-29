@@ -1,6 +1,8 @@
 package com.oodwj_assignment;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
+import com.oodwj_assignment.helpers.Response;
+import com.oodwj_assignment.models.Medias;
 import com.oodwj_assignment.models.Users;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -12,8 +14,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 import javafx.stage.FileChooser;
 
@@ -67,8 +72,23 @@ public class FileChooser_1 extends Application {
                         public void handle(ActionEvent e)
                         {
                             File file = fil_chooser.getInitialDirectory();
+                            String extension = DaoFactory.getMediaDao().getExtensionByStringHandling(file.getName());
+                            // Upload under user model
                             Users jamesProfile = DaoFactory.getUserDao().read(Map.of("username", "james")).getData().get(0);
-                            DaoFactory.getUserDao().addMedia(file, "pdf", jamesProfile.getId());
+                            Medias media = new Medias(null, null, jamesProfile.getId(), "default", file.getName(), extension, "local", "100x100", "100kb", LocalDateTime.now(), LocalDateTime.now());
+                            Response<Void> res = DaoFactory.getUserDao().addMedia(file, media);
+                            System.out.println(res.getMessage());
+                            System.out.println(res.getData());
+
+                            // Retrieve
+                            Response<String> res2 = DaoFactory.getUserDao().getFirstMedia(UUID.fromString(jamesProfile.getId().toString()));
+                            System.out.println(res2.getMessage());
+                            System.out.println(res2.getData());
+
+                            // Remove
+//                            Response<Void> res3 = DaoFactory.getUserDao().removeMedia(UUID.fromString(jamesProfile.getId().toString()));
+//                            System.out.println(res3.getMessage());
+
                             label.setText("uploaded");
                         }
                     };

@@ -7,19 +7,17 @@ public class Medias extends Model {
     private String Model;
     private UUID ModelUUID;
     private String Collection;
-    private String name;
     private String fileName;
     private String mimeType;
     private String disk;
     private String dimension;
     private String size;
 
-    public Medias(UUID mediaId, String Model, UUID ModelUUID, String Collection, String name, String fileName, String mimeType, String disk, String dimension, String size, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Medias(UUID mediaId, String Model, UUID ModelUUID, String Collection, String fileName, String mimeType, String disk, String dimension, String size, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(mediaId, createdAt, updatedAt);
         this.Model = Model;
         this.ModelUUID = ModelUUID;
         this.Collection = Collection;
-        this.name = name;
         this.fileName = fileName;
         this.mimeType = mimeType;
         this.disk = disk;
@@ -37,10 +35,6 @@ public class Medias extends Model {
 
     public String getCollection() {
         return Collection;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getFileName() {
@@ -63,8 +57,8 @@ public class Medias extends Model {
         return size;
     }
 
-    public String setModel(String Model) {
-        return this.Model = Model;
+    public void setModel(String Model) {
+        this.Model = Model;
     }
 
     public void setModelUUID(UUID ModelUUID) {
@@ -73,10 +67,6 @@ public class Medias extends Model {
 
     public void setCollection(String Collection) {
         this.Collection = Collection;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setFileName(String fileName) {
@@ -101,6 +91,6 @@ public class Medias extends Model {
 
     @Override
     public String toString() {
-        return getId() + ";" + getCreatedAt() + ";" + getUpdatedAt() + ";" + getModel() + ";" + getModelUUID() + ";" + getCollection() + ";" + getName() + ";" + getFileName() + ";" + getMimeType() + ";" + getDisk() + ";" + getDimension() + ";" + getSize();
+        return getId() + ";" + getModel() + ";" + getModelUUID() + ";" + getCollection() + ";" + getFileName() + ";" + getMimeType() + ";" + getDisk() + ";" + getDimension() + ";" + getSize() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }
