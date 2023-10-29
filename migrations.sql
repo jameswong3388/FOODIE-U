@@ -216,7 +216,8 @@ create table Medias
     fileName   varchar(255) not null,
     mimeType   varchar(255) not null,
     disk       varchar(255) not null,
-    dimensions varchar(255) not null,
+    height     int          not null,
+    width      int          not null,
     size       int          not null,
     updatedAt  datetime     not null,
     createdAt  datetime     not null
