@@ -1,6 +1,7 @@
 module com.oodwj_assigment {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens com.oodwj_assignment to javafx.fxml;
