@@ -270,6 +270,7 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
         File dest = new File(MEDIA_DIR + media.getDisk());
 
         media.setModel(modelDescriptor());
+        media.setSize(DaoFactory.getMediaDao().getMediaSizeMegaBytes(file));
 
         Response<UUID> res = DaoFactory.getMediaDao().create(media);
 

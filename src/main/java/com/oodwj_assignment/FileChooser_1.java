@@ -7,6 +7,7 @@ import com.oodwj_assignment.models.Users;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.*;
@@ -17,7 +18,6 @@ import java.io.*;
 import java.time.LocalDateTime;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 import javafx.stage.FileChooser;
@@ -75,7 +75,7 @@ public class FileChooser_1 extends Application {
                             String extension = DaoFactory.getMediaDao().getExtensionByStringHandling(file.getName());
                             // Upload under user model
                             Users jamesProfile = DaoFactory.getUserDao().read(Map.of("username", "james")).getData().get(0);
-                            Medias media = new Medias(null, null, jamesProfile.getId(), "default", file.getName(), extension, "local", "100x100", "100kb", LocalDateTime.now(), LocalDateTime.now());
+                            Medias media = new Medias(null, null, jamesProfile.getId(), "default", file.getName(), extension, "local", "100x100", null, LocalDateTime.now(), LocalDateTime.now());
                             Response<Void> res = DaoFactory.getUserDao().addMedia(file, media);
                             System.out.println(res.getMessage());
                             System.out.println(res.getData());
