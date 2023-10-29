@@ -4,6 +4,7 @@ import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Medias;
 import com.oodwj_assignment.models.Model;
 
+import javax.imageio.ImageIO;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -271,6 +272,14 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
 
         media.setModel(modelDescriptor());
         media.setSize(DaoFactory.getMediaDao().getMediaSizeMegaBytes(file));
+        try {
+            Integer height = ImageIO.read(file).getHeight();
+            Integer width = ImageIO.read(file).getWidth();
+            media.setHeight(height);
+            media.setWidth(width);
+        } catch (Exception e) {
+            return Response.failure("Failed to get media height and width: " + e.getMessage());
+        }
 
         Response<UUID> res = DaoFactory.getMediaDao().create(media);
 
@@ -360,6 +369,20 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
         }
     }
 
+    /***
+     * Check if a model has media
+     * @param modelUUID model UUID
+     * @return true if the model has media, false otherwise
+     */
+    public Response<Boolean> hasMedia(UUID modelUUID) {
+        Response<ArrayList<Medias>> res = DaoFactory.getMediaDao().read(Map.of("model", modelDescriptor(), "modelUUID", modelUUID));
+
+        if (res.isSuccess()) {
+            return Response.success("Media retrieved successfully", !res.getData().isEmpty());
+        } else {
+            return Response.failure("Failed to get media: " + res.getMessage());
+        }
+    }
 
     /***
      * Remove "DaoImpl" from the class name

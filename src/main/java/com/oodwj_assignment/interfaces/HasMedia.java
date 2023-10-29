@@ -39,8 +39,15 @@ public interface HasMedia {
     /***
      * Remove all media of a model
      *
-     * @param modelUUID model UUID
+     * @param modelUUID model UUIDœ
      * @return null
      */
     Response<Void> removeMedia(UUID modelUUID);
+
+    /***
+     * Check if a model has media
+     * @param modelUUID model UUID
+     * @return true if the model has media, false otherwise
+     */
+    Response<Boolean> hasMedia(UUID modelUUID);
 }

@@ -5,7 +5,6 @@ import com.oodwj_assignment.models.Medias;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 public class MediaDaoImpl extends AbstractDao<Medias> implements MediaDao {
@@ -25,12 +24,13 @@ public class MediaDaoImpl extends AbstractDao<Medias> implements MediaDao {
             String fileName = parts[4];
             String mimeType = parts[5];
             String disk = parts[6];
-            String dimension = parts[7];
-            Double size = Double.parseDouble(parts[8]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[9]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[10]);
+            Integer height = Integer.parseInt(parts[7]);
+            Integer width = Integer.parseInt(parts[8]);
+            Double size = Double.parseDouble(parts[9]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[10]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[11]);
 
-            return new Medias(mediaId, model, modelUUID, collection, fileName, mimeType, disk, dimension, size, updatedAt, createdAt);
+            return new Medias(mediaId, model, modelUUID, collection, fileName, mimeType, disk, height, width, size, updatedAt, createdAt);
         } catch (Exception e) {
             System.out.println("Failed to parse media: " + e.getMessage());
             return null;
