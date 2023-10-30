@@ -1,7 +1,7 @@
 package com.oodwj_assignment.dao.base;
 
 import com.oodwj_assignment.helpers.Response;
-import com.oodwj_assignment.interfaces.HasMedia;
+import com.oodwj_assignment.interfaces.HasMediaLibrary;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.UUID;
  *
  * @param <T> the type parameter
  */
-public interface Dao<T> extends HasMedia {
+public interface Dao<T> extends HasMediaLibrary {
     /***
      * Creates object in database
      *
