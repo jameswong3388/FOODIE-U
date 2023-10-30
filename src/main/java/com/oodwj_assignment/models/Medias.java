@@ -10,8 +10,8 @@ public class Medias extends Model {
     private String fileName;
     private String mimeType;
     private String disk;
-    private int height;
-    private int width;
+    private Integer height;
+    private Integer width;
     private Double size;
 
     public Medias(UUID mediaId, String Model, UUID ModelUUID, String Collection, String fileName, String mimeType, String disk, Integer height, Integer width, Double size, LocalDateTime updatedAt, LocalDateTime createdAt) {
