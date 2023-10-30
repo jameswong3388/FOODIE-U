@@ -11,7 +11,7 @@ import java.util.UUID;
 /***
  * Interface for media operations
  */
-public interface HasMedia {
+public interface HasMediaLibrary {
     /***
      * Add media to a defined disk, and record the media in the database
      * @param file uploaded file
