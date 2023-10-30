@@ -19,10 +19,12 @@ public class StoreDaoImpl extends AbstractDao<Stores> implements StoreDao {
             UUID storeId = UUID.fromString(parts[0]);
             String name = parts[1];
             UUID vendorId = UUID.fromString(parts[2]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[3]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[4]);
+            String description = parts[3];
+            Stores.storeCategory category = Stores.storeCategory.valueOf(parts[4]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[5]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
 
-            return new Stores(storeId, name, vendorId, updatedAt, createdAt);
+            return new Stores(storeId, name, vendorId, description, category, updatedAt, createdAt);
         } catch (Exception e) {
             return null;
         }

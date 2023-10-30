@@ -70,7 +70,8 @@ create table Reviews
 (
     reviewId      varchar(255) not null
         primary key,
-    orderId       varchar(255) not null,
+    model         varchar(255) not null,
+    modelUUID     varchar(255) not null,
     userId        varchar(255) not null,
     reviewContent text         not null,
     reviewRating  varchar(255) not null,
@@ -87,6 +88,8 @@ create table Stores
         primary key,
     name      varchar(255) not null,
     vendorId  varchar(255) not null,
+    description text null,
+    category  varchar(255) not null,
     updatedAt datetime     not null,
     createdAt datetime     not null,
 

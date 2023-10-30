@@ -18,14 +18,15 @@ public class ReviewDaoImpl extends AbstractDao<Reviews> implements ReviewDao {
     public Reviews parse(String[] parts) {
         try {
             UUID reviewId = UUID.fromString(parts[0]);
-            UUID foodId = UUID.fromString(parts[1]);
-            UUID userId = UUID.fromString(parts[2]);
+            String model = parts[1];
+            UUID modelUUID = UUID.fromString(parts[2]);
+            UUID userId = UUID.fromString(parts[3]);
             String reviewContent = parts[4];
             Reviews.reviewRating reviewRating = Reviews.reviewRating.valueOf(parts[5]);
             LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
             LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
 
-            return new Reviews(reviewId, foodId, userId, reviewContent, reviewRating, updatedAt, createdAt);
+            return new Reviews(reviewId, model, modelUUID, userId, reviewContent, reviewRating, updatedAt, createdAt);
         } catch (Exception e) {
             return null;
         }
