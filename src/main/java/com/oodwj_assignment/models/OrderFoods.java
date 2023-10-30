@@ -8,6 +8,7 @@ public class OrderFoods extends Model {
     private UUID orderId;
     private String foodName;
     private Double foodPrice;
+    private Double amount;
     private Integer foodQuantity;
 
     public OrderFoods(UUID oderFoodId, UUID foodId, UUID orderId, String foodName, Double foodPrice, Integer foodQuantity, LocalDateTime updatedAt, LocalDateTime createdAt) {

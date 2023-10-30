@@ -4,21 +4,27 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Reviews extends Model {
-    private UUID orderId;
+    private String model;
+    private UUID modelUUID;
     private UUID userId;
     private String reviewContent;
     private reviewRating reviewRating;
 
-    public Reviews(UUID reviewId, UUID orderId, UUID userId, String reviewContent, reviewRating reviewRating, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Reviews(UUID reviewId, String model,UUID modelUUID, UUID userId, String reviewContent, reviewRating reviewRating, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(reviewId, updatedAt, createdAt);
-        this.orderId = orderId;
+        this.model = model;
+        this.modelUUID = modelUUID;
         this.userId = userId;
         this.reviewContent = reviewContent;
         this.reviewRating = reviewRating;
     }
 
-    public UUID getOrderId() {
-        return orderId;
+    public String getModel() {
+        return model;
+    }
+
+    public UUID getModelUUID() {
+        return modelUUID;
     }
 
     public UUID getUserId() {
@@ -33,8 +39,12 @@ public class Reviews extends Model {
         return reviewRating;
     }
 
-    public void setOrderId(UUID orderId) {
-        this.orderId = orderId;
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setModelUUID(UUID modelUUID) {
+        this.modelUUID = modelUUID;
     }
 
     public void setUserId(UUID userId) {
@@ -59,6 +69,6 @@ public class Reviews extends Model {
 
     @Override
     public String toString() {
-        return getId() + ";" + getOrderId() + ";" + getUserId() + ";" + getReviewContent() + ";" + getReviewRating() + ";" + getUpdatedAt() + ";" + getCreatedAt();
+        return getId() + ";" + getModel() + ";" + getModelUUID() + ";" + getUserId() + ";" + getReviewContent() + ";" + getReviewRating() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }
