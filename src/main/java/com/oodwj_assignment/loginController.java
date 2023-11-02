@@ -38,13 +38,9 @@ public class loginController {
 
         Response<UUID> loginResponse = DaoFactory.getAuthDao().login(username, password);
 
-        System.out.println(loginResponse.getData());
-
         if (loginResponse.isSuccess()) {
-            Map<String, Object> query = Map.of("username", username);
-            Response<ArrayList<Users>> usersResponse = DaoFactory.getUserDao().read(query);
-            ArrayList<Users> users = usersResponse.getData();
-            Users.Role userRole = users.get(0).getRole();
+            Response<Users> usersResponse = DaoFactory.getUserDao().getByUsername(username);
+            Users.Role userRole = usersResponse.getData().getRole();
 
             String fxmlPath = getFxmlPathForRole(userRole);
             if (fxmlPath != null) {

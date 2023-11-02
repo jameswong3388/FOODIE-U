@@ -1,5 +1,5 @@
 package com.oodwj_assignment.dao;
-
+w
 import com.oodwj_assignment.helpers.UniqueId;
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.helpers.Response;
@@ -17,6 +17,7 @@ import java.util.UUID;
 public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao {
 
     private static final String FILE_NAME = "database/sessions.txt";
+
     public SessionDaoImpl() {
         super(FILE_NAME);
     }
@@ -183,7 +184,7 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
      * Generates a session token
      * @return a session token in UUID format
      */
-    private  UUID generateSessionToken() {
+    private UUID generateSessionToken() {
         return UniqueId.generateType1UUID();
     }
 }
