@@ -32,6 +32,21 @@
                   <Insets left="10.0" />
                </padding>
             </Button>
+            <Button fx:id="order" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#btnOrderClicked" prefHeight="45.0" prefWidth="186.0" styleClass="menu-button" text="Order">
+               <font>
+                  <Font name="Trebuchet MS" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fx:id="orderIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/order-grey.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Button>
             <Button fx:id="menu" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#btnMenuClicked" prefHeight="45.0" prefWidth="186.0" styleClass="menu-button" text="Menu">
                <font>
                   <Font name="Trebuchet MS" size="14.0" />

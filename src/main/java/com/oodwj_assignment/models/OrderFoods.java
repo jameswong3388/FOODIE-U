@@ -40,6 +40,10 @@ public class OrderFoods extends Model {
         return foodQuantity;
     }
 
+    public Double getAmount() {
+        return amount;
+    }
+
     public void setFoodId(UUID foodId) {
         this.foodId = foodId;
     }
@@ -58,6 +62,10 @@ public class OrderFoods extends Model {
 
     public void setFoodQuantity(Integer foodQuantity) {
         this.foodQuantity = foodQuantity;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     @Override

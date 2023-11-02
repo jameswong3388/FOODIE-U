@@ -44,13 +44,14 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
             UUID uuid = UUID.fromString(parts[0]);
             String username = parts[1];
             String password = parts[2];
-            String email = parts[3];
-            int age = Integer.parseInt(parts[4]);
-            Users.Role role = Users.Role.valueOf(parts[5]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[7]);
+            Users.Role role = Users.Role.valueOf(parts[3]);
+            String name = parts[4];
+            String phoneNumber = parts[5];
+            String email = parts[6];
+            LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[8]);
 
-            return new Users(uuid, username, password, email, age, role, createdAt, updatedAt);
+            return new Users(uuid, username, password, role, name, phoneNumber, email, createdAt, updatedAt);
         } catch (Exception e) {
             return null; // Return null if parsing fails
         }

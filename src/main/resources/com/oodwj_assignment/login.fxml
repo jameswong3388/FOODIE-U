@@ -54,20 +54,20 @@
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="412.0" layoutY="142.0" prefHeight="26.0" prefWidth="215.0" promptText="Username" />
+            <TextField fx:id="usernameTextField" layoutX="412.0" layoutY="142.0" prefHeight="26.0" prefWidth="215.0" promptText="Username" />
             <Label layoutX="414.0" layoutY="257.0" text="Forgot password?" textFill="#004aad">
                <font>
                   <Font name="Segoe UI" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="textField" layoutX="413.0" layoutY="224.0" prefHeight="26.0" prefWidth="215.0" promptText="Password" />
+            <TextField fx:id="passwordTextField" layoutX="413.0" layoutY="224.0" prefHeight="26.0" prefWidth="215.0" promptText="Password" />
             <PasswordField fx:id="passwordField" layoutX="413.0" layoutY="224.0" prefHeight="26.0" prefWidth="215.0" promptText="Password" />
-            <ImageView fx:id="eyeslash" fitHeight="18.0" fitWidth="18.0" layoutX="598.0" layoutY="228.0" nodeOrientation="INHERIT" onMouseClicked="#eyeslashClicked" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="eyeIcon" fitHeight="18.0" fitWidth="18.0" layoutX="598.0" layoutY="228.0" nodeOrientation="INHERIT" onMouseClicked="#eyeslashClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/hide.png" />
                </image>
             </ImageView>
-            <Button fx:id="loginButton" alignment="CENTER" defaultButton="true" layoutX="439.0" layoutY="313.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: #0454BF;" text="Login" textAlignment="CENTER" textFill="WHITE">
+            <Button alignment="CENTER" defaultButton="true" layoutX="439.0" layoutY="313.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: #0454BF;" text="Login" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

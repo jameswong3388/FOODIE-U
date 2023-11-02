@@ -1,71 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusMenuController">
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TabPane layoutX="11.0" layoutY="74.0" prefHeight="444.0" prefWidth="467.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="14.0" layoutY="64.0" prefHeight="450.0" prefWidth="465.0" styleClass="background-color-2" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Food">
+            <Tab text="Main Course">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane prefHeight="418.0" prefWidth="466.0">
+                           <content>
+                              <GridPane fx:id="mainCourseGrid" prefHeight="0.0" prefWidth="0.0">
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+          <Tab text="Appetizer">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="360.0" prefWidth="467.0" styleClass="background-color-2">
                      <children>
-                        <ScrollPane prefHeight="411.0" prefWidth="467.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="482.0" prefWidth="467.0" />
-                          </content>
+                        <ScrollPane prefHeight="418.0" prefWidth="466.0">
+                           <content>
+                              <GridPane fx:id="appetizerGrid" prefHeight="0.0" prefWidth="0.0">
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                           </content>
                         </ScrollPane>
                      </children></AnchorPane>
             </content>
           </Tab>
           <Tab text="Dessert">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="534.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="534.0">
+                     <children>
+                        <ScrollPane prefHeight="418.0" prefWidth="466.0">
+                           <content>
+                              <GridPane fx:id="dessertGrid" prefHeight="0.0" prefWidth="0.0">
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
             </content>
           </Tab>
-            <Tab text="Beverage">
+            <Tab text="Drink">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane prefHeight="418.0" prefWidth="466.0">
+                           <content>
+                              <GridPane fx:id="drinkGrid" prefHeight="0.0" prefWidth="0.0">
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
       </TabPane>
-      <AnchorPane layoutX="488.0" layoutY="74.0" prefHeight="444.0" prefWidth="337.0">
+      <AnchorPane layoutX="488.0" layoutY="61.0" prefHeight="457.0" prefWidth="342.0">
          <children>
-            <TableView layoutX="3.0" prefHeight="294.0" prefWidth="338.0" styleClass="background-color-2">
+            <TableView layoutX="3.0" prefHeight="306.0" prefWidth="338.0" styleClass="background-color-2">
               <columns>
-                <TableColumn prefWidth="28.0" resizable="false" text="No" />
-                <TableColumn prefWidth="114.39996337890625" resizable="false" text="Item" />
-                  <TableColumn prefWidth="28.800048828125" resizable="false" text="Qty" />
-                  <TableColumn prefWidth="67.20001220703125" resizable="false" text="Price" />
-                  <TableColumn prefWidth="70.0" resizable="false" text="Amount" />
-                  <TableColumn prefWidth="40.0" resizable="false" />
+                <TableColumn fx:id="itemColumn" prefWidth="113.60003662109375" resizable="false" text="Item" />
+                  <TableColumn fx:id="priceColumn" prefWidth="84.80010986328125" resizable="false" text="Unit Price" />
+                  <TableColumn fx:id="quantityColumn" prefWidth="58.39990234375" resizable="false" text="Quantity" />
+                  <TableColumn fx:id="amountColumn" prefWidth="84.0001220703125" resizable="false" text="Amount" />
               </columns>
             </TableView>
-            <Label layoutX="89.0" layoutY="310.0" prefHeight="23.0" prefWidth="56.0" text="Total: ">
+            <Label layoutX="174.0" layoutY="321.0" prefHeight="23.0" prefWidth="56.0" text="Total: ">
                <font>
                   <Font name="Segoe UI Bold" size="18.0" />
                </font>
             </Label>
-            <Button focusTraversable="false" layoutX="14.0" layoutY="349.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="37.0" prefWidth="315.0" text="Place Order" textFill="WHITE">
+            <Button focusTraversable="false" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="37.0" prefWidth="315.0" text="Place Order" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font></Button>
-            <Button focusTraversable="false" layoutX="14.0" layoutY="399.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #FFE8CC;" text="Receipt" textFill="#ff8a00">
+            <Button focusTraversable="false" layoutX="178.0" layoutY="413.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #FFE8CC;" text="Receipt" textFill="#ff8a00">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font></Button>
-            <Button focusTraversable="false" layoutX="178.0" layoutY="399.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE">
+            <Button focusTraversable="false" layoutX="14.0" layoutY="413.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Button>
+            <Label fx:id="totalLabel" layoutX="230.0" layoutY="321.0" prefHeight="23.0" prefWidth="101.0">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="346.0" layoutY="22.0" text="Restaurant Name">
+      <Label fx:id="nameLabel" layoutX="346.0" layoutY="22.0" text="Restaurant Name">
          <font>
             <Font name="Segoe UI Bold" size="18.0" />
          </font>

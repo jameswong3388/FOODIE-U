@@ -7,10 +7,10 @@ public class Orders extends Model {
     private  UUID userId;
     private  Double totalPrice;
     private  Integer totalQuantity;
-    private  oderStatus status;
+    private  orderStatus status;
     private  orderType type;
 
-    public Orders(UUID orderId, UUID userId, Double totalPrice, Integer totalQuantity, oderStatus status, orderType type, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Orders(UUID orderId, UUID userId, Double totalPrice, Integer totalQuantity, orderStatus status, orderType type, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(orderId, updatedAt, createdAt);
         this.userId = userId;
         this.totalPrice = totalPrice;
@@ -31,9 +31,7 @@ public class Orders extends Model {
         return totalQuantity;
     }
 
-    public oderStatus getStatus() {
-        return status;
-    }
+    public orderStatus getStatus() { return status; }
 
     public orderType getType() {
         return type;
@@ -51,7 +49,7 @@ public class Orders extends Model {
         this.totalQuantity = totalQuantity;
     }
 
-    public void setStatus(oderStatus status) {
+    public void setStatus(orderStatus status) {
         this.status = status;
     }
 
@@ -65,14 +63,13 @@ public class Orders extends Model {
         Delivery
     }
 
-    public enum oderStatus {
+    public enum orderStatus {
         OrderPlaced,
-        Processing,
-        PreparingToShip,
-        Shipped,
-        Delivered,
-        Cancelled,
-        Declined
+        Accepted,
+        Declined,
+        FoodsReady,
+        Completed,
+        Cancelled
     }
 
     @Override

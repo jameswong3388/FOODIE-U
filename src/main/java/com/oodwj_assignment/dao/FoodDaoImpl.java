@@ -19,12 +19,11 @@ public class FoodDaoImpl extends AbstractDao<Foods> implements FoodDao {
             UUID storeId = UUID.fromString(parts[1]);
             String foodName = parts[2];
             Foods.foodType foodType = Foods.foodType.valueOf(parts[3]);
-            String foodDescription = parts[4];
-            Double foodPrice = Double.parseDouble(parts[5]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
+            Double foodPrice = Double.parseDouble(parts[4]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[5]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
 
-            return new Foods(foodId, storeId, foodName, foodType, foodDescription, foodPrice, updatedAt, createdAt);
+            return new Foods(foodId, storeId, foodName, foodType, foodPrice, updatedAt, createdAt);
         } catch (Exception e) {
             System.out.println("Failed to parse food: " + e.getMessage());
             return null;
