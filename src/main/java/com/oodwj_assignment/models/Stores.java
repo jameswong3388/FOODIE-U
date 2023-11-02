@@ -57,6 +57,6 @@ public class Stores extends Model {
 
     @Override
     public String toString() {
-        return getId() + ";" + getName() + ";" + getVendorId() + ";" + getUpdatedAt() + ";" + getCreatedAt();
+        return getId() + ";" + getName() + ";" + getVendorId() + ";" + getDescription() + ";"+ getCategory() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

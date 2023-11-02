@@ -1,5 +1,10 @@
 package com.oodwj_assignment;
 
+import com.oodwj_assignment.dao.base.DaoFactory;
+import com.oodwj_assignment.helpers.Response;
+import com.oodwj_assignment.models.Foods;
+import com.oodwj_assignment.models.OrderFoods;
+import com.oodwj_assignment.models.Orders;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,30 +22,24 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class venMainController {
 
-    @FXML
-    private BorderPane borderpane;
-    @FXML
-    private ImageView homeIcon;
-    @FXML
-    private ImageView menuIcon;
-    @FXML
-    private ImageView revenueIcon;
-    @FXML
-    private ImageView reviewIcon;
-    @FXML
-    private ImageView profileIcon;
-    @FXML
-    private ImageView logoutIcon;
-    @FXML
-    private ImageView notificationIcon;
+    @FXML private BorderPane borderpane;
+    @FXML private ImageView homeIcon;
+    @FXML private ImageView orderIcon;
+    @FXML private ImageView menuIcon;
+    @FXML private ImageView revenueIcon;
+    @FXML private ImageView reviewIcon;
+    @FXML private ImageView profileIcon;
+    @FXML private ImageView logoutIcon;
+    @FXML private ImageView notificationIcon;
+    public static UUID storeId = UUID.fromString("5d6e7f8a-9b0c-1d2e-3f4a-5c6b7d8e9f0a");
+    public static UUID vendorId = UUID.fromString("8a7ed604-d77a-476f-87c5-8c7e71940756");
 
     public void initialize() throws IOException {
-        // Load an image file and set it to the ImageView
         Image home = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/home-orange.png")));
         homeIcon.setImage(home);
         AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venHome.fxml")));
@@ -51,6 +50,8 @@ public class venMainController {
         // Load an image file and set it to the ImageView
         Image home = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/home-grey.png")));
         homeIcon.setImage(home);
+        Image order = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/order-grey.png")));
+        orderIcon.setImage(order);
         Image menu = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/menu-grey.png")));
         menuIcon.setImage(menu);
         Image revenue = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/revenue-grey.png")));
@@ -71,6 +72,14 @@ public class venMainController {
         defaultSettings();
         Image home = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/home-orange.png")));
         homeIcon.setImage(home);
+    }
+
+    public void btnOrderClicked(ActionEvent event) throws IOException {
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venOrder.fxml")));
+        borderpane.setCenter(view);
+        defaultSettings();
+        Image order = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/order-orange.png")));
+        orderIcon.setImage(order);
     }
 
     public void btnMenuClicked(ActionEvent event) throws IOException {
@@ -134,6 +143,7 @@ public class venMainController {
             cusStage.close();
         }
     }
+
     public void btnNotificationClicked(ActionEvent event) throws IOException {
         AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venNotification.fxml")));
         borderpane.setCenter(view);
@@ -142,5 +152,43 @@ public class venMainController {
         notificationIcon.setImage(notification);
     }
 
+    public static void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public static List<UUID> getOrderIds() {
+        Set<UUID> storeOrderIds = new HashSet<>();
+
+        Map<String, Object> foodQuery = Map.of("storeId", storeId);
+        Response<ArrayList<Foods>> foodResponse = DaoFactory.getFoodDao().read(foodQuery);
+
+        if (foodResponse.isSuccess()) {
+            List<UUID> foodIds = foodResponse.getData().stream()
+                    .map(Foods::getId)
+                    .toList();
+
+            for (UUID foodId : foodIds) {
+                Map<String, Object> orderFoodQuery = Map.of("foodId", foodId);
+                Response<ArrayList<OrderFoods>> orderFoodsResponse = DaoFactory.getOrderFoodDao().read(orderFoodQuery);
+
+                if (orderFoodsResponse.isSuccess()) {
+                    List<UUID> orderIds = orderFoodsResponse.getData().stream()
+                            .map(OrderFoods::getOrderId)
+                            .distinct()
+                            .toList();
+
+                    storeOrderIds.addAll(orderIds);
+                }
+            }
+        } else {
+            showAlert("Error", "Failed to retrieve foodIds for the store: " + foodResponse.getMessage());
+        }
+
+        return new ArrayList<>(storeOrderIds);
+    }
 
 }

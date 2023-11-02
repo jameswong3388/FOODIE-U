@@ -7,17 +7,19 @@ import java.util.UUID;
 public class Users extends Model {
     private String username;
     private String password;
-    private String email;
-    private Integer age;
     private Role role;
+    private String name;
+    private String phoneNumber;
+    private String email;
 
-    public Users(UUID userId, String username, String password, String email, Integer age, Role role, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Users(UUID userId, String username, String password, Role role, String name, String phoneNumber, String email, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(userId, updatedAt, createdAt);
         this.username = username;
         this.password = password;
-        this.email = email;
-        this.age = age;
         this.role = role;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
     }
     public String getUsername() {
         return username;
@@ -27,17 +29,15 @@ public class Users extends Model {
         return password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
     public Role getRole() {
         return role;
     }
+
+    public String getName() { return name; }
+
+    public String getPhoneNumber() { return phoneNumber; }
+
+    public String getEmail() { return email; }
 
     public void setUsername(String username) {
         this.username = username;
@@ -47,17 +47,15 @@ public class Users extends Model {
         this.password = password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public void setName(String name) { this.name = name; }
+
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    public void setEmail(String email) { this.email = email; }
 
     public enum Role {
         Admin,
@@ -68,6 +66,6 @@ public class Users extends Model {
 
     @Override
     public String toString() {
-        return getId() + ";" + getUsername() + ";" + getPassword() + ";" + getEmail() + ";" + getAge() + ";" + getRole() + ";" + getUpdatedAt() + ";" + getCreatedAt();
+        return getId() + ";" + getUsername() + ";" + getPassword() + ";" + getRole() + ";" + getName() + ";" + getPhoneNumber() + ";" + getEmail() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

@@ -52,11 +52,9 @@ public class Tasks extends Model {
     public enum taskStatus {
         Pending,
         Accepted,
-        Processing,
-        PreparingToShip,
-        Shipped,
+        Declined,
+        PickedUp,
         Delivered,
-        Cancelled
     }
 
     @Override

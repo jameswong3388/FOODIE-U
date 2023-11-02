@@ -8,15 +8,13 @@ public class Foods extends Model {
     private UUID storeId;
     private String foodName;
     private Foods.foodType foodType;
-    private String foodDescription;
     private Double foodPrice;
 
-    public Foods(UUID foodId, UUID storeId, String foodName, Foods.foodType foodType, String foodDescription, Double foodPrice, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Foods(UUID foodId, UUID storeId, String foodName, Foods.foodType foodType, Double foodPrice, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(foodId, updatedAt, createdAt);
         this.storeId = storeId;
         this.foodName = foodName;
         this.foodType = foodType;
-        this.foodDescription = foodDescription;
         this.foodPrice = foodPrice;
     }
 
@@ -30,10 +28,6 @@ public class Foods extends Model {
 
     public Foods.foodType getFoodType() {
         return foodType;
-    }
-
-    public String getFoodDescription() {
-        return foodDescription;
     }
 
     public Double getFoodPrice() {
@@ -52,10 +46,6 @@ public class Foods extends Model {
         this.foodType = foodType;
     }
 
-    public void setFoodDescription(String foodDescription) {
-        this.foodDescription = foodDescription;
-    }
-
     public void setFoodPrice(Double foodPrice) {
         this.foodPrice = foodPrice;
     }
@@ -69,6 +59,6 @@ public class Foods extends Model {
 
     @Override
     public String toString() {
-        return getId() + ";" + getStoreId() + ";" + getFoodName() + ";" + getFoodType() + ";" + getFoodDescription() + ";" + getFoodPrice() + ";" + getUpdatedAt() + ";" + getCreatedAt();
+        return getId() + ";" + getStoreId() + ";" + getFoodName() + ";" + getFoodType() + ";" + getFoodPrice() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

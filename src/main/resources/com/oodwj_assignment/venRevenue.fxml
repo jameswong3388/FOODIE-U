@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.venRevenueController">
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.venRevenueController">
    <children>
       <Label layoutX="24.0" layoutY="26.0" text="Revenue Dashboard">
          <font>
@@ -26,7 +32,7 @@
                   <Image url="@../../images/revenue.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="92.0" layoutY="26.0" prefHeight="24.0" prefWidth="134.0" text="RM2400.00" textAlignment="CENTER">
+            <Label fx:id="revenueLabel" alignment="CENTER" layoutX="92.0" layoutY="26.0" prefHeight="24.0" prefWidth="134.0" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Bold" size="20.0" />
                </font>
@@ -49,7 +55,7 @@
                   <Image url="@../../images/mobile-order.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="92.0" layoutY="26.0" prefHeight="24.0" prefWidth="134.0" text="300" textAlignment="CENTER">
+            <Label fx:id="totalOrdersLabel" alignment="CENTER" layoutX="92.0" layoutY="26.0" prefHeight="24.0" prefWidth="134.0" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Bold" size="20.0" />
                </font>
@@ -62,7 +68,7 @@
       </Pane>
       <Pane layoutX="572.0" layoutY="66.0" prefHeight="99.0" prefWidth="242.0">
          <children>
-            <Label alignment="CENTER" layoutX="93.0" layoutY="59.0" prefHeight="19.0" prefWidth="134.0" text="Qty" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="93.0" layoutY="59.0" prefHeight="19.0" prefWidth="134.0" text="Quantity" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
@@ -72,7 +78,7 @@
                   <Image url="@../../images/food.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="92.0" layoutY="26.0" prefHeight="24.0" prefWidth="134.0" text="600" textAlignment="CENTER">
+            <Label fx:id="quantityLabel" alignment="CENTER" layoutX="92.0" layoutY="26.0" prefHeight="24.0" prefWidth="134.0" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Bold" size="20.0" />
                </font>
@@ -83,7 +89,7 @@
             <String fx:value="rounded-shape" />
          </styleClass>
       </Pane>
-      <LineChart layoutX="24.0" layoutY="226.0" prefHeight="282.0" prefWidth="792.0">
+      <LineChart fx:id="revenueLineChart" layoutX="24.0" layoutY="226.0" prefHeight="292.0" prefWidth="792.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -91,7 +97,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <ToggleButton layoutX="151.0" layoutY="191.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="134.0" text="Daily" textFill="WHITE">
+      <ToggleButton layoutX="109.0" layoutY="191.0" mnemonicParsing="false" onAction="#dailyToggleClicked" prefHeight="34.0" prefWidth="134.0" styleClass="primary-color" text="Daily" textFill="WHITE">
          <font>
             <Font name="Segoe UI Bold" size="12.0" />
          </font>
@@ -99,17 +105,17 @@
             <ToggleGroup fx:id="dateFilter" />
          </toggleGroup>
       </ToggleButton>
-      <ToggleButton layoutX="286.0" layoutY="191.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="134.0" text="Weekly" textFill="WHITE" toggleGroup="$dateFilter">
+      <ToggleButton layoutX="268.0" layoutY="191.0" mnemonicParsing="false" onAction="#weeklyToggleClicked" prefHeight="34.0" prefWidth="134.0" styleClass="primary-color" text="Weekly" textFill="WHITE" toggleGroup="$dateFilter">
          <font>
             <Font name="Segoe UI Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton layoutX="420.0" layoutY="191.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="134.0" text="Monthly" textFill="WHITE" toggleGroup="$dateFilter">
+      <ToggleButton layoutX="431.0" layoutY="191.0" mnemonicParsing="false" onAction="#monthlyToggleClicked" prefHeight="34.0" prefWidth="134.0" styleClass="primary-color" text="Monthly" textFill="WHITE" toggleGroup="$dateFilter">
          <font>
             <Font name="Segoe UI Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton layoutX="554.0" layoutY="191.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="134.0" text="Yearly" textFill="WHITE" toggleGroup="$dateFilter">
+      <ToggleButton layoutX="595.0" layoutY="191.0" mnemonicParsing="false" onAction="#yearlyToggleClicked" prefHeight="34.0" prefWidth="134.0" styleClass="primary-color" text="Yearly" textFill="WHITE" toggleGroup="$dateFilter">
          <font>
             <Font name="Segoe UI Bold" size="12.0" />
          </font>

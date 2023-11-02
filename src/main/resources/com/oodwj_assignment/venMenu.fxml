@@ -1,61 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.venMenuController">
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.venMenuController">
    <children>
-      <TableView layoutX="300.0" layoutY="62.0" prefHeight="452.0" prefWidth="520.0">
+      <TableView fx:id="menuTableView" layoutX="300.0" layoutY="54.0" prefHeight="460.0" prefWidth="520.0">
         <columns>
-          <TableColumn prefWidth="113.5999755859375" text="Item ID" />
-            <TableColumn prefWidth="84.7999267578125" text="Date" />
-          <TableColumn prefWidth="114.4000244140625" text="Item Name" />
-            <TableColumn prefWidth="99.20001220703125" text="Type" />
-            <TableColumn prefWidth="106.4000244140625" text="Price" />
+          <TableColumn fx:id="itemIdColumn" prefWidth="90.39996337890625" text="Item ID" />
+            <TableColumn fx:id="createdDateColumn" prefWidth="108.0" text="Created Date" />
+          <TableColumn fx:id="itemNameColumn" prefWidth="114.4000244140625" text="Item Name" />
+            <TableColumn fx:id="itemTypeColumn" prefWidth="99.20001220703125" text="Type" />
+            <TableColumn fx:id="itemPriceColumn" prefWidth="106.4000244140625" text="Price" />
         </columns>
       </TableView>
-      <Label layoutX="23.0" layoutY="24.0" prefHeight="26.0" prefWidth="51.0" text="Menu">
+      <Label layoutX="23.0" layoutY="14.0" prefHeight="26.0" prefWidth="51.0" text="Menu">
          <font>
             <Font name="Segoe UI Bold" size="18.0" />
          </font>
       </Label>
-      <TabPane layoutX="23.0" layoutY="62.0" prefHeight="452.0" prefWidth="259.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="23.0" layoutY="54.0" prefHeight="460.0" prefWidth="259.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Add Item">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="31.0" layoutY="26.0" text="Item ID:">
+                        <Label layoutX="31.0" layoutY="46.0" text="Item Name:">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="31.0" layoutY="54.0" prefHeight="26.0" prefWidth="197.0" />
-                        <Label layoutX="31.0" layoutY="91.0" text="Item Name:">
+                        <TextField fx:id="addItemName" layoutX="31.0" layoutY="74.0" prefHeight="26.0" prefWidth="197.0" />
+                        <ComboBox fx:id="addItemType" layoutX="31.0" layoutY="141.0" prefHeight="26.0" prefWidth="197.0" />
+                        <Label layoutX="31.0" layoutY="113.0" text="Type:">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="31.0" layoutY="119.0" prefHeight="26.0" prefWidth="197.0" />
-                        <ComboBox layoutX="31.0" layoutY="186.0" prefHeight="26.0" prefWidth="197.0" />
-                        <Label layoutX="31.0" layoutY="158.0" text="Type:">
+                        <Label layoutX="31.0" layoutY="182.0" text="Price:">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="31.0" layoutY="227.0" text="Price:">
-                           <font>
-                              <Font name="Segoe UI" size="14.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="31.0" layoutY="255.0" prefHeight="26.0" prefWidth="197.0" />
-                        <Button focusTraversable="false" layoutX="62.0" layoutY="302.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Add" textFill="WHITE">
+                        <TextField fx:id="addItemPrice" layoutX="31.0" layoutY="210.0" prefHeight="26.0" prefWidth="197.0" />
+                        <Button focusTraversable="false" layoutX="62.0" layoutY="302.0" mnemonicParsing="false" onAction="#addButtonClicked" prefHeight="34.0" prefWidth="135.0" text="Add" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button focusTraversable="false" layoutX="62.0" layoutY="350.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" style="-fx-background-color: #c8c8c8;" text="Clear" textFill="WHITE">
+                        <Button focusTraversable="false" layoutX="62.0" layoutY="350.0" mnemonicParsing="false" onAction="#clearButtonClicked" prefHeight="34.0" prefWidth="135.0" style="-fx-background-color: #c8c8c8;" text="Clear" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -73,14 +74,14 @@
                               <Font name="Segoe UI" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="31.0" layoutY="54.0" prefHeight="26.0" prefWidth="197.0" />
+                        <ComboBox fx:id="modifyItemId" layoutX="31.0" layoutY="54.0" onAction="#itemIdSelected" prefHeight="26.0" prefWidth="197.0" />
                         <Label layoutX="31.0" layoutY="91.0" text="Item Name:">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="31.0" layoutY="119.0" prefHeight="26.0" prefWidth="197.0" />
-                        <ComboBox layoutX="31.0" layoutY="186.0" prefHeight="26.0" prefWidth="197.0" />
+                        <TextField fx:id="modifyItemName" layoutX="31.0" layoutY="119.0" prefHeight="26.0" prefWidth="197.0" />
+                        <ComboBox fx:id="modifyItemType" layoutX="31.0" layoutY="186.0" prefHeight="26.0" prefWidth="197.0" />
                         <Label layoutX="31.0" layoutY="158.0" text="Type:">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
@@ -91,13 +92,13 @@
                               <Font name="Segoe UI" size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="31.0" layoutY="255.0" prefHeight="26.0" prefWidth="197.0" />
-                        <Button focusTraversable="false" layoutX="62.0" layoutY="302.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Update" textFill="WHITE">
+                        <TextField fx:id="modifyItemPrice" layoutX="31.0" layoutY="255.0" prefHeight="26.0" prefWidth="197.0" />
+                        <Button focusTraversable="false" layoutX="62.0" layoutY="302.0" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="34.0" prefWidth="135.0" text="Update" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button focusTraversable="false" layoutX="62.0" layoutY="350.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" style="-fx-background-color: #c8c8c8;" text="Delete" textFill="WHITE">
+                        <Button focusTraversable="false" layoutX="62.0" layoutY="350.0" mnemonicParsing="false" onAction="#deleteButtonClicked" prefHeight="34.0" prefWidth="135.0" style="-fx-background-color: #c8c8c8;" text="Delete" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
