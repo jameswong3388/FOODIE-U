@@ -66,6 +66,10 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
             return Response.failure("Incorrect password");
         }
 
+        if (user.getData().getAccountStatus() != Users.AccountStatus.Approved) {
+            return Response.failure("Your account is pending to be approved, please try again later");
+        }
+
         Response<ArrayList<Sessions>> sessions = read(Map.of());
 
         UUID newSessionToken = generateSessionToken();
