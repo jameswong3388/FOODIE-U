@@ -11,8 +11,9 @@ public class Users extends Model {
     private String name;
     private String phoneNumber;
     private String email;
+    private AccountStatus accountStatus;
 
-    public Users(UUID userId, String username, String password, Role role, String name, String phoneNumber, String email, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Users(UUID userId, String username, String password, Role role, String name, String phoneNumber, String email, AccountStatus accountStatus, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(userId, updatedAt, createdAt);
         this.username = username;
         this.password = password;
@@ -20,7 +21,9 @@ public class Users extends Model {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.accountStatus = accountStatus;
     }
+
     public String getUsername() {
         return username;
     }
@@ -33,11 +36,21 @@ public class Users extends Model {
         return role;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public String getPhoneNumber() { return phoneNumber; }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
+
+    public AccountStatus getAccountStatus() {
+        return accountStatus;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -51,11 +64,21 @@ public class Users extends Model {
         this.role = role;
     }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAccountStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
 
     public enum Role {
         Admin,
@@ -64,8 +87,13 @@ public class Users extends Model {
         Delivery_Runner
     }
 
+    public enum AccountStatus {
+        Approved,
+        Pending,
+    }
+
     @Override
     public String toString() {
-        return getId() + ";" + getUsername() + ";" + getPassword() + ";" + getRole() + ";" + getName() + ";" + getPhoneNumber() + ";" + getEmail() + ";" + getUpdatedAt() + ";" + getCreatedAt();
+        return getId() + ";" + getUsername() + ";" + getPassword() + ";" + getRole() + ";" + getName() + ";" + getPhoneNumber() + ";" + getEmail() + ";" + getAccountStatus() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }
