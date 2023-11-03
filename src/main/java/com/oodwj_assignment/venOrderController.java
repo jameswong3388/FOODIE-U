@@ -31,8 +31,6 @@ public class venOrderController {
     @FXML private Label nameLabel;
     @FXML private Label typeLabel;
     @FXML private Label dateLabel;
-    @FXML private Label subtotalLabel;
-    @FXML private Label discountLabel;
     @FXML private Label totalLabel;
     @FXML private TableColumn<OrderFoods, String> itemColumn;
     @FXML private TableColumn<OrderFoods, String> priceColumn;
@@ -120,26 +118,21 @@ public class venOrderController {
             String name = user.get(0).getName();
 
             DecimalFormat currencyFormat = new DecimalFormat("RM #,##0.00");
-            double subtotal = 0.0;
-            double discount = 5.0;
+            double total = 0.0;
 
             for (OrderFoods orderFood : orderFoodsInfo) {
                 double price = orderFood.getFoodPrice();
                 int quantity = orderFood.getFoodQuantity();
                 double amount = price * quantity;
                 orderFood.setAmount(amount);
-                subtotal += amount;
+                total += amount;
             }
-
-            double total = subtotal - discount;
 
             LocalDateTime date = orderFoodsInfo.get(0).getCreatedAt();
             nameLabel.setText(name);
             typeLabel.setText(type.toString());
             orderIdLabel.setText(orderId.toString());
             dateLabel.setText(date.withNano(0).toString());
-            subtotalLabel.setText(currencyFormat.format(subtotal));
-            discountLabel.setText(currencyFormat.format(discount));
             totalLabel.setText(currencyFormat.format(total));
             orderInfoTableView.getItems().setAll(orderFoodsInfo);
         } else {

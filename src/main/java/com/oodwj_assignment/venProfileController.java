@@ -61,6 +61,7 @@ public class venProfileController {
     private boolean isNewHidden;
     private boolean isConfirmHidden;
     private venProfileController venProfileController;
+    private venMainController mainController;
 
     public void initialize(){
         phoneNumberFormatLabel.setVisible(false);
@@ -129,6 +130,11 @@ public class venProfileController {
                 System.err.println("Image file not found: " + imageFile.getAbsolutePath());
             }
         }
+
+        if (mainController != null){
+            mainController.setVenMainController(mainController);
+            mainController.loadData();
+        }
     }
 
     public void editButtonClicked(ActionEvent event) throws IOException {
@@ -156,7 +162,7 @@ public class venProfileController {
         loadInfo();
     }
 
-    public void saveResInfoButtonClicked(ActionEvent event) {
+    public void saveResInfoButtonClicked(ActionEvent event) throws IOException {
         // Get user input
         String restaurantName = restaurantNameTextField.getText();
         String description = descriptionTextField.getText();
@@ -196,6 +202,11 @@ public class venProfileController {
         }
 
         venMainController.showAlert("Success", "Information updated successfully.");
+
+        if (mainController != null){
+            mainController.setVenMainController(mainController);
+            mainController.loadData();
+        }
         loadInfo();
     }
 
@@ -309,4 +320,6 @@ public class venProfileController {
     public void setVenProfileController(venProfileController controller) {
         this.venProfileController = controller;
     }
+
+    public void setVenMainController(venMainController controller) { mainController = controller; }
 }
