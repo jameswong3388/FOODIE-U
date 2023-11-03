@@ -6,32 +6,23 @@ import com.oodwj_assignment.models.Medias;
 import com.oodwj_assignment.models.Users;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.Year;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
-public class venProfilePicController {
+public class venMenuPicController {
 
     @FXML private Label pathLabel;
     @FXML private Button backButton;
     private File selectedFile;
-    private venProfileController venProfileController;
+    private venMenuController venMenuController;
 
     public void initialize(){
         pathLabel.setText("");
@@ -63,8 +54,8 @@ public class venProfilePicController {
             UUID userId = venMainController.vendorId;
 
             Users profile = DaoFactory.getUserDao().read(Map.of("Id", userId)).getData().get(0);
-            Medias media = new Medias(null, null, profile.getId(), "profile_pics", selectedFile.getName(),
-                    extension, "profiles", null, null, null, LocalDateTime.now(), LocalDateTime.now()
+            Medias media = new Medias(null, null, profile.getId(), "food_pics", selectedFile.getName(),
+                    extension, "menus", null, null, null, LocalDateTime.now(), LocalDateTime.now()
             );
 
             //remove existed user profile pic
@@ -74,8 +65,8 @@ public class venProfilePicController {
                 pathLabel.setText("Uploaded");
                 venMainController.showAlert("Success", "New profile added");
 
-                venProfileController.setVenProfileController(venProfileController);
-                venProfileController.loadProfilePic();
+                venMenuController.setVenMenuController(venMenuController);
+                venMenuController.initialize();
 
                 Stage profileStage = (Stage) backButton.getScene().getWindow();
                 profileStage.close();
@@ -83,7 +74,7 @@ public class venProfilePicController {
         }
     }
 
-    public void setVenProfileController(venProfileController controller) {
-        this.venProfileController = controller;
+    public void setVenMenuController(com.oodwj_assignment.venMenuController controller) {
+        this.venMenuController = controller;
     }
 }

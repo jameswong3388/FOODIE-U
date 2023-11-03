@@ -149,7 +149,7 @@
                </children>
             </Pane>
             <TextField prefHeight="30.0" prefWidth="197.0" promptText="Search for food &amp; restaurants" style="-fx-background-color: #ffffff;" />
-            <Pane prefHeight="70.0" prefWidth="346.0" />
+            <Pane prefHeight="70.0" prefWidth="369.0" />
             <Button mnemonicParsing="false" onAction="#btnNotificationClicked" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fx:id="notificationIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -159,13 +159,13 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Pane prefHeight="70.0" prefWidth="22.0" />
-            <Label alignment="BASELINE_LEFT" prefHeight="16.0" prefWidth="150.0" styleClass="primary-text-color" text="Foong Yi Hen">
+            <Pane prefHeight="70.0" prefWidth="8.0" />
+            <Label fx:id="nameLabel" alignment="BASELINE_LEFT" prefHeight="16.0" prefWidth="126.0" styleClass="primary-text-color">
                <font>
                   <Font name="Trebuchet MS" size="14.0" />
                </font>
             </Label>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="profilePic" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/sample-profile.png" />
                </image></ImageView>
