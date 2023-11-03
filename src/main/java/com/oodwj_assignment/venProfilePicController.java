@@ -44,12 +44,30 @@ public class venProfilePicController {
 
     public void browseButtonClicked(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select a File");
+        fileChooser.setTitle("Select an Image File");
+
+        // Set the file extension filters to limit selection to image files
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
+        );
+
         selectedFile = fileChooser.showOpenDialog(null);
 
-        if (selectedFile != null) {
-            pathLabel.setText(selectedFile.getAbsolutePath() + " selected");
+        if (selectedFile == null){
+            return;
         }
+
+        if (!isImageFile(selectedFile.getName())) {
+            venMainController.showAlert("Upload Error", "Invalid image file format");
+            return;
+        }
+        pathLabel.setText(selectedFile.getAbsolutePath() + " selected");
+    }
+
+    private boolean isImageFile(String filename) {
+        String extension = filename.toLowerCase();
+        return extension.endsWith(".png") || extension.endsWith(".jpg")
+                || extension.endsWith(".jpeg") || extension.endsWith(".gif") || extension.endsWith(".bmp");
     }
 
     public void cancelButtonClicked(ActionEvent event) {
@@ -67,18 +85,22 @@ public class venProfilePicController {
                     extension, "profiles", null, null, null, LocalDateTime.now(), LocalDateTime.now()
             );
 
-            //remove existed user profile pic
-            Response<Void> removeResponse = DaoFactory.getUserDao().removeMedia(userId);
-            if (removeResponse.isSuccess()) {
-                Response<Void> addResponse = DaoFactory.getUserDao().addMedia(selectedFile, media);
-                pathLabel.setText("Uploaded");
-                venMainController.showAlert("Success", "New profile added");
+            //for the initial upload when there is no existing data
+            Response<Void> addResponse = DaoFactory.getUserDao().addMedia(selectedFile, media);
+            if (addResponse.isSuccess()){
+                //remove existed user profile pic
+                Response<Void> removeResponse = DaoFactory.getUserDao().removeMedia(userId);
+                if (removeResponse.isSuccess()) {
+                    DaoFactory.getUserDao().addMedia(selectedFile, media);
+                    pathLabel.setText("Uploaded");
+                    venMainController.showAlert("Success", "New profile added");
 
-                venProfileController.setVenProfileController(venProfileController);
-                venProfileController.loadProfilePic();
+                    venProfileController.setVenProfileController(venProfileController);
+                    venProfileController.loadProfilePic();
 
-                Stage profileStage = (Stage) backButton.getScene().getWindow();
-                profileStage.close();
+                    Stage profileStage = (Stage) backButton.getScene().getWindow();
+                    profileStage.close();
+                }
             }
         }
     }

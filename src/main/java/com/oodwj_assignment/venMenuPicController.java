@@ -2,6 +2,7 @@ package com.oodwj_assignment;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
+import com.oodwj_assignment.models.Foods;
 import com.oodwj_assignment.models.Medias;
 import com.oodwj_assignment.models.Users;
 import javafx.event.ActionEvent;
@@ -35,12 +36,30 @@ public class venMenuPicController {
 
     public void browseButtonClicked(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select a File");
+        fileChooser.setTitle("Select an Image File");
+
+        // Set the file extension filters to limit selection to image files
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
+        );
+
         selectedFile = fileChooser.showOpenDialog(null);
 
-        if (selectedFile != null) {
-            pathLabel.setText(selectedFile.getAbsolutePath() + " selected");
+        if (selectedFile == null){
+            return;
         }
+
+        if (!isImageFile(selectedFile.getName())) {
+            venMainController.showAlert("Upload Error", "Invalid image file format");
+            return;
+        }
+        pathLabel.setText(selectedFile.getAbsolutePath() + " selected");
+    }
+
+    private boolean isImageFile(String filename) {
+        String extension = filename.toLowerCase();
+        return extension.endsWith(".png") || extension.endsWith(".jpg")
+                || extension.endsWith(".jpeg") || extension.endsWith(".gif") || extension.endsWith(".bmp");
     }
 
     public void cancelButtonClicked(ActionEvent event) {
@@ -53,8 +72,8 @@ public class venMenuPicController {
             String extension = DaoFactory.getMediaDao().getExtensionByStringHandling(selectedFile.getName());
             UUID userId = venMainController.vendorId;
 
-            Users profile = DaoFactory.getUserDao().read(Map.of("Id", userId)).getData().get(0);
-            Medias media = new Medias(null, null, profile.getId(), "food_pics", selectedFile.getName(),
+            Foods food = DaoFactory.getFoodDao().read(Map.of("Id", userId)).getData().get(0);
+            Medias media = new Medias(null, null, food.getId(), "food_pics", selectedFile.getName(),
                     extension, "menus", null, null, null, LocalDateTime.now(), LocalDateTime.now()
             );
 

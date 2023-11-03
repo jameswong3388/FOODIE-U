@@ -180,7 +180,7 @@
          <children>
             <ImageView fx:id="profilePic" fitHeight="150.0" fitWidth="150.0" layoutX="36.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/Lion.jpg" />
+                  <Image url="@../../images/sample-profile.png" />
                </image>
             </ImageView>
             <Button alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="298.0" mnemonicParsing="false" onAction="#confidentialInfoButtonClicked" prefHeight="28.0" prefWidth="174.0" text="Login Credentials" textAlignment="CENTER" textFill="WHITE">
