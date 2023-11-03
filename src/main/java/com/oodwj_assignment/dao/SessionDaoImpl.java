@@ -1,5 +1,6 @@
 package com.oodwj_assignment.dao;
 
+import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.UniqueId;
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.helpers.Response;
@@ -178,6 +179,33 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
                 }
             } else {
                 return Response.failure("Session not found");
+            }
+        } else {
+            return Response.failure(res.getMessage());
+        }
+    }
+
+    /***
+     * Gets authenticated user
+     * @param sessionToken session token stored in global state
+     * @return a response object with status, message and data
+     */
+    public Response<Users> geAuthenticatedUser(UUID sessionToken) {
+        Response<ArrayList<Sessions>> res = read(Map.of("sessionToken", sessionToken));
+
+        if (res.isSuccess()) {
+            Sessions session = res.getData().get(0);
+
+            if (session.isActive() && session.isAuthenticated()) {
+                Response<ArrayList<Users>> user = DaoFactory.getUserDao().read(Map.of("id", session.getUserId()));
+
+                if (user.isSuccess()) {
+                    return Response.success("User is read", user.getData().get(0));
+                } else {
+                    return Response.failure(user.getMessage());
+                }
+            } else {
+                return Response.failure("User is not authenticated");
             }
         } else {
             return Response.failure(res.getMessage());

@@ -39,7 +39,7 @@ public class loginController {
         Response<UUID> loginResponse = DaoFactory.getAuthDao().login(username, password);
 
         if (loginResponse.isSuccess()) {
-            Users user = DaoFactory.getUserDao().getByUsername(username).getData();
+            Users user = DaoFactory.getAuthDao().geAuthenticatedUser(loginResponse.getData()).getData();
             Users.Role userRole = user.getRole();
 
             String fxmlPath = getFxmlPathForRole(userRole);
