@@ -6,6 +6,7 @@ import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Sessions;
 import com.oodwj_assignment.models.Users;
+import com.oodwj_assignment.states.AppState;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -163,7 +164,13 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
      * @param sessionToken session token stored in global state
      * @return a boolean indicating if user is authenticated
      */
-    public Response<Boolean> isAuthenticated(String sessionToken) {
+    public Response<Boolean> isAuthenticated() {
+        UUID sessionToken = AppState.getSessionToken();
+
+        if (sessionToken == null) {
+            return Response.failure("Session token is null");
+        }
+
         Response<ArrayList<Sessions>> res = read(Map.of("sessionToken", sessionToken));
 
         if (res.isSuccess()) {
@@ -190,7 +197,13 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
      * @param sessionToken session token stored in global state
      * @return a response object with status, message and data
      */
-    public Response<Users> geAuthenticatedUser(UUID sessionToken) {
+    public Response<Users> geAuthenticatedUser() {
+        UUID sessionToken = AppState.getSessionToken();
+
+        if (sessionToken == null) {
+            return Response.failure("Session token is null");
+        }
+
         Response<ArrayList<Sessions>> res = read(Map.of("sessionToken", sessionToken));
 
         if (res.isSuccess()) {
