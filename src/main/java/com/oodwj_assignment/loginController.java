@@ -1,5 +1,6 @@
 package com.oodwj_assignment;
 
+import com.oodwj_assignment.states.AppState;
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Users;
@@ -38,8 +39,10 @@ public class loginController {
 
         Response<UUID> loginResponse = DaoFactory.getAuthDao().login(username, password);
 
+        AppState.setSessionToken(loginResponse.getData());
+
         if (loginResponse.isSuccess()) {
-            Users user = DaoFactory.getAuthDao().geAuthenticatedUser(loginResponse.getData()).getData();
+            Users user = DaoFactory.getAuthDao().geAuthenticatedUser().getData();
             Users.Role userRole = user.getRole();
 
             String fxmlPath = getFxmlPathForRole(userRole);

@@ -28,15 +28,13 @@ public interface SessionDao extends Dao<Sessions> {
 
     /***
      * Checks if user is authenticated
-     * @param sessionToken session token stored in global state
      * @return a boolean indicating if user is authenticated
      */
-    Response<Boolean> isAuthenticated(String sessionToken);
+    Response<Boolean> isAuthenticated();
 
     /***
      * Gets authenticated user
-     * @param sessionToken session token stored in global state
      * @return a response object with status, message and data
      */
-    Response<Users> geAuthenticatedUser(UUID sessionToken);
+    Response<Users> geAuthenticatedUser();
 }

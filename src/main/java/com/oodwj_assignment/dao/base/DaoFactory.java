@@ -23,6 +23,8 @@ public class DaoFactory {
     private static final UserDao userDao = new UserDaoImpl();
     private static final WalletDao walletDao = new WalletDaoImpl();
 
+    private DaoFactory() {}
+
     /**
      * Attachment dao attachment dao.
      *
