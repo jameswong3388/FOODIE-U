@@ -1,10 +1,13 @@
 package com.oodwj_assignment.dao;
 
+import com.oodwj_assignment.dao.base.DaoFactory;
+import com.oodwj_assignment.dao.users.UserDaoImpl;
 import com.oodwj_assignment.helpers.UniqueId;
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Sessions;
 import com.oodwj_assignment.models.Users;
+import com.oodwj_assignment.states.AppState;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -159,10 +162,15 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
 
     /***
      * Checks if user is authenticated
-     * @param sessionToken session token stored in global state
      * @return a boolean indicating if user is authenticated
      */
-    public Response<Boolean> isAuthenticated(String sessionToken) {
+    public Response<Boolean> isAuthenticated() {
+        UUID sessionToken = AppState.getSessionToken();
+
+        if (sessionToken == null) {
+            return Response.failure("Session token is null");
+        }
+
         Response<ArrayList<Sessions>> res = read(Map.of("sessionToken", sessionToken));
 
         if (res.isSuccess()) {
@@ -178,6 +186,38 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
                 }
             } else {
                 return Response.failure("Session not found");
+            }
+        } else {
+            return Response.failure(res.getMessage());
+        }
+    }
+
+    /***
+     * Gets authenticated user
+     * @return a response object with status, message and data
+     */
+    public Response<Users> geAuthenticatedUser() {
+        UUID sessionToken = AppState.getSessionToken();
+
+        if (sessionToken == null) {
+            return Response.failure("Session token is null");
+        }
+
+        Response<ArrayList<Sessions>> res = read(Map.of("sessionToken", sessionToken));
+
+        if (res.isSuccess()) {
+            Sessions session = res.getData().get(0);
+
+            if (session.isActive() && session.isAuthenticated()) {
+                Response<ArrayList<Users>> user = DaoFactory.getUserDao().read(Map.of("id", session.getUserId()));
+
+                if (user.isSuccess()) {
+                    return Response.success("User is read", user.getData().get(0));
+                } else {
+                    return Response.failure(user.getMessage());
+                }
+            } else {
+                return Response.failure("User is not authenticated");
             }
         } else {
             return Response.failure(res.getMessage());

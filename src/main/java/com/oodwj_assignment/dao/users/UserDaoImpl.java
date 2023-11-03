@@ -1,4 +1,4 @@
-package com.oodwj_assignment.dao;
+package com.oodwj_assignment.dao.users;
 
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.dao.base.DaoFactory;
