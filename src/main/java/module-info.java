@@ -8,4 +8,6 @@ module com.oodwj_assigment {
     exports com.oodwj_assignment;
     exports com.oodwj_assignment.dao;
     opens com.oodwj_assignment.dao to javafx.fxml;
+    exports com.oodwj_assignment.dao.users;
+    opens com.oodwj_assignment.dao.users to javafx.fxml;
 }

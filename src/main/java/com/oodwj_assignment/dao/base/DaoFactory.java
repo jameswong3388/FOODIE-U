@@ -2,6 +2,8 @@ package com.oodwj_assignment.dao.base;
 
 import com.oodwj_assignment.dao.*;
 import com.oodwj_assignment.dao.AttachmentDaoImpl;
+import com.oodwj_assignment.dao.users.UserDao;
+import com.oodwj_assignment.dao.users.UserDaoImpl;
 
 /**
  * Factory method for singleton implementation of DAOs

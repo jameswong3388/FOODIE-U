@@ -3,10 +3,10 @@ package com.oodwj_assignment.models;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class RunnerProfile extends Model {
+public class AdminProfile extends Model{
     private UUID userId;
 
-    public RunnerProfile(UUID profileId, UUID userId, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public AdminProfile(UUID profileId, UUID userId, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(profileId, updatedAt, createdAt);
         this.userId = userId;
     }
