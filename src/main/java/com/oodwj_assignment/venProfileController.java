@@ -25,7 +25,9 @@ import java.awt.event.KeyEvent;
 import javafx.scene.image.ImageView;
 
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class venProfileController {
@@ -50,6 +52,7 @@ public class venProfileController {
     @FXML private TextField newPassTextField;
     @FXML private TextField confirmPassTextField;
     @FXML private TextField usernameTextField;
+    @FXML private ImageView profilePic;
 
     private UUID storeId = venMainController.storeId;
     private UUID vendorId = venMainController.vendorId;
@@ -57,8 +60,7 @@ public class venProfileController {
     private boolean isOldHidden;
     private boolean isNewHidden;
     private boolean isConfirmHidden;
-
-
+    private venProfileController venProfileController;
 
     public void initialize(){
         phoneNumberFormatLabel.setVisible(false);
@@ -73,7 +75,9 @@ public class venProfileController {
         loadInfo();
     }
 
-    private void loadInfo(){
+    public void loadInfo(){
+        loadProfilePic();
+
         Map<String, Object> storeQuery = Map.of("Id", storeId);
         Response<ArrayList<Stores>> storeResponse = DaoFactory.getStoreDao().read(storeQuery);
 
@@ -113,12 +117,29 @@ public class venProfileController {
         updatePasswordVisibility(isConfirmHidden, confirmPassField, confirmPassTextField, confirmPassEyeIcon);
     }
 
+    public void loadProfilePic(){
+        Response<String> mediaResponse = DaoFactory.getUserDao().getFirstMedia(vendorId);
+        if (mediaResponse.isSuccess()){
+            String imagePath = mediaResponse.getData();
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                Image image = new Image(imageFile.toURI().toString());
+                profilePic.setImage(image);
+            } else {
+                System.err.println("Image file not found: " + imageFile.getAbsolutePath());
+            }
+        }
+    }
+
     public void editButtonClicked(ActionEvent event) throws IOException {
-        Parent profileRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venProfilePic.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("venProfilePic.fxml"));
+        Parent profilePicRoot = loader.load();
+        venProfilePicController profilePicController = loader.getController();
+        profilePicController.setVenProfileController(this);
         Stage profile = new Stage();
         profile.setTitle("Profile Picture");
         profile.initStyle(StageStyle.UNDECORATED);
-        profile.setScene(new Scene(profileRoot));
+        profile.setScene(new Scene(profilePicRoot));
         profile.initModality(Modality.APPLICATION_MODAL);
         profile.showAndWait();
     }
@@ -283,5 +304,9 @@ public class venProfileController {
             }
             return null;
         });
+    }
+
+    public void setVenProfileController(venProfileController controller) {
+        this.venProfileController = controller;
     }
 }

@@ -14,10 +14,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,6 +38,8 @@ public class venMainController {
     @FXML private ImageView profileIcon;
     @FXML private ImageView logoutIcon;
     @FXML private ImageView notificationIcon;
+    @FXML private ImageView profilePic;
+    @FXML private Label nameLabel;
     public static UUID storeId = UUID.fromString("5d6e7f8a-9b0c-1d2e-3f4a-5c6b7d8e9f0a");
     public static UUID vendorId = UUID.fromString("8a7ed604-d77a-476f-87c5-8c7e71940756");
 
@@ -44,6 +48,8 @@ public class venMainController {
         homeIcon.setImage(home);
         AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venHome.fxml")));
         borderpane.setCenter(view);
+        String name = DaoFactory.getUserDao().read(Map.of("Id", vendorId)).getData().get(0).getName();
+        nameLabel.setText(name);
     }
 
     public void defaultSettings() {

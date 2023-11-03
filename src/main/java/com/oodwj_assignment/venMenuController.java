@@ -9,9 +9,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -25,12 +32,15 @@ public class venMenuController {
     @FXML private TableColumn<Foods, LocalDateTime> createdDateColumn;
     @FXML private TextField addItemName;
     @FXML private TextField addItemPrice;
+    @FXML private TextField addImage;
+    @FXML private TextField modifyImage;
     @FXML private ComboBox<Foods.foodType> addItemType;
     @FXML private ComboBox<UUID> modifyItemId;
     @FXML private TextField modifyItemName;
     @FXML private TextField modifyItemPrice;
     @FXML private ComboBox<Foods.foodType> modifyItemType;
     private UUID storeId;
+    private venMenuController venMenuController;
 
     public void initialize(){
         storeId = venMainController.storeId;
@@ -62,6 +72,23 @@ public class venMenuController {
         } else {
             System.out.println("Failed to read orders: " + response.getMessage());
         }
+    }
+
+    public void addImageClicked() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("venMenuPic.fxml"));
+        Parent profilePicRoot = loader.load();
+        venMenuPicController menuPicController = loader.getController();
+        menuPicController.setVenMenuController(this);
+        Stage profile = new Stage();
+        profile.setTitle("Food Image");
+        profile.initStyle(StageStyle.UNDECORATED);
+        profile.setScene(new Scene(profilePicRoot));
+        profile.initModality(Modality.APPLICATION_MODAL);
+        profile.showAndWait();
+    }
+
+    public void modifyImageClicked(){
+
     }
 
     public void addButtonClicked(ActionEvent event) {
@@ -198,5 +225,9 @@ public class venMenuController {
         modifyItemName.clear();
         modifyItemType.setValue(null);
         modifyItemPrice.clear();
+    }
+
+    public void setVenMenuController(venMenuController controller) {
+        this.venMenuController = controller;
     }
 }
