@@ -1,6 +1,7 @@
 package com.oodwj_assignment.dao;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
+import com.oodwj_assignment.dao.users.UserDaoImpl;
 import com.oodwj_assignment.helpers.UniqueId;
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.helpers.Response;
@@ -161,7 +162,6 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
 
     /***
      * Checks if user is authenticated
-     * @param sessionToken session token stored in global state
      * @return a boolean indicating if user is authenticated
      */
     public Response<Boolean> isAuthenticated() {
@@ -194,7 +194,6 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
 
     /***
      * Gets authenticated user
-     * @param sessionToken session token stored in global state
      * @return a response object with status, message and data
      */
     public Response<Users> geAuthenticatedUser() {

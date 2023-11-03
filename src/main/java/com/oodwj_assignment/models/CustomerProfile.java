@@ -1,27 +1,21 @@
 package com.oodwj_assignment.models;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class CustomerProfile {
-    private UUID profileId;
+public class CustomerProfile extends Model {
     private UUID userId;
 
-    public CustomerProfile(UUID profileId, UUID userId) {
-        this.profileId = profileId;
+    public CustomerProfile(UUID profileId, UUID userId, LocalDateTime updatedAt, LocalDateTime createdAt) {
+        super(profileId, updatedAt, createdAt);
         this.userId = userId;
     }
 
-    public UUID getProfileId() {
-        return profileId;
-    }
 
     public UUID getUserId() {
         return userId;
     }
 
-    public void setProfileId(UUID profileId) {
-        this.profileId = profileId;
-    }
 
     public void setUserId(UUID userId) {
         this.userId = userId;
@@ -29,6 +23,6 @@ public class CustomerProfile {
 
     @Override
     public String toString() {
-        return getProfileId() + ";" + getUserId();
+        return getId() + ";" + getUserId() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }
