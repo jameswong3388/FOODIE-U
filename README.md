@@ -10,14 +10,18 @@ JDK - [Adoptium 20](https://adoptium.net/en-GB/temurin/releases/?arch=any&versio
 │   ├── main
 │   │   ├── java
 │   │   │   ├── com.oodwj_assignment
-│   │   │   │   ├── Dao
-│   │   │   │   ├── Controllers
-│   │   │   │   ├── Models
+│   │   │   │   ├── dao
+│   │   │   │   ├── helpers
+│   │   │   │   ├── interfaces
+│   │   │   │   ├── models
+│   │   │   │   ├── states
 │   │   │   │   ├── main.java
+│   │   │   │   ├── <controllers>
 │   │   ├── resources
 │   │   │   ├── com.oodwj_assignment
 │   │   │   │   └── <views>
 │   │   |   ├── images
+│   │   |   ├── medias
 │   │   |   ├── styles
 └── README.md
 ```
