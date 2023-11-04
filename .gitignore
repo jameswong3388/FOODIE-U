@@ -38,5 +38,5 @@ build/
 ### Mac OS ###
 .DS_Store
 
-## Application Media ""
-src/main/resources/medias/*
+## Database
+/database/sessions.txt
