@@ -1,47 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusWalletController">
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusWalletController">
    <children>
       <ScrollPane layoutX="27.0" layoutY="178.0" prefHeight="337.0" prefWidth="782.0" styleClass="background-color-2">
          <content>
-            <TableView prefHeight="326.0" prefWidth="778.0">
+            <TableView fx:id="transactionTableView" prefHeight="326.0" prefWidth="778.0">
               <columns>
-                <TableColumn prefWidth="103.1999785900116" text="Date" />
-                <TableColumn prefWidth="292.0000457763672" text="Transaction " />
-                  <TableColumn prefWidth="121.60003662109375" text="Business" />
-                  <TableColumn prefWidth="118.39996337890625" text="Sent / Receive" />
-                  <TableColumn prefWidth="139.19998779296873" text="Amount" />
+                <TableColumn fx:id="transactionIdColumn" prefWidth="150.0" text="Transaction ID" />
+                <TableColumn fx:id="dateColumn" prefWidth="120.0" text="Date" />
+                  <TableColumn fx:id="typeColumn" prefWidth="120.0" text="Type" />
+                  <TableColumn fx:id="statusColumn" prefWidth="120.0" text="Status" />
+                  <TableColumn fx:id="payeeIdColumn" prefWidth="150.0" text="Payee ID" />
+                  <TableColumn fx:id="amountColumn" prefWidth="120.0" text="Amount" />
               </columns>
             </TableView>
          </content>
       </ScrollPane>
       <Pane layoutX="27.0" layoutY="22.0" prefHeight="147.0" prefWidth="782.0" styleClass="background-color-2">
          <children>
-            <Label alignment="CENTER" layoutX="164.0" layoutY="14.0" prefHeight="23.0" prefWidth="178.0" text="Available Balance">
+            <Label alignment="CENTER" layoutX="166.0" layoutY="24.0" prefHeight="23.0" prefWidth="178.0" text="Available Balance">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="191.0" layoutY="48.0" prefHeight="19.0" prefWidth="125.0" text="RM530.39">
+            <Label fx:id="creditLabel" alignment="CENTER" layoutX="178.0" layoutY="55.0" prefHeight="32.0" prefWidth="154.0">
                <font>
                   <Font name="Segoe UI Bold" size="26.0" />
                </font>
             </Label>
-            <ComboBox layoutX="540.0" layoutY="49.0" prefHeight="26.0" prefWidth="185.0" promptText="Year" styleClass="background-color-1" />
-            <ComboBox layoutX="540.0" layoutY="84.0" prefHeight="26.0" prefWidth="185.0" promptText="Type" styleClass="background-color-1" />
-            <Button focusTraversable="false" layoutX="191.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnTopUpClicked" prefHeight="26.0" prefWidth="125.0" text="Request Topup" textFill="WHITE">
+            <ComboBox fx:id="typeComboBox" layoutX="440.0" layoutY="58.0" prefHeight="26.0" prefWidth="154.0" styleClass="background-color-1" />
+            <ComboBox fx:id="optionComboBox" layoutX="606.0" layoutY="58.0" prefHeight="26.0" prefWidth="154.0" styleClass="background-color-1" />
+            <Button focusTraversable="false" layoutX="187.0" layoutY="97.0" mnemonicParsing="false" onAction="#topUpButtonClicked" prefHeight="26.0" prefWidth="136.0" text="Request Topup" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Label alignment="CENTER" layoutX="569.0" layoutY="15.0" prefHeight="23.0" prefWidth="126.0" text="Filters">
+            <Label alignment="CENTER" layoutX="454.0" layoutY="25.0" prefHeight="23.0" prefWidth="126.0" text="Select Filter Type" textFill="#636363">
                <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
+                  <Font name="Segoe UI Bold" size="12.0" />
                </font>
             </Label>
             <ImageView fitHeight="147.0" fitWidth="148.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
@@ -49,7 +57,22 @@
                   <Image url="@../../images/wallet.png" />
                </image>
             </ImageView>
-            <Line endX="100.0" layoutX="382.0" layoutY="48.0" startX="100.0" startY="64.0" stroke="#ff9900" strokeWidth="4.0" />
+            <Line endX="100.0" endY="-31.600006103515625" layoutX="302.0" layoutY="57.0" startX="100.0" startY="64.0" stroke="#ff9900" strokeWidth="4.0" />
+            <Button focusTraversable="false" layoutX="628.0" layoutY="97.0" mnemonicParsing="false" onAction="#applyButtonClicked" prefHeight="26.0" prefWidth="111.0" text="Apply" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button focusTraversable="false" layoutX="462.0" layoutY="97.0" mnemonicParsing="false" onAction="#resetButtonClicked" prefHeight="26.0" prefWidth="111.0" text="Reset" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" layoutX="620.0" layoutY="25.0" prefHeight="23.0" prefWidth="126.0" text="Select Option" textFill="#636363">
+               <font>
+                  <Font name="Segoe UI Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

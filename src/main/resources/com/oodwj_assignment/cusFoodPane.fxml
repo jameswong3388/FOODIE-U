@@ -10,7 +10,7 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="150.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusFoodPaneController">
    <children>
-      <ImageView fitHeight="70.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="foodImage" fitHeight="70.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/food.png" />
          </image>

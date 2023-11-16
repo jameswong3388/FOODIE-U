@@ -97,7 +97,7 @@ public class venReviewController {
         averageRatingLabel.setText(calculateAverageRating(orderIds));
     }
 
-    private void fetchReviewsForOrder(UUID orderId, List<String> names) {
+    public void fetchReviewsForOrder(UUID orderId, List<String> names) {
         Map<String, Object> query = Map.of("modelUUID", orderId, "model", "/models/Order");
         Response<ArrayList<Reviews>> response = DaoFactory.getReviewDao().read(query);
 

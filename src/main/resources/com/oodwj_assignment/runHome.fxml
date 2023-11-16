@@ -3,91 +3,80 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.runHomeController">
    <children>
-      <Label layoutX="23.0" layoutY="24.0" prefHeight="26.0" prefWidth="78.0" text="My Tasks">
+      <TableView fx:id="tasksTableView" layoutX="22.0" layoutY="88.0" prefHeight="311.0" prefWidth="795.0">
+        <columns>
+            <TableColumn fx:id="taskIdColumn" prefWidth="150.0" text="Task ID" />
+          <TableColumn fx:id="orderIdColumn" prefWidth="150.0" text="Order ID" />
+            <TableColumn fx:id="deliveryFeesColumn" prefWidth="100.0" text="Delivery Fees" />
+            <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="100.0" text="Status" />
+            <TableColumn fx:id="createdAtColumn" minWidth="0.79998779296875" prefWidth="150.0" text="Create Time" />
+            <TableColumn fx:id="updatedAtColumn" minWidth="0.79998779296875" prefWidth="150.0" text="Update Time" />
+        </columns>
+      </TableView>
+      <Label layoutX="25.0" layoutY="14.0" prefHeight="26.0" prefWidth="82.0" text="My Task">
          <font>
             <Font name="Segoe UI Bold" size="18.0" />
          </font>
       </Label>
-      <TabPane layoutX="23.0" layoutY="62.0" prefHeight="452.0" prefWidth="786.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Active Tasks">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ComboBox layoutX="35.0" layoutY="373.0" prefHeight="26.0" prefWidth="197.0" />
-                        <Label layoutX="35.0" layoutY="345.0" text="Task ID:">
-                           <font>
-                              <Font name="Segoe UI" size="14.0" />
-                           </font>
-                        </Label>
-                        <Button focusTraversable="false" layoutX="626.0" layoutY="369.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Mark as Completed" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <TableView layoutX="24.0" layoutY="24.0" prefHeight="286.0" prefWidth="738.0">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="Task ID" />
-                            <TableColumn prefWidth="75.0" text="Status" />
-                              <TableColumn prefWidth="84.800048828125" text="Date" />
-                              <TableColumn prefWidth="171.99993896484375" text="Order ID" />
-                              <TableColumn prefWidth="94.39996337890625" text="Customer" />
-                              <TableColumn prefWidth="91.20001220703125" text="Location" />
-                              <TableColumn prefWidth="147.20001220703125" text="Contact Number" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Completed">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView layoutX="24.0" layoutY="24.0" prefHeight="286.0" prefWidth="738.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="Task ID" />
-                              <TableColumn prefWidth="75.0" text="Status" />
-                              <TableColumn prefWidth="84.800048828125" text="Date" />
-                              <TableColumn prefWidth="171.99993896484375" text="Order ID" />
-                              <TableColumn prefWidth="94.39996337890625" text="Customer" />
-                              <TableColumn prefWidth="91.20001220703125" text="Location" />
-                              <TableColumn prefWidth="147.20001220703125" text="Contact Number" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-            <Tab text="Cancelled">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView layoutX="24.0" layoutY="24.0" prefHeight="286.0" prefWidth="738.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="Task ID" />
-                              <TableColumn prefWidth="75.0" text="Status" />
-                              <TableColumn prefWidth="84.800048828125" text="Date" />
-                              <TableColumn prefWidth="171.99993896484375" text="Order ID" />
-                              <TableColumn prefWidth="94.39996337890625" text="Customer" />
-                              <TableColumn prefWidth="91.20001220703125" text="Location" />
-                              <TableColumn prefWidth="147.20001220703125" text="Contact Number" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-        </tabs>
-      </TabPane>
+      <Pane layoutX="22.0" layoutY="409.0" prefHeight="106.0" prefWidth="795.0" styleClass="background-color-2">
+         <children>
+            <ComboBox fx:id="taskIdComboBox" layoutX="30.0" layoutY="54.0" prefHeight="26.0" prefWidth="193.0" styleClass="background-color-1" />
+            <TextField fx:id="tasksStatusTextField" disable="true" layoutX="254.0" layoutY="53.0" prefHeight="26.0" prefWidth="193.0" />
+            <Label layoutX="30.0" layoutY="24.0" text="Task ID:">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="254.0" layoutY="24.0" text="New Order Status:">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button focusTraversable="false" layoutX="646.0" layoutY="48.0" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="34.0" prefWidth="135.0" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button focusTraversable="false" layoutX="484.0" layoutY="48.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="34.0" prefWidth="135.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <ToggleButton layoutX="178.0" layoutY="52.0" mnemonicParsing="false" onAction="#activeToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="Active Orders" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Bold" size="12.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="statusFilter" />
+         </toggleGroup>
+      </ToggleButton>
+      <ToggleButton layoutX="333.0" layoutY="52.0" mnemonicParsing="false" onAction="#completedToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="Completed Orders" textFill="WHITE" toggleGroup="$statusFilter">
+         <font>
+            <Font name="Segoe UI Bold" size="12.0" />
+         </font>
+      </ToggleButton>
+      <ToggleButton layoutX="25.0" layoutY="52.0" mnemonicParsing="false" onAction="#allToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="All Orders" textFill="WHITE" toggleGroup="$statusFilter">
+         <font>
+            <Font name="Segoe UI Bold" size="12.0" />
+         </font>
+      </ToggleButton>
+      <ToggleButton layoutX="488.0" layoutY="52.0" mnemonicParsing="false" onAction="#rejectedToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="Rejected Orders" textFill="WHITE" toggleGroup="$statusFilter">
+         <font>
+            <Font name="Segoe UI Bold" size="12.0" />
+         </font>
+      </ToggleButton>
    </children>
 </AnchorPane>
