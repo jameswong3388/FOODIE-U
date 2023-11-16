@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusRestaurantPaneController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="380.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusRestaurantPaneController">
    <children>
       <HBox prefHeight="120.0" prefWidth="380.0" stylesheets="@../../styles/styles.css">
          <children>
-            <ImageView fitHeight="132.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="restaurantIProfile" fitHeight="132.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/campuseats.png" />
                </image>
@@ -25,24 +25,25 @@
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="descriptionLabel" prefHeight="18.0" prefWidth="298.0" text="Description">
+                  <Label fx:id="descriptionLabel" prefHeight="20.0" prefWidth="261.0" text="Description">
                      <font>
                         <Font name="Segoe UI" size="12.0" />
                      </font>
                   </Label>
                   <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="261.0">
                      <children>
-                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="15.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/rating.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="ratingLabel" alignment="CENTER" prefHeight="18.0" prefWidth="31.0" text="4.0">
+                        <Pane prefHeight="27.0" prefWidth="6.0" />
+                        <Label fx:id="ratingLabel" prefHeight="18.0" prefWidth="36.0" text="4.0">
                            <font>
                               <Font name="Segoe UI Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Pane prefHeight="27.0" prefWidth="121.0" />
+                        <Pane prefHeight="27.0" prefWidth="106.0" />
                         <Button mnemonicParsing="false" onAction="#viewButtonClicked" prefHeight="34.0" prefWidth="76.0" text="View" textFill="WHITE">
                            <font>
                               <Font name="Segoe UI Bold" size="12.0" />
@@ -50,11 +51,6 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Label fx:id="deliveryFeeLabel" prefHeight="21.0" prefWidth="261.0" text="RM4.00 Delivery Fee">
-                     <font>
-                        <Font name="Segoe UI Bold" size="12.0" />
-                     </font>
-                  </Label>
                </children>
             </VBox>
          </children>

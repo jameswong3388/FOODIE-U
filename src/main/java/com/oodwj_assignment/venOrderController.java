@@ -2,11 +2,10 @@ package com.oodwj_assignment;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
-import com.oodwj_assignment.models.OrderFoods;
-import com.oodwj_assignment.models.Orders;
-import com.oodwj_assignment.models.Users;
+import com.oodwj_assignment.models.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,6 +37,7 @@ public class venOrderController {
     @FXML private TableColumn<OrderFoods, String> amountColumn;
     @FXML private Pane orderInfoPane;
     @FXML private Pane noOrderPane;
+    private double total = 0.0;
     private UUID orderId;
 
     public void initialize() throws IOException {
@@ -107,18 +107,15 @@ public class venOrderController {
             // Fetch order information
             Map<String, Object> orderQuery = Map.of("Id", orderId);
             Response<ArrayList<Orders>> orderResponse = DaoFactory.getOrderDao().read(orderQuery);
-            ArrayList<Orders> order = orderResponse.getData();
-            UUID userId = order.get(0).getUserId();
-            Orders.orderType type = order.get(0).getType();
+            UUID userId = orderResponse.getData().get(0).getUserId();
+            Orders.orderType type = orderResponse.getData().get(0).getType();
 
             // Fetch user information
             Map<String, Object> userQuery = Map.of("Id", userId);
             Response<ArrayList<Users>> userResponse = DaoFactory.getUserDao().read(userQuery);
-            ArrayList<Users> user = userResponse.getData();
-            String name = user.get(0).getName();
+            String name = userResponse.getData().get(0).getName();
 
             DecimalFormat currencyFormat = new DecimalFormat("RM #,##0.00");
-            double total = 0.0;
 
             for (OrderFoods orderFood : orderFoodsInfo) {
                 double price = orderFood.getFoodPrice();
@@ -143,6 +140,23 @@ public class venOrderController {
 
     public void acceptButtonClicked(ActionEvent event) throws Exception {
         updateOrderStatus(Orders.orderStatus.Accepted, "Order accepted.");
+
+        // Check if it is a delivery order
+        Response<ArrayList<Orders>> orderResponse = DaoFactory.getOrderDao().read(Map.of("Id", orderId, "type", Orders.orderType.Delivery));
+        if (!orderResponse.isSuccess()) {
+            return;
+        }
+
+        double deliveryFee = Math.round(total * 0.15);;
+        // Set the minimum delivery fee to 3 and maximum to 10
+        deliveryFee = Math.max(Math.min(deliveryFee, 10), 3);
+
+        // Create a delivery task
+        Tasks newTask = new Tasks(UUID.randomUUID(), UUID.randomUUID(), orderId, deliveryFee, Tasks.taskStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
+        Response<UUID> taskResponse = DaoFactory.getTaskDao().create(newTask);
+        if (!taskResponse.isSuccess()) {
+            venMainController.showAlert("Error", "Failed to create task: " + taskResponse.getMessage());
+        }
     }
 
     public void rejectButtonClicked(ActionEvent event) throws Exception {

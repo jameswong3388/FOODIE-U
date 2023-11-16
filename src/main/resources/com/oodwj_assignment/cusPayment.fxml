@@ -1,20 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="361.0" prefWidth="612.0" style="-fx-background-color: ffffff; -fx-border-width: 10px 10px 10px 10px" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusPaymentController">
+<AnchorPane prefHeight="400.0" prefWidth="650.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusPaymentController">
    <children>
-      <Pane layoutX="361.0" layoutY="88.0" prefHeight="93.0" prefWidth="232.0" style="-fx-background-color: #666564;">
+      <Pane layoutY="-1.0" prefHeight="62.0" prefWidth="650.0" styleClass="primary-color">
          <children>
-            <GridPane layoutY="-1.0" prefHeight="93.0" prefWidth="232.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="249.0" layoutY="18.0" prefHeight="28.0" prefWidth="152.0" text="Payment" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+               <font>
+                  <Font name="Segoe UI Bold" size="22.0" />
+               </font>
+            </Label>
+            <Button fx:id="closeButton" focusTraversable="false" layoutX="596.0" layoutY="11.0" mnemonicParsing="false" onAction="#closeButtonClicked" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/close.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="417.0" layoutY="133.0" prefHeight="110.0" prefWidth="202.0" style="-fx-background-color: ffb265;">
+         <children>
+            <GridPane prefHeight="110.0" prefWidth="202.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.20001220703125" minWidth="10.0" prefWidth="101.79996948242187" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="10.0" prefWidth="101.00003051757814" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -22,7 +47,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="118.0" text="Discount :" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
+                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="118.0" text="Delivery :" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
                      <font>
                         <Font name="Segoe UI Bold" size="15.0" />
                      </font>
@@ -32,60 +57,53 @@
                         <Font name="Segoe UI Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="118.0" text="SubTotal :" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="118.0" text="Subtotal :" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="   0.00" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="subtotalLabel" alignment="CENTER" prefHeight="19.0" prefWidth="105.0" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
                      <font>
-                        <Font size="13.0" />
+                        <Font name="Segoe UI Bold" size="15.0" />
                      </font>
-                  </Text>
+                  </Label>
+                  <Label fx:id="deliveryLabel" alignment="CENTER" prefHeight="19.0" prefWidth="105.0" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Segoe UI Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalLabel" alignment="CENTER" prefHeight="19.0" prefWidth="105.0" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Segoe UI Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
          </children>
       </Pane>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="251.0" layoutY="17.0" prefHeight="28.0" prefWidth="101.0" text="Payment" textAlignment="CENTER" textFill="#ff8000" textOverrun="CENTER_ELLIPSIS">
-         <font>
-            <Font name="Segoe UI Bold" size="22.0" />
-         </font>
-         <effect>
-            <DropShadow>
-               <color>
-                  <Color opacity="0.17870722711086273" />
-               </color>
-            </DropShadow>
-         </effect>
-      </Label>
-      <AnchorPane layoutX="40.0" layoutY="59.0" prefHeight="314.0" prefWidth="220.0">
-         <children>
-            <TableView prefHeight="294.0" prefWidth="311.0" styleClass="background-color-2">
-               <columns>
-                  <TableColumn prefWidth="28.0" resizable="false" text="No" />
-                  <TableColumn prefWidth="114.39996337890625" resizable="false" text="Item" />
-                  <TableColumn prefWidth="28.800048828125" resizable="false" text="Qty" />
-                  <TableColumn prefWidth="67.20001220703125" resizable="false" text="Price" />
-                  <TableColumn prefWidth="70.0" resizable="false" text="Amount" />
-               </columns>
-            </TableView>
-         </children>
-      </AnchorPane>
-      <Button fx:id="btnCancel" focusTraversable="false" layoutX="367.0" layoutY="305.0" mnemonicParsing="false" onAction="#backOrder" prefHeight="45.0" prefWidth="221.0" style="-fx-background-color: ffb265;" text="Cancel" textFill="#7a7a7a" textOverrun="CENTER_ELLIPSIS">
+      <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="417.0" layoutY="343.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="39.0" prefWidth="202.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
          <font>
             <Font name="Segoe UI Bold" size="15.0" />
          </font>
       </Button>
-      <Button focusTraversable="false" layoutX="367.0" layoutY="246.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="221.0" style="-fx-background-color: ff8800;" text="Confirm Payment" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+      <Button alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="417.0" layoutY="295.0" mnemonicParsing="false" onAction="#placeOrderButtonClicked" prefHeight="39.0" prefWidth="202.0" style="-fx-background-color: ff8800;" text="Place Order" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
          <font>
             <Font name="Segoe UI Bold" size="15.0" />
          </font>
       </Button>
-      <Label alignment="CENTER" contentDisplay="TOP" layoutX="354.0" layoutY="58.0" prefHeight="27.0" prefWidth="152.0" text="Order Summary" textAlignment="CENTER">
+      <Label contentDisplay="TOP" layoutX="417.0" layoutY="81.0" prefHeight="27.0" prefWidth="136.0" text="Order Summary">
          <font>
             <Font name="Segoe UI Bold" size="18.0" />
          </font>
       </Label>
+      <TableView fx:id="orderFoodsTableView" layoutX="23.0" layoutY="81.0" prefHeight="302.0" prefWidth="362.0" styleClass="background-color-2">
+         <columns>
+            <TableColumn fx:id="itemColumn" prefWidth="103.2000789642334" resizable="false" text="Item" />
+            <TableColumn fx:id="priceColumn" prefWidth="100.7999267578125" resizable="false" text="Unit Price" />
+            <TableColumn fx:id="quantityColumn" prefWidth="68.7999267578125" resizable="false" text="Quantity" />
+            <TableColumn fx:id="amountColumn" prefWidth="89.60003662109375" resizable="false" text="Amount" />
+         </columns>
+      </TableView>
    </children>
    <opaqueInsets>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

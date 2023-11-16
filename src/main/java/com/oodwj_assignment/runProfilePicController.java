@@ -2,7 +2,6 @@ package com.oodwj_assignment;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
-import com.oodwj_assignment.models.Foods;
 import com.oodwj_assignment.models.Medias;
 import com.oodwj_assignment.models.Users;
 import javafx.event.ActionEvent;
@@ -18,12 +17,12 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 
-public class venMenuPicController {
+public class runProfilePicController {
 
     @FXML private Label pathLabel;
     @FXML private Button backButton;
     private File selectedFile;
-    private venMenuController venMenuController;
+    private com.oodwj_assignment.runProfileController runProfileController;
 
     public void initialize(){
         pathLabel.setText("");
@@ -50,7 +49,7 @@ public class venMenuPicController {
         }
 
         if (!isImageFile(selectedFile.getName())) {
-            venMainController.showAlert("Upload Error", "Invalid image file format");
+            runMainController.showAlert("Upload Error", "Invalid image file format");
             return;
         }
         pathLabel.setText(selectedFile.getAbsolutePath() + " selected");
@@ -70,30 +69,34 @@ public class venMenuPicController {
     public void uploadButtonClicked(ActionEvent event) throws IOException {
         if (selectedFile != null) {
             String extension = DaoFactory.getMediaDao().getExtensionByStringHandling(selectedFile.getName());
-            UUID userId = venMainController.vendorId;
+            UUID userId = runMainController.runnerId;
 
-            Foods food = DaoFactory.getFoodDao().read(Map.of("Id", userId)).getData().get(0);
-            Medias media = new Medias(null, null, food.getId(), "food_pics", selectedFile.getName(),
-                    extension, "menus", null, null, null, LocalDateTime.now(), LocalDateTime.now()
+            Users profile = DaoFactory.getUserDao().read(Map.of("Id", userId)).getData().get(0);
+            Medias media = new Medias(null, null, profile.getId(), "profile_pics", selectedFile.getName(),
+                    extension, "profiles", null, null, null, LocalDateTime.now(), LocalDateTime.now()
             );
 
-            //remove existed user profile pic
-            Response<Void> removeResponse = DaoFactory.getUserDao().removeMedia(userId);
-            if (removeResponse.isSuccess()) {
-                Response<Void> addResponse = DaoFactory.getUserDao().addMedia(selectedFile, media);
-                pathLabel.setText("Uploaded");
-                venMainController.showAlert("Success", "New profile added");
+            //for the initial upload when there is no existing data
+            Response<Void> addResponse = DaoFactory.getUserDao().addMedia(selectedFile, media);
+            if (addResponse.isSuccess()){
+                //remove existed user profile pic
+                Response<Void> removeResponse = DaoFactory.getUserDao().removeMedia(userId);
+                if (removeResponse.isSuccess()) {
+                    DaoFactory.getUserDao().addMedia(selectedFile, media);
+                    pathLabel.setText("Uploaded");
+                    venMainController.showAlert("Success", "New profile added");
 
-                venMenuController.setVenMenuController(venMenuController);
-                venMenuController.initialize();
+                    runProfileController.setRunProfileController(runProfileController);
+                    runProfileController.loadProfilePic();
 
-                Stage profileStage = (Stage) backButton.getScene().getWindow();
-                profileStage.close();
+                    Stage profileStage = (Stage) backButton.getScene().getWindow();
+                    profileStage.close();
+                }
             }
         }
     }
 
-    public void setVenMenuController(com.oodwj_assignment.venMenuController controller) {
-        this.venMenuController = controller;
+    public void setRunProfileController(runProfileController controller) {
+        this.runProfileController = controller;
     }
 }

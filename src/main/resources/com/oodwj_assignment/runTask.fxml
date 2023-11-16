@@ -9,93 +9,113 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.runTaskController">
    <children>
+      <Pane fx:id="noTaskPane" layoutX="310.0" layoutY="57.0" prefHeight="446.0" prefWidth="500.0" styleClass="background-color-2">
+         <children>
+            <Label layoutX="166.0" layoutY="212.0" text="No order is selected">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
       <Label layoutX="25.0" layoutY="23.0" prefHeight="26.0" prefWidth="86.0" text="Task List">
          <font>
             <Font name="Segoe UI Bold" size="18.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="25.0" layoutY="57.0" prefHeight="446.0" prefWidth="265.0">
+      <ScrollPane layoutX="25.0" layoutY="57.0" prefHeight="446.0" prefWidth="266.0">
          <content>
-            <GridPane prefHeight="78.0" prefWidth="264.0">
+            <GridPane fx:id="taskGrid" prefHeight="442.0" prefWidth="264.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
             </GridPane>
          </content>
       </ScrollPane>
-      <Pane layoutX="310.0" layoutY="57.0" prefHeight="446.0" prefWidth="500.0" styleClass="background-color-2">
+      <Pane fx:id="taskInfoPane" layoutX="310.0" layoutY="57.0" prefHeight="446.0" prefWidth="500.0" styleClass="background-color-2">
          <children>
-                 <Button focusTraversable="false" layoutX="348.0" layoutY="398.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Accept Order" textFill="WHITE">
+                 <Button focusTraversable="false" layoutX="360.0" layoutY="398.0" mnemonicParsing="false" onAction="#acceptButtonClicked" prefHeight="34.0" prefWidth="123.0" text="Accept Task" textFill="WHITE">
                      <font>
                          <Font name="System Bold" size="12.0" />
                      </font>
                  </Button>
-            <Label layoutX="16.0" layoutY="14.0" prefHeight="26.0" prefWidth="86.0" text="Task Info">
-               <font>
-                  <Font name="Segoe UI Bold" size="16.0" />
-               </font>
-            </Label>
-            <TableView layoutX="16.0" layoutY="96.0" prefHeight="292.0" prefWidth="468.0">
-              <columns>
-                <TableColumn prefWidth="180.0" text="Item" />
-                <TableColumn prefWidth="48.0" text="Qty" />
-                  <TableColumn prefWidth="154.4000244140625" text="Remarks" />
-                  <TableColumn prefWidth="79.9998779296875" text="Price" />
-              </columns>
-            </TableView>
-            <Label layoutX="124.0" layoutY="402.0" prefHeight="26.0" prefWidth="135.0" text="RM5.00">
+            <Label fx:id="deliveryFeeLabel" layoutX="360.0" layoutY="356.0" prefHeight="26.0" prefWidth="123.0">
                <font>
                   <Font name="Segoe UI Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="20.0" layoutY="402.0" prefHeight="26.0" prefWidth="104.0" text="Total Earning:">
+            <Label layoutX="236.0" layoutY="356.0" prefHeight="26.0" prefWidth="114.0" text="Delivery Fee:">
                <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
+                  <Font name="Segoe UI Bold" size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="26.0" layoutY="40.0" prefHeight="26.0" prefWidth="114.0" text="Customer Name" textFill="#898989">
-               <font>
-                  <Font name="Segoe UI Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="26.0" layoutY="59.0" prefHeight="26.0" prefWidth="114.0" text="Jeremy Lau">
-               <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="195.0" layoutY="44.0" prefHeight="26.0" prefWidth="114.0" text="Location" textFill="#898989">
+            <Label alignment="CENTER" layoutX="22.0" layoutY="47.0" prefHeight="26.0" prefWidth="114.0" text="Restaurant Name" textFill="#898989">
                <font>
                   <Font name="Segoe UI Bold" size="12.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="195.0" layoutY="63.0" prefHeight="26.0" prefWidth="114.0" text="D 09-10">
+            <Label fx:id="resNameLabel" alignment="CENTER" layoutX="22.0" layoutY="66.0" prefHeight="26.0" prefWidth="114.0">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="361.0" layoutY="44.0" prefHeight="26.0" prefWidth="114.0" text="Contact Number" textFill="#898989">
+            <Label alignment="CENTER" layoutX="346.0" layoutY="47.0" prefHeight="26.0" prefWidth="114.0" text="Customer's Contact" textFill="#898989">
                <font>
                   <Font name="Segoe UI Bold" size="12.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="361.0" layoutY="63.0" prefHeight="26.0" prefWidth="114.0" text="012-3456789">
+            <Label fx:id="phoneNumberLabel" alignment="CENTER" layoutX="327.0" layoutY="66.0" prefHeight="26.0" prefWidth="153.0">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Label>
-            <Button focusTraversable="false" layoutX="204.0" layoutY="398.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Reject Order" textFill="WHITE">
+            <Button focusTraversable="false" layoutX="227.0" layoutY="398.0" mnemonicParsing="false" onAction="#rejectButtonClicked" prefHeight="34.0" prefWidth="123.0" text="Reject Task" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
+            <Label fx:id="taskIdLabel" alignment="CENTER" layoutX="131.0" layoutY="14.0" prefHeight="26.0" prefWidth="239.0">
+               <font>
+                  <Font name="Segoe UI Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="14.0" prefHeight="26.0" prefWidth="86.0" text="Task Info ">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="194.0" layoutY="47.0" prefHeight="26.0" prefWidth="114.0" text="Customer Name" textFill="#898989">
+               <font>
+                  <Font name="Segoe UI Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="cusNameLabel" alignment="CENTER" layoutX="193.0" layoutY="66.0" prefHeight="26.0" prefWidth="114.0">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="97.0" prefHeight="26.0" prefWidth="101.0" text="Order Details">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+            </Label>
+            <TableView fx:id="orderTableView" layoutX="17.0" layoutY="129.0" prefHeight="223.0" prefWidth="468.0">
+               <columns>
+                  <TableColumn fx:id="itemColumn" prefWidth="160.0" text="Item" />
+                  <TableColumn fx:id="priceColumn" prefWidth="100.0" text="Unit Price" />
+                  <TableColumn fx:id="quantityColumn" prefWidth="100.0" text="Quantity" />
+                  <TableColumn fx:id="amountColumn" prefWidth="110.0" text="Amount" />
+               </columns>
+            </TableView>
+            <Label fx:id="orderIdLabel" alignment="CENTER" layoutX="131.0" layoutY="97.0" prefHeight="26.0" prefWidth="239.0">
+               <font>
+                  <Font name="Segoe UI Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

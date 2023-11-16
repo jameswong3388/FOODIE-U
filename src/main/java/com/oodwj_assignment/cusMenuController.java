@@ -5,16 +5,21 @@ import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Foods;
 import com.oodwj_assignment.models.OrderFoods;
 import com.oodwj_assignment.models.Stores;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -23,11 +28,14 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class cusMenuController {
-    
+
+    @FXML private TableView<OrderFoods> orderFoodsTableView;
     @FXML private TableColumn<OrderFoods, String> itemColumn;
     @FXML private TableColumn<OrderFoods, String> priceColumn;
     @FXML private TableColumn<OrderFoods, Integer> quantityColumn;
@@ -38,21 +46,22 @@ public class cusMenuController {
     @FXML private GridPane drinkGrid;
     @FXML private Label nameLabel;
     @FXML private Label totalLabel;
-    @FXML private Button btnBack;
+    @FXML private Button backButton;
     private String name;
     private UUID storeId;
-
-    public cusMenuController(String name) {
+    private ArrayList<OrderFoods> orderFoods;
+    public cusMenuController(String name, ArrayList<OrderFoods> orderFoods) {
         this.name = name;
+        this.orderFoods = orderFoods;
     }
 
     public void initialize() throws IOException {
-        itemColumn.setCellValueFactory(new PropertyValueFactory<>("foodName"));
+        itemColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFoodName()));
         priceColumn.setCellValueFactory(cellData -> {double price = cellData.getValue().getFoodPrice();
             String formattedPrice = "RM " + String.format("%.2f", price);
             return new SimpleStringProperty(formattedPrice);
         });
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("foodQuantity"));
+        quantityColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFoodQuantity()));
         amountColumn.setCellValueFactory(cellData -> {double amount = cellData.getValue().getAmount();
             String formattedAmount = "RM " + String.format("%.2f", amount);
             return new SimpleStringProperty(formattedAmount);
@@ -66,7 +75,7 @@ public class cusMenuController {
             return;
         }
         ArrayList<Stores> stores = storeResponse.getData();
-        UUID storeId = stores.get(0).getId();
+        storeId = stores.get(0).getId();
 
         Map<String, Object> query = Map.of("storeId", storeId);
         Response<ArrayList<Foods>> response = DaoFactory.getFoodDao().read(query);
@@ -87,6 +96,7 @@ public class cusMenuController {
             System.out.println("Failed to read orders: " + response.getMessage());
         }
     }
+
     private List<Foods> filterByType(List<Foods> foods, Foods.foodType type) {
         return foods.stream()
                 .filter(food -> type.equals(food.getFoodType()))
@@ -115,23 +125,126 @@ public class cusMenuController {
         }
     }
 
-    public void itemAdded(Integer quantity, String name, String price) {
+    public void itemAdded(Integer quantity, String foodName, Double price) {
+        // Check if the row is existed
+        for (OrderFoods orderFood : orderFoodsTableView.getItems()) {
+            if (orderFood.getFoodName().equals(foodName)) {
+                if (quantity == 0) {
+                    orderFoodsTableView.getItems().remove(orderFood);
+                } else {
+                    orderFood.setFoodQuantity(quantity);
+                    double newAmount = price * quantity;
+                    orderFood.setAmount(newAmount);
+                    orderFoodsTableView.refresh();
+                }
+                updateTotalLabel();
+                return;
+            }
+        }
 
+        if (quantity > 0) {
+            Map<String, Object> query = Map.of("foodName", foodName);
+            UUID foodId = DaoFactory.getFoodDao().read(query).getData().get(0).getId();
+
+            // If the row doesn't exist, create a new one
+            OrderFoods newOrderFood = new OrderFoods(null, foodId, null, foodName, price, quantity, LocalDateTime.now(), LocalDateTime.now());
+            double newAmount = price * quantity;
+            newOrderFood.setAmount(newAmount);
+            orderFoodsTableView.getItems().add(newOrderFood);
+            updateTotalLabel();
+        }
     }
 
-    public void backHome(ActionEvent event) {
-        Stage menuStage = (Stage) btnBack.getScene().getWindow();
+    private void updateTotalLabel() {
+        double total = orderFoodsTableView.getItems().stream()
+                .mapToDouble(OrderFoods::getAmount)
+                .sum();
+        DecimalFormat currencyFormat = new DecimalFormat("RM #,##0.00");
+        totalLabel.setText(currencyFormat.format(total));
+    }
+
+    public void backButtonClicked(ActionEvent event) {
+        Stage menuStage = (Stage) backButton.getScene().getWindow();
         menuStage.close();
     }
 
-    public void placeOrder(ActionEvent event) throws IOException{
-        Parent menuRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("cusPayment.fxml")));
-        Stage menu = new Stage();
-        menu.setTitle("Payment Page");
-        menu.initStyle(StageStyle.UNDECORATED);
-        menu.setScene(new Scene(menuRoot));
-        menu.initModality(Modality.APPLICATION_MODAL);
-        menu.showAndWait();
+    public void checkoutButtonClicked(ActionEvent event) throws IOException{
+        if (!orderFoodsTableView.getItems().isEmpty()){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cusOrderMethod.fxml"));
+            Parent methodRoot = loader.load();
+            cusOrderMethodController orderMethodController = loader.getController();
+            orderMethodController.getOrderFoodsList(orderFoodsTableView.getItems());
+            Stage method = new Stage();
+            method.setTitle("Order Method Page");
+            method.initStyle(StageStyle.UNDECORATED);
+            method.setScene(new Scene(methodRoot));
+            method.initModality(Modality.APPLICATION_MODAL);
+            method.showAndWait();
+        } else {
+            cusMainController.showAlert("Checkout Fails", "No food is selected.");
+        }
+    }
+
+    public void reviewButtonClicked(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("cusRestaurantReview.fxml"));
+        Parent reviewRoot = loader.load();
+        cusRestaurantReviewController restaurantReviewController = loader.getController();
+        restaurantReviewController.getOrderIds(storeId);
+        Stage review = new Stage();
+        review.setTitle("Restaurant Review Page");
+        review.initStyle(StageStyle.UNDECORATED);
+        review.setScene(new Scene(reviewRoot));
+        review.initModality(Modality.APPLICATION_MODAL);
+        review.showAndWait();
+    }
+
+    public void cancelButtonClicked(ActionEvent event) {
+        orderFoodsTableView.getItems().clear();
+        updateTotalLabel();
+
+        // Reset all spinners in each food pane
+        setSpinnersInGrid(appetizerGrid, null, 0);
+        setSpinnersInGrid(mainCourseGrid, null, 0);
+        setSpinnersInGrid(dessertGrid, null,0);
+        setSpinnersInGrid(drinkGrid, null,0);
+    }
+
+    private void setSpinnersInGrid(GridPane gridPane, UUID foodId, int value) {
+        for (Node node : gridPane.getChildren()) {
+            if (node instanceof VBox) {
+                FXMLLoader loader = (FXMLLoader) node.getUserData();
+                cusFoodPaneController controller = loader.getController();
+                if (foodId == null || controller.getFoodId().equals(foodId)) {
+                    controller.setSpinnerValue(value);
+                    if (foodId == null) {
+                        continue; // Continue resetting all spinners
+                    }
+                    break; // Break if a specific food ID is matched
+                }
+            }
+        }
+    }
+
+    public void setOrderItems() {
+        for (OrderFoods orderFood : orderFoods) {
+            UUID foodId = orderFood.getFoodId();
+            Map<String, Object> query = Map.of("Id", foodId);
+            Response<ArrayList<Foods>> response = DaoFactory.getFoodDao().read(query);
+
+            if (response.isSuccess() && !response.getData().isEmpty()) {
+                Foods food = response.getData().get(0);
+                int quantity = orderFood.getFoodQuantity();
+
+                setSpinnersInGrid(appetizerGrid, foodId, quantity);
+                setSpinnersInGrid(mainCourseGrid, foodId, quantity);
+                setSpinnersInGrid(dessertGrid, foodId, quantity);
+                setSpinnersInGrid(drinkGrid, foodId, quantity);
+            } else {
+                cusMainController.showAlert("Item Unavailable", "The item " + orderFood.getFoodName() + " is no longer available.");
+            }
+        }
+
+        updateTotalLabel();
     }
 
 }

@@ -51,6 +51,7 @@ public class loginController {
                 Stage stage = new Stage();
                 stage.setTitle(getTitleForRole(userRole));
                 stage.setScene(new Scene(root));
+                stage.setResizable(false);
                 stage.show();
 
                 Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -61,7 +62,7 @@ public class loginController {
 
         } else {
             String errorMessage = loginResponse.getMessage();
-            System.out.println("Login failed: " + errorMessage);
+            cusMainController.showAlert("Login failed", errorMessage);
         }
     }
 

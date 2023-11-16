@@ -83,10 +83,10 @@ public class venProfileController {
         Response<ArrayList<Stores>> storeResponse = DaoFactory.getStoreDao().read(storeQuery);
 
         if (storeResponse.isSuccess()){
-            ArrayList<Stores> stores = storeResponse.getData();
-            String restaurantName = stores.get(0).getName();
-            String description = stores.get(0).getDescription();
-            Stores.storeCategory category = stores.get(0).getCategory();
+            Stores stores = storeResponse.getData().get(0);
+            String restaurantName = stores.getName();
+            String description = stores.getDescription();
+            Stores.storeCategory category = stores.getCategory();
 
             restaurantNameLabel.setText(restaurantName);
             restaurantNameTextField.setText(restaurantName);
@@ -98,18 +98,19 @@ public class venProfileController {
         Response<ArrayList<Users>> userResponse = DaoFactory.getUserDao().read(userQuery);
 
         if (userResponse.isSuccess()){
-            ArrayList<Users> users = userResponse.getData();
-            String name = users.get(0).getName();
-            String phoneNumber = users.get(0).getPhoneNumber();
-            String email = users.get(0).getEmail();
-            String username = users.get(0).getUsername();
-            currentPassword = users.get(0).getPassword();
+            Users users = userResponse.getData().get(0);
+            String name = users.getName();
+            String phoneNumber = users.getPhoneNumber();
+            String email = users.getEmail();
+            String username = users.getUsername();
+            currentPassword = users.getPassword();
 
             nameTextField.setText(name);
             phoneNumberTextField.setText(phoneNumber);
             emailTextField.setText(email);
             usernameTextField.setText(username);
         }
+
         isOldHidden = true;
         isNewHidden = true;
         isConfirmHidden = true;

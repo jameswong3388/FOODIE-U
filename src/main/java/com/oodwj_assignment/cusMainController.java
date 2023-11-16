@@ -1,5 +1,8 @@
 package com.oodwj_assignment;
 
+import com.oodwj_assignment.dao.SessionDaoImpl;
+import com.oodwj_assignment.helpers.Response;
+import com.oodwj_assignment.states.AppState;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,28 +22,22 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 public class cusMainController {
 
-    @FXML
-    private BorderPane borderpane;
-    @FXML
-    private ImageView homeIcon;
-    @FXML
-    private ImageView historyIcon;
-    @FXML
-    private ImageView reviewIcon;
-    @FXML
-    private ImageView walletIcon;
-    @FXML
-    private ImageView profileIcon;
-    @FXML
-    private ImageView logoutIcon;
-    @FXML
-    private ImageView notificationIcon;
-    @FXML
-    private ImageView cartIcon;
-
+    @FXML private BorderPane borderpane;
+    @FXML private ImageView homeIcon;
+    @FXML private ImageView orderIcon;
+    @FXML private ImageView historyIcon;
+    @FXML private ImageView reviewIcon;
+    @FXML private ImageView walletIcon;
+    @FXML private ImageView profileIcon;
+    @FXML private ImageView logoutIcon;
+    @FXML private ImageView notificationIcon;
+    @FXML private ImageView cartIcon;
+    public static UUID userId = UUID.fromString("00e1b7f5-7fda-4184-a2fc-f8dadacdb772");
+    private cusMainController mainController;
 
     public void initialize() throws IOException {
         // Load an image file and set it to the ImageView
@@ -54,10 +51,12 @@ public class cusMainController {
         // Load an image file and set it to the ImageView
         Image home = new Image(getClass().getResourceAsStream("/images/home-grey.png"));
         homeIcon.setImage(home);
-        Image review = new Image(getClass().getResourceAsStream("/images/review-grey.png"));
-        reviewIcon.setImage(review);
+        Image order = new Image(getClass().getResourceAsStream("/images/order-grey.png"));
+        orderIcon.setImage(order);
         Image history = new Image(getClass().getResourceAsStream("/images/history-grey.png"));
         historyIcon.setImage(history);
+        Image review = new Image(getClass().getResourceAsStream("/images/review-grey.png"));
+        reviewIcon.setImage(review);
         Image wallet = new Image(getClass().getResourceAsStream("/images/wallet-grey.png"));
         walletIcon.setImage(wallet);
         Image profile = new Image(getClass().getResourceAsStream("/images/profile-grey.png"));
@@ -76,6 +75,14 @@ public class cusMainController {
         defaultSettings();
         Image home = new Image(getClass().getResourceAsStream("/images/home-orange.png"));
         homeIcon.setImage(home);
+    }
+
+    public void btnOrderClicked(ActionEvent event) throws IOException {
+        AnchorPane view = FXMLLoader.load(getClass().getResource("cusOrder.fxml"));
+        borderpane.setCenter(view);
+        defaultSettings();
+        Image order = new Image(getClass().getResourceAsStream("/images/order-orange.png"));
+        orderIcon.setImage(order);
     }
 
     public void btnHistoryClicked(ActionEvent event) throws IOException {
@@ -130,12 +137,22 @@ public class cusMainController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == logoutButton) {
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("login.fxml"));
-            Stage loginStage = new Stage();
-            loginStage.setTitle("Customer Main Page");
-            loginStage.setScene(new Scene(loginRoot));
-            loginStage.show();
-            cusStage.close();
+            // Perform logout
+            SessionDaoImpl sessionDao = new SessionDaoImpl();
+            Response<Void> logoutResponse = sessionDao.logout(AppState.getSessionToken());
+
+            if (logoutResponse.isSuccess()) {
+                // Logout successful, navigate to login screen
+                Parent loginRoot = FXMLLoader.load(getClass().getResource("login.fxml"));
+                Stage loginStage = new Stage();
+                loginStage.setTitle("Login Page");
+                loginStage.setScene(new Scene(loginRoot));
+                loginStage.setResizable(false);
+                loginStage.show();
+                cusStage.close();
+            } else {
+                cusMainController.showAlert(String.valueOf(Alert.AlertType.ERROR), logoutResponse.getMessage());
+            }
         }
     }
     public void btnNotificationClicked(ActionEvent event) throws IOException {
@@ -158,6 +175,14 @@ public class cusMainController {
         AnchorPane view = FXMLLoader.load(getClass().getResource("cusProfile.fxml"));
         borderpane.setCenter(view);
         defaultSettings();
+    }
+
+    public static void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
 }

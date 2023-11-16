@@ -40,15 +40,15 @@
          <children>
                  <Button focusTraversable="false" layoutX="360.0" layoutY="398.0" mnemonicParsing="false" onAction="#acceptButtonClicked" prefHeight="34.0" prefWidth="123.0" text="Accept Order" textFill="WHITE">
                      <font>
-                         <Font name="System Bold" size="12.0" />
+                         <Font name="System Bold" size="14.0" />
                      </font>
                  </Button>
             <TableView fx:id="orderInfoTableView" layoutX="16.0" layoutY="100.0" prefHeight="241.0" prefWidth="468.0">
               <columns>
-                <TableColumn fx:id="itemColumn" prefWidth="143.20001220703125" text="Item" />
-                <TableColumn fx:id="priceColumn" prefWidth="117.60003662109375" text="Unit Price" />
-                  <TableColumn fx:id="quantityColumn" prefWidth="105.5999755859375" text="Quantity" />
-                  <TableColumn fx:id="amountColumn" prefWidth="97.5999755859375" text="Amount" />
+                <TableColumn fx:id="itemColumn" prefWidth="160.0" text="Item" />
+                <TableColumn fx:id="priceColumn" prefWidth="100.0" text="Unit Price" />
+                  <TableColumn fx:id="quantityColumn" prefWidth="100.0" text="Quantity" />
+                  <TableColumn fx:id="amountColumn" prefWidth="110.0" text="Amount" />
               </columns>
             </TableView>
             <Label fx:id="totalLabel" layoutX="360.0" layoutY="356.0" prefHeight="26.0" prefWidth="123.0">
@@ -86,14 +86,14 @@
                   <Font name="Segoe UI Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="dateLabel" alignment="CENTER" layoutX="326.0" layoutY="70.0" prefHeight="26.0" prefWidth="153.0">
+            <Label fx:id="dateLabel" alignment="CENTER" layoutX="326.0" layoutY="66.0" prefHeight="26.0" prefWidth="153.0">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Label>
             <Button focusTraversable="false" layoutX="227.0" layoutY="398.0" mnemonicParsing="false" onAction="#rejectButtonClicked" prefHeight="34.0" prefWidth="123.0" text="Reject Order" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Button>
             <Label fx:id="orderIdLabel" alignment="CENTER" layoutX="131.0" layoutY="14.0" prefHeight="26.0" prefWidth="239.0">

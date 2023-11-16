@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="390.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusRestaurantReviewPaneController">
+   <children>
+      <Label fx:id="nameLabel" prefHeight="29.0" prefWidth="412.0">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+         <padding>
+            <Insets left="20.0" top="10.0" />
+         </padding>
+      </Label>
+      <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="390.0" spacing="5.0">
+         <children>
+            <ImageView fx:id="firstRatingIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/rating-null.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="secondRatingIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/rating-null.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="thirdRatingIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/rating-null.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="fourthRatingIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/rating-null.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="fifthRatingIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/rating-null.png" />
+               </image>
+            </ImageView>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+      <Label fx:id="dateLabel" prefHeight="15.0" prefWidth="394.0">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="20.0" top="5.0" />
+         </padding>
+      </Label>
+      <TextArea fx:id="contentTextArea" editable="false" prefHeight="60.0" prefWidth="342.0">
+         <VBox.margin>
+            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+         </VBox.margin>
+      </TextArea>
+   </children>
+</VBox>

@@ -1,9 +1,11 @@
 package com.oodwj_assignment;
 
+import com.oodwj_assignment.dao.SessionDaoImpl;
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Foods;
 import com.oodwj_assignment.models.OrderFoods;
+import com.oodwj_assignment.states.AppState;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -147,12 +149,12 @@ public class venMainController {
         Image logout = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/logout-orange.png")));
         logoutIcon.setImage(logout);
 
-        Stage cusStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage venStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         Alert.AlertType type = Alert.AlertType.CONFIRMATION;
         Alert alert = new Alert(type, "");
         alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(cusStage);
+        alert.initOwner(venStage);
         alert.getDialogPane().setHeaderText("Are you sure you want to logout?");
 
         // Customize the button text
@@ -162,13 +164,22 @@ public class venMainController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == logoutButton) {
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("login.fxml"));
-            Stage loginStage = new Stage();
-            loginStage.setTitle("Login Page");
-            loginStage.setScene(new Scene(loginRoot));
-            loginStage.show();
+            // Perform logout
+            SessionDaoImpl sessionDao = new SessionDaoImpl();
+            Response<Void> logoutResponse = sessionDao.logout(AppState.getSessionToken());
 
-            cusStage.close();
+            if (logoutResponse.isSuccess()) {
+                // Logout successful, navigate to login screen
+                Parent loginRoot = FXMLLoader.load(getClass().getResource("login.fxml"));
+                Stage loginStage = new Stage();
+                loginStage.setTitle("Login Page");
+                loginStage.setScene(new Scene(loginRoot));
+                loginStage.setResizable(false);
+                loginStage.show();
+                venStage.close();
+            } else {
+                venMainController.showAlert(String.valueOf(Alert.AlertType.ERROR), logoutResponse.getMessage());
+            }
         }
     }
 

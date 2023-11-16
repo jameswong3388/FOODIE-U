@@ -11,13 +11,14 @@ import java.util.Objects;
 
 public class main extends Application {
     @Override
-    public void start(Stage primarystage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         Scene sc = new Scene(root);
         //primarystage.initStyle(StageStyle.UNDECORATED);
-        primarystage.setTitle("Login Page");
-        primarystage.setScene(sc);
-        primarystage.show();
+        primaryStage.setTitle("Login Page");
+        primaryStage.setScene(sc);
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {launch();}

@@ -60,11 +60,11 @@ public class Transactions extends Model {
     }
 
     public enum transactionStatus {
-        Pending, Completed, Cancelled, Failed,
+        Pending, Completed, Cancelled, Failed
     }
 
     public enum transactionType {
-        Purchase, Sale, Refund, Transfer, Payment
+        Purchase, Payment, Refund, TopUp
     }
 
     @Override
