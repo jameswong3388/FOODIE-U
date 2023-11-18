@@ -6,6 +6,7 @@ import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Orders;
 import com.oodwj_assignment.models.Tasks;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -13,10 +14,10 @@ import java.util.UUID;
 
 public class TaskDaoImpl extends AbstractDao<Tasks> implements TaskDao {
 
-    private static final String FILE_NAME = "database/tasks.txt";
+    private static final File FILE = new File("database/tasks.txt");
 
     public TaskDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
 
     public Tasks parse(String[] parts) {

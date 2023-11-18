@@ -3,15 +3,16 @@ package com.oodwj_assignment.dao;
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.models.Carts;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class CartDaoImpl extends AbstractDao<Carts> implements CartDao {
 
-    private static final String FILE_NAME = "database/carts.txt";
+    private static final File FILE = new File("database/carts.txt");
 
     public CartDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
 
     public Carts parse(String[] parts) {

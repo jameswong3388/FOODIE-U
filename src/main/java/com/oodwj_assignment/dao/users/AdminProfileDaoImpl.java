@@ -3,14 +3,15 @@ package com.oodwj_assignment.dao.users;
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.models.AdminProfile;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class AdminProfileDaoImpl extends AbstractDao<AdminProfile> implements AdminProfileDao {
-    private static final String FILE_NAME = "database/adminProfile.txt";
+    private static final File FILE = new File("database/adminProfile.txt");
 
     public AdminProfileDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Users;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,10 +16,10 @@ import java.util.UUID;
 
 public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
 
-    private static final String FILE_NAME = "database/users.txt";
+    private static final File FILE = new File("database/users.txt");
 
     public UserDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
         UUID userId = UUID.randomUUID();
         model.setId(userId);
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE, true))) {
             writer.println(model);
 
             return Response.success("User created successfully", userId);

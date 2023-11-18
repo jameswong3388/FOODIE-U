@@ -16,23 +16,23 @@ import java.lang.reflect.Method;
  * @param <T> the type parameter
  */
 public abstract class AbstractDao<T extends Model> implements Dao<T> {
-    private final String fileName;
+    private final File FILE;
     private static final String CWD = System.getProperty("user.dir");
     private static final String MEDIA_DIR = CWD + "/src/main/resources/medias/";
 
     /**
      * Instantiates a new Abstract dao.
      *
-     * @param fileName the database file name
+     * @param file the database FILE name
      */
-    public AbstractDao(String fileName) {
-        this.fileName = fileName;
+    public AbstractDao(File file) {
+        this.FILE = file;
     }
 
     /**
-     * Parses a line from the file into a T object
+     * Parses a line from the FILE into a T object
      *
-     * @param parts a line from the file
+     * @param parts a line from the FILE
      * @return a T object
      */
     public abstract T parse(String[] parts);
@@ -45,7 +45,7 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
      */
     public Response<UUID> create(T object) {
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName, true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE, true))) {
             UUID id = UUID.randomUUID();
             object.setId(id);
 
@@ -67,7 +67,7 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
     public Response<ArrayList<T>> read(Map<String, Object> query) {
         ArrayList<T> matchedObjects = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
@@ -238,7 +238,7 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
      * @return Void returned a response object with status, message and data
      */
     public Response<Void> saveAll(ArrayList<T> objects) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE))) {
             for (T object : objects) {
                 writer.println(object.toString());
             }
@@ -263,7 +263,7 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
 
     /***
      * Add media to a defined disk, and record the media in the database
-     * @param file uploaded file
+     * @param file uploaded FILE
      * @param media media object
      * @return null
      */
@@ -304,7 +304,7 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
      * Get all media of a model
      *
      * @param modelUUID model UUID
-     * @return file paths
+     * @return FILE paths
      */
     public Response<ArrayList<String>> getMedia(UUID modelUUID) {
         Response<ArrayList<Medias>> res = DaoFactory.getMediaDao().read(Map.of("model", modelDescriptor(), "modelUUID", modelUUID));
@@ -325,7 +325,7 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
      * Get the first media of a model
      *
      * @param modelUUID model UUID
-     * @return file path
+     * @return FILE path
      */
     public Response<String> getFirstMedia(UUID modelUUID) {
         Response<ArrayList<Medias>> res = DaoFactory.getMediaDao().read(Map.of("model", modelDescriptor(), "modelUUID", modelUUID));
