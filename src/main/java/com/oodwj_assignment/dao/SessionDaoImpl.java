@@ -9,6 +9,7 @@ import com.oodwj_assignment.models.Sessions;
 import com.oodwj_assignment.models.Users;
 import com.oodwj_assignment.states.AppState;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.Duration;
@@ -19,10 +20,10 @@ import java.util.UUID;
 
 public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao {
 
-    private static final String FILE_NAME = "database/sessions.txt";
+    private static final File FILE = new File("database/sessions.txt");
 
     public SessionDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
 
     public Sessions parse(String[] parts) {

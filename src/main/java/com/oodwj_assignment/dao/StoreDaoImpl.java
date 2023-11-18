@@ -3,15 +3,16 @@ package com.oodwj_assignment.dao;
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.models.Stores;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class StoreDaoImpl extends AbstractDao<Stores> implements StoreDao {
 
-    private static final String FILE_NAME = "database/stores.txt";
+    private static final File FILE = new File("database/stores.txt");
 
     public StoreDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
 
     public Stores parse(String[] parts) {

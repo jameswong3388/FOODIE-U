@@ -3,14 +3,15 @@ package com.oodwj_assignment.dao;
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.models.Attachments;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class AttachmentDaoImpl extends AbstractDao<Attachments> implements AttachmentDao {
-    private static final String FILE_NAME = "database/attachments.txt";
+    private static final File FILE = new File("database/attachments.txt");
 
     public AttachmentDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
 
     public Attachments parse(String[] parts) {

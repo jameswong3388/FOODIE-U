@@ -4,15 +4,16 @@ import com.oodwj_assignment.dao.base.AbstractDao;
 
 import com.oodwj_assignment.models.Reviews;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class ReviewDaoImpl extends AbstractDao<Reviews> implements ReviewDao {
 
-    private static final String FILE_NAME = "database/reviews.txt";
+    private static final File FILE = new File("database/reviews.txt");
 
     public ReviewDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
 
     public Reviews parse(String[] parts) {

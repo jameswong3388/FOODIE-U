@@ -3,14 +3,15 @@ package com.oodwj_assignment.dao;
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.models.Transactions;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class TransactionDaoImpl extends AbstractDao<Transactions> implements TransactionDao {
-    private static final String FILE_NAME = "database/transactions.txt";
+    private static final File FILE = new File("database/transactions.txt");
 
     public TransactionDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
 
     public Transactions parse(String[] parts) {

@@ -3,14 +3,15 @@ package com.oodwj_assignment.dao.users;
 import com.oodwj_assignment.dao.base.AbstractDao;
 import com.oodwj_assignment.models.CustomerProfile;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class CustomerProfileDaoImpl extends AbstractDao<CustomerProfile> implements CustomerProfileDao  {
-    private static final String FILE_NAME = "database/customerProfiles.txt";
+    private static final File FILE = new File("database/customerProfiles.txt");
 
     public CustomerProfileDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
     @Override
     public CustomerProfile parse(String[] parts) {
