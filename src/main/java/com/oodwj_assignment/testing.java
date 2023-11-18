@@ -46,7 +46,7 @@ public class testing {
         // Read 10000 users with string bytes, Execution time: 107 milliseconds
         // readUserWithStringByte(usersDao);
 
-        // Read 1000 users with text, Execution time: 112 milliseconds
+        // Read 10000 users with text, Execution time: 112 milliseconds
         // readUserByText();
 
         // Stop the timer
@@ -74,5 +74,4 @@ public class testing {
         System.out.println(res2.getData());
         System.out.println(res2.getMessage());
     }
-
 }
