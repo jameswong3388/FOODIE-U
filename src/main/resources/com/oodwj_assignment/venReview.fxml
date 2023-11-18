@@ -50,12 +50,12 @@
       </Label>
       <TableView fx:id="reviewsTableView" layoutX="258.0" layoutY="66.0" prefHeight="438.0" prefWidth="558.0">
         <columns>
-          <TableColumn fx:id="reviewIdColumn" prefWidth="85.5999755859375" text="Review ID" />
-          <TableColumn fx:id="nameColumn" prefWidth="109.5999755859375" text="Customer Name" />
-            <TableColumn fx:id="dateColumn" minWidth="6.4000244140625" prefWidth="64.800048828125" text="Date" />
-            <TableColumn fx:id="ratingColumn" minWidth="0.0" prefWidth="57.60003662109375" text="Rating" />
-            <TableColumn fx:id="contentColumn" minWidth="0.0" prefWidth="162.4000244140625" text="Content" />
-            <TableColumn fx:id="actionColumn" prefWidth="76.7999267578125" text="Action" />
+          <TableColumn fx:id="reviewIdColumn" prefWidth="85.5999755859375" sortable="false" text="Review ID" />
+          <TableColumn fx:id="nameColumn" prefWidth="109.5999755859375" sortable="false" text="Customer Name" />
+            <TableColumn fx:id="dateColumn" minWidth="6.4000244140625" prefWidth="64.800048828125" sortable="false" text="Date" />
+            <TableColumn fx:id="ratingColumn" minWidth="0.0" prefWidth="57.60003662109375" sortable="false" text="Rating" />
+            <TableColumn fx:id="contentColumn" minWidth="0.0" prefWidth="162.4000244140625" sortable="false" text="Content" />
+            <TableColumn fx:id="actionColumn" prefWidth="76.7999267578125" sortable="false" text="Action" />
         </columns>
       </TableView>
       <ImageView fx:id="firstRatingIcon" fitHeight="20.0" fitWidth="20.0" layoutX="32.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">

@@ -61,6 +61,7 @@ public class venProfileController {
     private boolean isNewHidden;
     private boolean isConfirmHidden;
     private venProfileController venProfileController;
+    private venMainController mainController;
 
     public void initialize(){
         phoneNumberFormatLabel.setVisible(false);
@@ -82,10 +83,10 @@ public class venProfileController {
         Response<ArrayList<Stores>> storeResponse = DaoFactory.getStoreDao().read(storeQuery);
 
         if (storeResponse.isSuccess()){
-            ArrayList<Stores> stores = storeResponse.getData();
-            String restaurantName = stores.get(0).getName();
-            String description = stores.get(0).getDescription();
-            Stores.storeCategory category = stores.get(0).getCategory();
+            Stores stores = storeResponse.getData().get(0);
+            String restaurantName = stores.getName();
+            String description = stores.getDescription();
+            Stores.storeCategory category = stores.getCategory();
 
             restaurantNameLabel.setText(restaurantName);
             restaurantNameTextField.setText(restaurantName);
@@ -97,18 +98,19 @@ public class venProfileController {
         Response<ArrayList<Users>> userResponse = DaoFactory.getUserDao().read(userQuery);
 
         if (userResponse.isSuccess()){
-            ArrayList<Users> users = userResponse.getData();
-            String name = users.get(0).getName();
-            String phoneNumber = users.get(0).getPhoneNumber();
-            String email = users.get(0).getEmail();
-            String username = users.get(0).getUsername();
-            currentPassword = users.get(0).getPassword();
+            Users users = userResponse.getData().get(0);
+            String name = users.getName();
+            String phoneNumber = users.getPhoneNumber();
+            String email = users.getEmail();
+            String username = users.getUsername();
+            currentPassword = users.getPassword();
 
             nameTextField.setText(name);
             phoneNumberTextField.setText(phoneNumber);
             emailTextField.setText(email);
             usernameTextField.setText(username);
         }
+
         isOldHidden = true;
         isNewHidden = true;
         isConfirmHidden = true;
@@ -128,6 +130,11 @@ public class venProfileController {
             } else {
                 System.err.println("Image file not found: " + imageFile.getAbsolutePath());
             }
+        }
+
+        if (mainController != null){
+            mainController.setVenMainController(mainController);
+            mainController.loadData();
         }
     }
 
@@ -156,7 +163,7 @@ public class venProfileController {
         loadInfo();
     }
 
-    public void saveResInfoButtonClicked(ActionEvent event) {
+    public void saveResInfoButtonClicked(ActionEvent event) throws IOException {
         // Get user input
         String restaurantName = restaurantNameTextField.getText();
         String description = descriptionTextField.getText();
@@ -196,6 +203,11 @@ public class venProfileController {
         }
 
         venMainController.showAlert("Success", "Information updated successfully.");
+
+        if (mainController != null){
+            mainController.setVenMainController(mainController);
+            mainController.loadData();
+        }
         loadInfo();
     }
 
@@ -309,4 +321,6 @@ public class venProfileController {
     public void setVenProfileController(venProfileController controller) {
         this.venProfileController = controller;
     }
+
+    public void setVenMainController(venMainController controller) { mainController = controller; }
 }

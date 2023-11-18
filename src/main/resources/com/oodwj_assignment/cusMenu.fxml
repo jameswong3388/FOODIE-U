@@ -87,7 +87,7 @@
       </TabPane>
       <AnchorPane layoutX="488.0" layoutY="61.0" prefHeight="457.0" prefWidth="342.0">
          <children>
-            <TableView layoutX="3.0" prefHeight="306.0" prefWidth="338.0" styleClass="background-color-2">
+            <TableView fx:id="orderFoodsTableView" layoutX="3.0" prefHeight="312.0" prefWidth="338.0" styleClass="background-color-2">
               <columns>
                 <TableColumn fx:id="itemColumn" prefWidth="113.60003662109375" resizable="false" text="Item" />
                   <TableColumn fx:id="priceColumn" prefWidth="84.80010986328125" resizable="false" text="Unit Price" />
@@ -95,37 +95,33 @@
                   <TableColumn fx:id="amountColumn" prefWidth="84.0001220703125" resizable="false" text="Amount" />
               </columns>
             </TableView>
-            <Label layoutX="174.0" layoutY="321.0" prefHeight="23.0" prefWidth="56.0" text="Total: ">
+            <Label layoutX="163.0" layoutY="329.0" prefHeight="23.0" prefWidth="56.0" text="Total: ">
                <font>
                   <Font name="Segoe UI Bold" size="18.0" />
                </font>
             </Label>
-            <Button focusTraversable="false" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="37.0" prefWidth="315.0" text="Place Order" textFill="WHITE">
+            <Button focusTraversable="false" layoutX="14.0" layoutY="367.0" mnemonicParsing="false" onAction="#checkoutButtonClicked" prefHeight="37.0" prefWidth="315.0" text="Checkout" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font></Button>
-            <Button focusTraversable="false" layoutX="178.0" layoutY="413.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #FFE8CC;" text="Receipt" textFill="#ff8a00">
-               <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
-               </font></Button>
-            <Button focusTraversable="false" layoutX="14.0" layoutY="413.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE">
+            <Button focusTraversable="false" layoutX="14.0" layoutY="412.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="38.0" prefWidth="315.0" style="-fx-background-color: #c8c8c8;" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Button>
-            <Label fx:id="totalLabel" layoutX="230.0" layoutY="321.0" prefHeight="23.0" prefWidth="101.0">
+            <Label fx:id="totalLabel" layoutX="219.0" layoutY="329.0" prefHeight="23.0" prefWidth="109.0" text="RM 0.00">
                <font>
                   <Font name="Segoe UI Bold" size="18.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <Label fx:id="nameLabel" layoutX="346.0" layoutY="22.0" text="Restaurant Name">
+      <Label fx:id="nameLabel" alignment="CENTER" layoutX="293.0" layoutY="22.0" prefHeight="23.0" prefWidth="253.0">
          <font>
             <Font name="Segoe UI Bold" size="18.0" />
          </font>
       </Label>
-      <Button alignment="BASELINE_CENTER" contentDisplay="RIGHT" focusTraversable="false" layoutX="733.0" layoutY="18.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Review">
+      <Button alignment="BASELINE_CENTER" contentDisplay="RIGHT" focusTraversable="false" layoutX="733.0" layoutY="18.0" mnemonicParsing="false" onAction="#reviewButtonClicked" style="-fx-background-color: transparent;" text="Review">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -137,7 +133,7 @@
             <Font name="Segoe UI Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnBack" focusTraversable="false" layoutY="8.0" mnemonicParsing="false" onAction="#backHome" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+      <Button fx:id="backButton" focusTraversable="false" layoutY="8.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>

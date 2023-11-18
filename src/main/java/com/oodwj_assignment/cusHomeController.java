@@ -75,7 +75,7 @@ public class cusHomeController {
     }
 
     public void setOrderInfo(String name) throws IOException {
-        cusMenuController menuController = new cusMenuController(name);
+        cusMenuController menuController = new cusMenuController(name, null);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("cusMenu.fxml"));
         fxmlLoader.setController(menuController);
         Parent menuRoot = fxmlLoader.load();

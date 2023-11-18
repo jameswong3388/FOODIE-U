@@ -2,6 +2,7 @@ package com.oodwj_assignment.dao.base;
 
 import com.oodwj_assignment.dao.*;
 import com.oodwj_assignment.dao.AttachmentDaoImpl;
+import com.oodwj_assignment.dao.users.*;
 import com.oodwj_assignment.dao.users.UserDao;
 import com.oodwj_assignment.dao.users.UserDaoImpl;
 
@@ -24,6 +25,10 @@ public class DaoFactory {
     private static final TransactionDao transactionDao = new TransactionDaoImpl();
     private static final UserDao userDao = new UserDaoImpl();
     private static final WalletDao walletDao = new WalletDaoImpl();
+    private static final AdminProfileDao adminProfileDao = new AdminProfileDaoImpl();
+    private static final RunnerProfileDao runnerProfileDao = new RunnerProfileDaoImpl();
+    private static final VendorProfileDao vendorProfileDao = new VendorProfileDaoImpl();
+    private static final CustomerProfileDao customerProfileDao = new CustomerProfileDaoImpl();
 
     private DaoFactory() {}
 
@@ -160,5 +165,41 @@ public class DaoFactory {
      */
     public static WalletDao getWalletDao() {
         return walletDao;
+    }
+
+    /**
+     * AdminProfile dao adminProfile dao.
+     *
+     * @return the adminProfile dao
+     */
+    public static AdminProfileDao getAdminProfileDao() {
+        return adminProfileDao;
+    }
+
+    /**
+     * RunnerProfile dao runnerProfile dao.
+     *
+     * @return the runnerProfile dao
+     */
+    public static RunnerProfileDao getRunnerProfileDao() {
+        return runnerProfileDao;
+    }
+
+    /**
+     * VendorProfile dao vendorProfile dao.
+     *
+     * @return the vendorProfile dao
+     */
+    public static VendorProfileDao getVendorProfileDao() {
+        return vendorProfileDao;
+    }
+
+    /**
+     * CustomerProfile dao customerProfile dao.
+     *
+     * @return the customerProfile dao
+     */
+    public static CustomerProfileDao getCustomerProfileDao() {
+        return customerProfileDao;
     }
 }

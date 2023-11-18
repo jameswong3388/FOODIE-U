@@ -38,27 +38,27 @@
       </ScrollPane>
       <Pane fx:id="orderInfoPane" layoutX="310.0" layoutY="57.0" prefHeight="446.0" prefWidth="500.0" styleClass="background-color-2">
          <children>
-                 <Button focusTraversable="false" layoutX="326.0" layoutY="354.0" mnemonicParsing="false" onAction="#acceptButtonClicked" prefHeight="34.0" prefWidth="123.0" text="Accept Order" textFill="WHITE">
+                 <Button focusTraversable="false" layoutX="360.0" layoutY="398.0" mnemonicParsing="false" onAction="#acceptButtonClicked" prefHeight="34.0" prefWidth="123.0" text="Accept Order" textFill="WHITE">
                      <font>
-                         <Font name="System Bold" size="12.0" />
+                         <Font name="System Bold" size="14.0" />
                      </font>
                  </Button>
             <TableView fx:id="orderInfoTableView" layoutX="16.0" layoutY="100.0" prefHeight="241.0" prefWidth="468.0">
               <columns>
-                <TableColumn fx:id="itemColumn" prefWidth="143.20001220703125" text="Item" />
-                <TableColumn fx:id="priceColumn" prefWidth="117.60003662109375" text="Unit Price" />
-                  <TableColumn fx:id="quantityColumn" prefWidth="105.5999755859375" text="Quantity" />
-                  <TableColumn fx:id="amountColumn" prefWidth="97.60003662109375" text="Amount" />
+                <TableColumn fx:id="itemColumn" prefWidth="160.0" text="Item" />
+                <TableColumn fx:id="priceColumn" prefWidth="100.0" text="Unit Price" />
+                  <TableColumn fx:id="quantityColumn" prefWidth="100.0" text="Quantity" />
+                  <TableColumn fx:id="amountColumn" prefWidth="110.0" text="Amount" />
               </columns>
             </TableView>
-            <Label fx:id="totalLabel" layoutX="146.0" layoutY="405.0" prefHeight="26.0" prefWidth="105.0">
+            <Label fx:id="totalLabel" layoutX="360.0" layoutY="356.0" prefHeight="26.0" prefWidth="123.0">
                <font>
                   <Font name="Segoe UI Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="59.0" layoutY="405.0" prefHeight="26.0" prefWidth="70.0" text="Total:">
+            <Label layoutX="280.0" layoutY="356.0" prefHeight="26.0" prefWidth="70.0" text="Total:">
                <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
+                  <Font name="Segoe UI Bold" size="18.0" />
                </font>
             </Label>
             <Label alignment="CENTER" layoutX="22.0" layoutY="47.0" prefHeight="26.0" prefWidth="114.0" text="Customer Name" textFill="#898989">
@@ -86,36 +86,16 @@
                   <Font name="Segoe UI Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="dateLabel" alignment="CENTER" layoutX="326.0" layoutY="70.0" prefHeight="26.0" prefWidth="153.0">
+            <Label fx:id="dateLabel" alignment="CENTER" layoutX="326.0" layoutY="66.0" prefHeight="26.0" prefWidth="153.0">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Label>
-            <Button focusTraversable="false" layoutX="326.0" layoutY="396.0" mnemonicParsing="false" onAction="#rejectButtonClicked" prefHeight="34.0" prefWidth="123.0" text="Reject Order" textFill="WHITE">
+            <Button focusTraversable="false" layoutX="227.0" layoutY="398.0" mnemonicParsing="false" onAction="#rejectButtonClicked" prefHeight="34.0" prefWidth="123.0" text="Reject Order" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Label fx:id="discountLabel" layoutX="146.0" layoutY="379.0" prefHeight="26.0" prefWidth="105.0">
-               <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="59.0" layoutY="379.0" prefHeight="26.0" prefWidth="70.0" text="Discount:">
-               <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="59.0" layoutY="353.0" prefHeight="26.0" prefWidth="70.0" text="Subtotal:">
-               <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="subtotalLabel" layoutX="146.0" layoutY="353.0" prefHeight="26.0" prefWidth="105.0">
-               <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
-               </font>
-            </Label>
             <Label fx:id="orderIdLabel" alignment="CENTER" layoutX="131.0" layoutY="14.0" prefHeight="26.0" prefWidth="239.0">
                <font>
                   <Font name="Segoe UI Bold" size="12.0" />

@@ -1,10 +1,11 @@
 package com.oodwj_assignment;
 
+import com.oodwj_assignment.dao.SessionDaoImpl;
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Foods;
 import com.oodwj_assignment.models.OrderFoods;
-import com.oodwj_assignment.models.Orders;
+import com.oodwj_assignment.states.AppState;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,13 +20,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class venMainController {
 
@@ -38,18 +40,36 @@ public class venMainController {
     @FXML private ImageView profileIcon;
     @FXML private ImageView logoutIcon;
     @FXML private ImageView notificationIcon;
-    @FXML private ImageView profilePic;
+    @FXML private Circle profilePic;
     @FXML private Label nameLabel;
     public static UUID storeId = UUID.fromString("5d6e7f8a-9b0c-1d2e-3f4a-5c6b7d8e9f0a");
     public static UUID vendorId = UUID.fromString("8a7ed604-d77a-476f-87c5-8c7e71940756");
+    private venMainController mainController;
 
     public void initialize() throws IOException {
         Image home = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/home-orange.png")));
         homeIcon.setImage(home);
         AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venHome.fxml")));
         borderpane.setCenter(view);
+        loadData();
+    }
+
+    public void loadData(){
         String name = DaoFactory.getUserDao().read(Map.of("Id", vendorId)).getData().get(0).getName();
         nameLabel.setText(name);
+
+        Response<String> mediaResponse = DaoFactory.getUserDao().getFirstMedia(vendorId);
+        if (mediaResponse.isSuccess()){
+            String imagePath = mediaResponse.getData();
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                Image image = new Image(imageFile.toURI().toString());
+                profilePic.setFill(new ImagePattern(image));
+            }
+        } else {
+            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/sample-profile.png")));
+            profilePic.setFill(new ImagePattern(image));
+        }
     }
 
     public void defaultSettings() {
@@ -113,11 +133,15 @@ public class venMainController {
     }
 
     public void btnProfileClicked(ActionEvent event) throws IOException {
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venProfile.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("venProfile.fxml."));
+        AnchorPane view = fxmlLoader.load();
+        venProfileController profileController = fxmlLoader.getController();
+        profileController.setVenMainController(this);
         borderpane.setCenter(view);
         defaultSettings();
         Image profile = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/profile-orange.png")));
         profileIcon.setImage(profile);
+
     }
 
     public void btnLogoutClicked(ActionEvent event) throws IOException {
@@ -125,12 +149,12 @@ public class venMainController {
         Image logout = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/logout-orange.png")));
         logoutIcon.setImage(logout);
 
-        Stage cusStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage venStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         Alert.AlertType type = Alert.AlertType.CONFIRMATION;
         Alert alert = new Alert(type, "");
         alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(cusStage);
+        alert.initOwner(venStage);
         alert.getDialogPane().setHeaderText("Are you sure you want to logout?");
 
         // Customize the button text
@@ -140,13 +164,22 @@ public class venMainController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == logoutButton) {
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("login.fxml"));
-            Stage loginStage = new Stage();
-            loginStage.setTitle("Login Page");
-            loginStage.setScene(new Scene(loginRoot));
-            loginStage.show();
+            // Perform logout
+            SessionDaoImpl sessionDao = new SessionDaoImpl();
+            Response<Void> logoutResponse = sessionDao.logout(AppState.getSessionToken());
 
-            cusStage.close();
+            if (logoutResponse.isSuccess()) {
+                // Logout successful, navigate to login screen
+                Parent loginRoot = FXMLLoader.load(getClass().getResource("login.fxml"));
+                Stage loginStage = new Stage();
+                loginStage.setTitle("Login Page");
+                loginStage.setScene(new Scene(loginRoot));
+                loginStage.setResizable(false);
+                loginStage.show();
+                venStage.close();
+            } else {
+                venMainController.showAlert(String.valueOf(Alert.AlertType.ERROR), logoutResponse.getMessage());
+            }
         }
     }
 
@@ -197,4 +230,5 @@ public class venMainController {
         return new ArrayList<>(storeOrderIds);
     }
 
+    public void setVenMainController(venMainController controller) { mainController = controller; }
 }
