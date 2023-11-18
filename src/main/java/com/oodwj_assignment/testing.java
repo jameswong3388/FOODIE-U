@@ -19,21 +19,21 @@ public class testing {
         // Start the timer
         long startTime = System.currentTimeMillis(); // or System.nanoTime();
 
-        // Create 10000 users with object bytes, Execution time: 773 milliseconds, File size: 7.3 MB
+        // Create 10,000 users with object bytes, Execution time: 773 milliseconds, File size: 7.3 MB
         // for (int i = 0; i < 10000; i++) {
         //     Response<UUID> res = usersDao.create(new Users(null, "test", "test", Users.Role.Admin, "test", "test", "test", Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now()));
         //     System.out.println(res.getData());
         //     System.out.println(res.getMessage());
         // }
 
-        // Create 15,000 users with string bytes, Execution time: 204 milliseconds, File size: 1.3 MB
-        // for (int i = 0; i < 15000; i++) {
+        // Create 10,000 users with string bytes, Execution time: 204 milliseconds, File size: 1.3 MB
+        // for (int i = 0; i < 10000; i++) {
         //     Response<UUID> res = usersDao.create2(new Users(null, "test", "test", Users.Role.Admin, "test", "test", "test", Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now()));
         //     System.out.println(res.getData());
         //     System.out.println(res.getMessage());
         // }
 
-        // Create 10000 users with text, Execution time: 324 milliseconds, File size: 1.3 MB
+        // Create 10,000 users with text, Execution time: 324 milliseconds, File size: 1.3 MB
         // for (int i = 0; i < 10000; i++) {
         //     Response<UUID> res = DaoFactory.getUserDao().create(new Users(null, "test", "test", Users.Role.Admin, "test", "test", "test", Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now()));
         //     System.out.println(res.getData());
