@@ -1,4 +1,4 @@
-package com.oodwj_assignment;
+package com.oodwj_assignment.helpers;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.dao.byteTesting.UserDaoByte;

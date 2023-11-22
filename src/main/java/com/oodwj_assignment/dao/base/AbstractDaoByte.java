@@ -1,11 +1,8 @@
 package com.oodwj_assignment.dao.base;
 
-import com.oodwj_assignment.ExecutorServiceExample;
-import com.oodwj_assignment.helpers.CustomObjectOutputStream;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Model;
 
-import javax.xml.transform.Result;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
