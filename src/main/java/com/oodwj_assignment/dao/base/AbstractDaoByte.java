@@ -1,16 +1,15 @@
 package com.oodwj_assignment.dao.base;
 
+import com.oodwj_assignment.ExecutorServiceExample;
 import com.oodwj_assignment.helpers.CustomObjectOutputStream;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Model;
 
+import javax.xml.transform.Result;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class AbstractDaoByte<T extends Model> implements DaoByte<T> {
     private final File file;
@@ -37,13 +36,20 @@ public abstract class AbstractDaoByte<T extends Model> implements DaoByte<T> {
 
     public Response<UUID> create(T object) {
         try {
+            ArrayList<T> list;
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+                list = (ArrayList<T>) objectInputStream.readObject();
+            } catch (EOFException e) {
+                list = new ArrayList<>();
+            }
+
             UUID id = UUID.randomUUID();
             object.setId(id);
 
-            try (FileOutputStream fos = new FileOutputStream(file, true)) {
-                try (ObjectOutputStream oos = file.length() == 0 ? new ObjectOutputStream(fos) : new CustomObjectOutputStream(fos)) {
-                    oos.writeObject(object);
-                }
+            list.add(object);
+
+            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+                objectOutputStream.writeObject(list);
             }
 
             return Response.success("Object created successfully", id);
@@ -51,107 +57,157 @@ public abstract class AbstractDaoByte<T extends Model> implements DaoByte<T> {
             return Response.failure("Failed to create object: " + e.getMessage());
         }
     }
-
-    public Response<UUID> create2(T object) {
-        try {
-            DataOutputStream fos = new DataOutputStream(new FileOutputStream(file, true));
-
-            UUID id = UUID.randomUUID();
-            object.setId(id);
-
-            fos.writeUTF(object.toString());
-            return Response.success("Object created successfully", id);
-
-        } catch (Exception e) {
-            return Response.failure("Failed to create object: " + e.getMessage());
-        }
-    }
-
 
     public Response<ArrayList<T>> read(Map<String, Object> query) {
-        ArrayList<T> matchedObjects = new ArrayList<>();
+        ArrayList<T> objects;
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            while (true) {
-                try {
-                    T object = (T) ois.readObject();
+        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
 
-                    // Use the match method to check if the object matches the query
-                    Response<Void> matchResponse = match(query, object);
+            objects = (ArrayList<T>) ois.readObject();
 
-                    if (matchResponse.isSuccess()) {
-                        matchedObjects.add(object);
-                    }
+            if (query.isEmpty()) {
+                return Response.success("Objects read successfully", objects);
+            }
 
-                } catch (EOFException e) {
-                    // Reached end of the file
-                    break;
+            for (Iterator<T> iterator = objects.iterator(); iterator.hasNext();) {
+                T object = iterator.next();
+                Response<Void> matchResponse = match(query, object);
+
+                if (!matchResponse.isSuccess()) {
+                    iterator.remove();
                 }
             }
+
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.failure("Error reading objects from the file: " + e.getMessage());
         }
 
-        if (matchedObjects.isEmpty()) {
-            return Response.failure("No objects match the query", matchedObjects);
+        if (objects.isEmpty()) {
+            return Response.failure("No objects match the query", objects);
         }
 
-        return Response.success("Objects read successfully", matchedObjects);
+        return Response.success("Objects read successfully", objects);
     }
 
-    public Response<ArrayList<T>> read2(Map<String, Object> query) {
-        ArrayList<T> matchedObjects = new ArrayList<>();
+    public Response<Void> update(Map<String, Object> query, Map<String, Object> newValue) {
+        Response<ArrayList<T>> objects = read(Map.of());
 
-        try (DataInputStream ois = new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-            while (true) {
-                try {
-                    String line = ois.readUTF();
+        if (objects.isSuccess()) {
+            for (T object : objects.getData()) {
 
-                    T object = parse(line.split(";"));
+                Response<Void> matchRes = match(query, object);
 
-                    // Use the match method to check if the object matches the query
-                    Response<Void> matchResponse = match(query, object);
+                if (matchRes.isSuccess()) {
+                    for (Map.Entry<String, Object> entry : newValue.entrySet()) {
+                        String attributeName = entry.getKey();
+                        Object expectedValue = entry.getValue();
 
-                    if (matchResponse.isSuccess()) {
-                        matchedObjects.add(object);
+                        try {
+                            Method setter = object.getClass().getMethod("set" + capitalizeFirstLetter(attributeName), expectedValue.getClass());
+                            setter.invoke(object, expectedValue);
+                        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                            return Response.failure("Error setting attribute value for " + attributeName);
+                        }
                     }
 
-                } catch (EOFException e) {
-                    // Reached end of the file
-                    break;
+                    Response<Void> saveRes = saveAll(objects.getData());
+
+                    if (saveRes.isSuccess()) {
+                        return Response.success("Object updated successfully");
+                    } else {
+                        return Response.failure(saveRes.getMessage());
+                    }
                 }
             }
-        } catch (Exception e) {
-            return Response.failure("Error reading objects from the file: " + e.getMessage());
-        }
 
-        if (matchedObjects.isEmpty()) {
-            return Response.failure("No objects match the query", matchedObjects);
+            return Response.failure("Object not found");
+        } else {
+            return Response.failure(objects.getMessage());
         }
-
-        return Response.success("Objects read successfully", matchedObjects);
     }
+
+    public Response<Void> deleteOne(Map<String, Object> query) {
+        Response<ArrayList<T>> objects = read(Map.of());
+
+        if (objects.isSuccess()) {
+            for (T object : objects.getData()) {
+                Response<Void> matchRes = match(query, object);
+
+                if (matchRes.isSuccess()) {
+                    objects.getData().remove(object);
+
+                    Response<Void> saveRes = saveAll(objects.getData());
+
+                    if (saveRes.isSuccess()) {
+                        return Response.success("Object deleted successfully");
+                    } else {
+                        return Response.failure(saveRes.getMessage());
+                    }
+                }
+            }
+
+            return Response.failure("Object not found");
+        } else {
+            return Response.failure(objects.getMessage());
+        }
+    }
+
+    public Response<Void> deleteAll(Map<String, Object> query) {
+        Response<ArrayList<T>> objects = read(Map.of());
+        ArrayList<T> toRemove = new ArrayList<>();
+
+        if (objects.isSuccess()) {
+            for (T object : objects.getData()) {
+                Response<Void> matchRes = match(query, object);
+
+                if (matchRes.isSuccess()) {
+                    toRemove.add(object); // to avoid ConcurrentModificationException
+                }
+            }
+
+            objects.getData().removeAll(toRemove);
+            Response<Void> saveRes = saveAll(objects.getData());
+
+            if (saveRes.isSuccess()) {
+                return Response.success("Objects deleted successfully");
+            } else {
+                return Response.failure(saveRes.getMessage());
+            }
+        } else {
+            return Response.failure(objects.getMessage());
+        }
+    }
+
+    public Response<Void> saveAll(ArrayList<T> objects) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+            objectOutputStream.writeObject(objects);
+            return Response.success("Objects saved successfully");
+        } catch (Exception e) {
+            return Response.failure("Error saving objects to the file: " + e.getMessage());
+        }
+    }
+
+
 
     public Response<Void> match(Map<String, Object> query, T object) {
-        boolean match = true;
+        boolean match = query.entrySet()
+                .parallelStream()
+                .allMatch(entry -> {
+                    String attributeName = entry.getKey();
+                    Object expectedValue = entry.getValue();
 
-        for (Map.Entry<String, Object> entry : query.entrySet()) {
-            String attributeName = entry.getKey();
-            Object expectedValue = entry.getValue();
+                    try {
+                        Method getter = object.getClass().getMethod("get" + capitalizeFirstLetter(attributeName));
+                        Object actualValue = getter.invoke(object);
 
-            // Use reflection to dynamically invoke the getter method
-            try {
-                Method getter = object.getClass().getMethod("get" + capitalizeFirstLetter(attributeName));
-                Object actualValue = getter.invoke(object);
+                        return Objects.equals(actualValue, expectedValue);
 
-                if (!Objects.equals(actualValue, expectedValue)) {
-                    match = false;
-                    break;
-                }
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                return Response.failure("Error getting attribute value for " + attributeName);
-            }
-        }
+                    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                        throw new RuntimeException("Error getting attribute value for " + attributeName, e);
+                    }
+                });
+
         if (match) {
             return Response.success("Object matches the query");
         } else {
