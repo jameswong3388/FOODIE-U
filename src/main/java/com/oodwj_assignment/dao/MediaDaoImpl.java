@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class MediaDaoImpl extends AbstractDao<Medias> implements MediaDao {
 
-    private static final File FILE = new File("database/medias.txt");
+    private static final File FILE = new File("database/medias.dat");
 
     public MediaDaoImpl() {
         super(FILE);

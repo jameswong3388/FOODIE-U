@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class CartDaoImpl extends AbstractDao<Carts> implements CartDao {
 
-    private static final File FILE = new File("database/carts.txt");
+    private static final File FILE = new File("database/carts.dat");
 
     public CartDaoImpl() {
         super(FILE);

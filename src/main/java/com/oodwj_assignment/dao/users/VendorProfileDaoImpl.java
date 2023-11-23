@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class VendorProfileDaoImpl extends AbstractDao<VendorProfile> implements VendorProfileDao {
-    private static final File FILE = new File("database/vendorProfile.txt");
+    private static final File FILE = new File("database/vendorProfiles.dat");
 
     public VendorProfileDaoImpl() {
         super(FILE);

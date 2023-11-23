@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class ReceiptDaoImpl extends AbstractDao<Receipts> implements ReceiptDao {
 
-    private static final File FILE = new File("database/receipts.txt");
+    private static final File FILE = new File("database/receipts.dat");
 
     public ReceiptDaoImpl() {
         super(FILE);

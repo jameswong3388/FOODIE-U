@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class AdminProfileDaoImpl extends AbstractDao<AdminProfile> implements AdminProfileDao {
-    private static final File FILE = new File("database/adminProfile.txt");
+    private static final File FILE = new File("database/adminProfiles.dat");
 
     public AdminProfileDaoImpl() {
         super(FILE);

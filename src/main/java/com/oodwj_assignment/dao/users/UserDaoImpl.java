@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
 
-    private static final File FILE = new File("database/users.txt");
+    private static final File FILE = new File("database/users.dat");
 
     public UserDaoImpl() {
         super(FILE);
@@ -67,6 +67,8 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
      */
     public Response<Boolean> isUsernameTaken(String username) {
         Response<ArrayList<Users>> users = DaoFactory.getUserDao().read(Map.of("username", username));
+
+        System.out.println(users.getData());
 
         if (users.isSuccess()) {
             for (Users user : users.getData()) {

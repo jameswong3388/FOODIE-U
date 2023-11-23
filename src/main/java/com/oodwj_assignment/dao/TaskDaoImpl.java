@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class TaskDaoImpl extends AbstractDao<Tasks> implements TaskDao {
 
-    private static final File FILE = new File("database/tasks.txt");
+    private static final File FILE = new File("database/tasks.dat");
 
     public TaskDaoImpl() {
         super(FILE);

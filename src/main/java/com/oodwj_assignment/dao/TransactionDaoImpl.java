@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class TransactionDaoImpl extends AbstractDao<Transactions> implements TransactionDao {
-    private static final File FILE = new File("database/transactions.txt");
+    private static final File FILE = new File("database/transactions.dat");
 
     public TransactionDaoImpl() {
         super(FILE);

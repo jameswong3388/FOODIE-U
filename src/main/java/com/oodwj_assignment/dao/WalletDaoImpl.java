@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class WalletDaoImpl extends AbstractDao<Wallets> implements WalletDao {
 
-    private static final File FILE = new File("database/wallets.txt");
+    private static final File FILE = new File("database/wallets.dat");
 
     public WalletDaoImpl() {
         super(FILE);

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class NotificationDaoImpl extends AbstractDao<Notifications> implements NotificationDao {
 
-    private static final File FILE = new File("database/notifications.txt");
+    private static final File FILE = new File("database/notifications.dat");
 
     public NotificationDaoImpl() {
         super(FILE);
