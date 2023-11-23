@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class OrderFoodDaoImpl extends AbstractDao<OrderFoods> implements OrderFoodDao {
 
-    private static final File FILE = new File("database/orderFoods.txt");
+    private static final File FILE = new File("database/orderFoods.dat");
 
     public OrderFoodDaoImpl() {
         super(FILE);

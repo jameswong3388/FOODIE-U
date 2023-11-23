@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class AttachmentDaoImpl extends AbstractDao<Attachments> implements AttachmentDao {
-    private static final File FILE = new File("database/attachments.txt");
+    private static final File FILE = new File("database/attachments.dat");
 
     public AttachmentDaoImpl() {
         super(FILE);

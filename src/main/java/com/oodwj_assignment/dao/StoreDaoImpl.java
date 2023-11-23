@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class StoreDaoImpl extends AbstractDao<Stores> implements StoreDao {
 
-    private static final File FILE = new File("database/stores.txt");
+    private static final File FILE = new File("database/stores.dat");
 
     public StoreDaoImpl() {
         super(FILE);

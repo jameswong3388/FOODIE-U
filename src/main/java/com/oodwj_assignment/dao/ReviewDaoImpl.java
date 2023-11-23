@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class ReviewDaoImpl extends AbstractDao<Reviews> implements ReviewDao {
 
-    private static final File FILE = new File("database/reviews.txt");
+    private static final File FILE = new File("database/reviews.dat");
 
     public ReviewDaoImpl() {
         super(FILE);

@@ -1,8 +1,6 @@
 package com.oodwj_assignment.helpers;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
-import com.oodwj_assignment.dao.byteTesting.UserDaoByte;
-import com.oodwj_assignment.dao.byteTesting.UserDaoByteImpl;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Users;
 
@@ -14,8 +12,6 @@ import java.util.UUID;
 
 public class testing {
     public static void main(String[] args) throws InterruptedException {
-        UserDaoByte usersDao = new UserDaoByteImpl();
-
         // Start the timer
         long startTime = System.currentTimeMillis(); // or System.nanoTime();
 
@@ -46,15 +42,5 @@ public class testing {
         // Calculate and print the execution time
         long executionTime = endTime - startTime;
         System.out.println("Execution time: " + executionTime + " milliseconds");
-    }
-
-    static void readUserWithObjectByte(UserDaoByte usersDao) {
-        Response<ArrayList<Users>> res2 = usersDao.read(Map.of());
-        System.out.println(res2.getMessage());
-    }
-
-    static void readUserByText() {
-        Response<ArrayList<Users>> res2 = DaoFactory.getUserDao().read(Map.of("username", "test"));
-        System.out.println(res2.getMessage());
     }
 }
