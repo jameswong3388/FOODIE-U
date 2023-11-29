@@ -26,10 +26,11 @@ public class TaskDaoImpl extends AbstractDao<Tasks> implements TaskDao {
             UUID orderId = UUID.fromString(parts[2]);
             Double deliveryFee = Double.parseDouble(parts[3]);
             Tasks.taskStatus status = Tasks.taskStatus.valueOf(parts[4]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[5]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
+            UUID transactionId = UUID.fromString(parts[5]);
+            LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
+            LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
 
-            return new Tasks(taskId, runnerId, orderId, deliveryFee, status, updatedAt, createdAt);
+            return new Tasks(taskId, runnerId, orderId, deliveryFee, status, transactionId, updatedAt, createdAt);
         } catch (Exception e) {
             return null;
         }

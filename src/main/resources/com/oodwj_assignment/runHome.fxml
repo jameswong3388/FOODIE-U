@@ -38,7 +38,7 @@
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="254.0" layoutY="24.0" text="New Order Status:">
+            <Label layoutX="254.0" layoutY="24.0" text="New Task Status:">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
@@ -55,7 +55,7 @@
             </Button>
          </children>
       </Pane>
-      <ToggleButton layoutX="178.0" layoutY="52.0" mnemonicParsing="false" onAction="#activeToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="Active Orders" textFill="WHITE">
+      <ToggleButton layoutX="178.0" layoutY="52.0" mnemonicParsing="false" onAction="#activeToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="Active Tasks" textFill="WHITE">
          <font>
             <Font name="Segoe UI Bold" size="12.0" />
          </font>
@@ -63,17 +63,17 @@
             <ToggleGroup fx:id="statusFilter" />
          </toggleGroup>
       </ToggleButton>
-      <ToggleButton layoutX="333.0" layoutY="52.0" mnemonicParsing="false" onAction="#completedToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="Completed Orders" textFill="WHITE" toggleGroup="$statusFilter">
+      <ToggleButton layoutX="333.0" layoutY="52.0" mnemonicParsing="false" onAction="#completedToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="Delivered Tasks" textFill="WHITE" toggleGroup="$statusFilter">
          <font>
             <Font name="Segoe UI Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton layoutX="25.0" layoutY="52.0" mnemonicParsing="false" onAction="#allToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="All Orders" textFill="WHITE" toggleGroup="$statusFilter">
+      <ToggleButton layoutX="25.0" layoutY="52.0" mnemonicParsing="false" onAction="#allToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="All Tasks" textFill="WHITE" toggleGroup="$statusFilter">
          <font>
             <Font name="Segoe UI Bold" size="12.0" />
          </font>
       </ToggleButton>
-      <ToggleButton layoutX="488.0" layoutY="52.0" mnemonicParsing="false" onAction="#rejectedToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="Rejected Orders" textFill="WHITE" toggleGroup="$statusFilter">
+      <ToggleButton layoutX="488.0" layoutY="52.0" mnemonicParsing="false" onAction="#rejectedToggleClicked" prefHeight="26.0" prefWidth="134.0" styleClass="primary-color" text="Rejected Tasks" textFill="WHITE" toggleGroup="$statusFilter">
          <font>
             <Font name="Segoe UI Bold" size="12.0" />
          </font>

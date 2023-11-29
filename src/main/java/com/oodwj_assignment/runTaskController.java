@@ -42,6 +42,9 @@ public class runTaskController {
     @FXML private Pane noTaskPane;
     private UUID orderId;
     private UUID taskId;
+    private UUID storeId;
+    private UUID runnerId;
+    private  Double deliveryFee;
     private Map<UUID, Set<UUID>> taskRejections = new HashMap<>();
 
     public void initialize() throws IOException {
@@ -60,6 +63,7 @@ public class runTaskController {
         });
         taskInfoPane.setVisible(false);
 
+        runnerId = runMainController.runnerId;
         // Create a list to hold the order panes
         List<VBox> taskPanes = new ArrayList<>();
 
@@ -121,6 +125,7 @@ public class runTaskController {
                 Map<String, Object> storeQuery = Map.of("Id", food.get(0).getStoreId());
                 Response<ArrayList<Stores>> storeResponse = DaoFactory.getStoreDao().read(storeQuery);
                 String resName = storeResponse.getData().get(0).getName();
+                storeId = storeResponse.getData().get(0).getId();
 
                 // Fetch user information
                 Map<String, Object> userQuery = Map.of("Id", userId);
@@ -137,37 +142,65 @@ public class runTaskController {
                     orderFood.setAmount(amount);
                 }
 
+                deliveryFee = task.get(0).getDeliveryFee();
                 taskIdLabel.setText(taskId.toString());
                 orderIdLabel.setText(orderId.toString());
                 resNameLabel.setText(resName);
                 cusNameLabel.setText(cusName);
                 phoneNumberLabel.setText(phoneNumber);
-                deliveryFeeLabel.setText(currencyFormat.format(task.get(0).getDeliveryFee()));
+                deliveryFeeLabel.setText(currencyFormat.format(deliveryFee));
                 orderTableView.getItems().setAll(orderFoodsInfo);
             }
         } else {
             taskInfoPane.setVisible(false);
-            runMainController.showAlert("Error", "Failed to read task: " + taskResponse.getMessage());
         }
     }
 
     public void acceptButtonClicked(ActionEvent event) throws Exception {
         updateTaskStatus(Tasks.taskStatus.Accepted, "Task accepted.");
+
+        // Create a new transaction for delivery fee
+        Transactions newTransaction = new Transactions(UUID.randomUUID(), deliveryFee, Transactions.transactionType.Payment, Transactions.transactionStatus.Pending, storeId, runnerId, LocalDateTime.now(), LocalDateTime.now());
+        Response<UUID> transactionResponse = DaoFactory.getTransactionDao().create(newTransaction);
+        if (!transactionResponse.isSuccess()) {
+            runMainController.showAlert("Error", "Failed to create transaction: " + transactionResponse.getMessage());
+            return;
+        }
+        UUID transactionId = transactionResponse.getData();
+
+        // Update transactionId into task
+        Map<String, Object> query = Map.of("Id", taskId);
+        Map<String, Object> newValue = Map.of("transactionId", transactionId, "updatedAt", LocalDateTime.now());
+        Response<Void> taskResponse = DaoFactory.getTaskDao().update(query, newValue);
+        if (!taskResponse.isSuccess()) {
+            runMainController.showAlert("Error", "Failed to update transaction to task: " + taskResponse.getMessage());
+        }
+
+        Map<String, Object> orderQuery = Map.of("Id", orderId);
+        UUID userId = DaoFactory.getOrderDao().read(orderQuery).getData().get(0).getUserId();
+        notificationController notificationController = new notificationController();
+        notificationController.sendNotification(userId, "A runner accepted the task: " + taskId, Notifications.notificationType.Information);
+        notificationController.sendNotification(storeId, "A runner accepted the task: " + taskId, Notifications.notificationType.Information);
     }
 
     public void rejectButtonClicked(ActionEvent event) throws Exception {
-        recordRejectionByRunner(taskId, runMainController.runnerId);
+        recordRejectionByRunner();
 
-        if (haveAllRunnersRejected(taskId)) {
-            updateTaskStatus(Tasks.taskStatus.Declined, "Task declined by all runners.");
-            // Handle refund here... Yet completed
-
-        } else {
+        if (!haveAllRunnersRejected(taskId)) {
             updateTaskStatus(Tasks.taskStatus.Pending, "You have rejected the task. Waiting for other runners.");
+            return;
         }
+
+        updateTaskStatus(Tasks.taskStatus.Declined, "Task declined by all runners.");
+
+        Map<String, Object> orderQuery = Map.of("Id", orderId);
+        UUID userId = DaoFactory.getOrderDao().read(orderQuery).getData().get(0).getUserId();
+        notificationController notificationController = new notificationController();
+        notificationController.sendNotification(userId, "Unable to find a runner for the order ID:" + orderId, Notifications.notificationType.Warning);
+        notificationController.sendNotification(storeId, "Unable to find a runner for the order ID:" + orderId + ". Waiting customer to make decision.", Notifications.notificationType.Information);
     }
 
-    private void recordRejectionByRunner(UUID taskId, UUID runnerId) {
+    private void recordRejectionByRunner() {
         taskRejections.computeIfAbsent(taskId, k -> new HashSet<>()).add(runnerId);
     }
 
@@ -194,9 +227,9 @@ public class runTaskController {
         Map<String, Object> query = Map.of("Id", taskId);
         Map<String, Object> newValue = null;
         if (newStatus.equals(Tasks.taskStatus.Accepted)){
-            newValue = Map.of("status", newStatus, "runnerId", runMainController.runnerId);
+            newValue = Map.of("status", newStatus, "runnerId", runnerId, "updatedAt", LocalDateTime.now());
         } else {
-            newValue = Map.of("status", newStatus);
+            newValue = Map.of("status", newStatus, "updatedAt", LocalDateTime.now());
         }
 
         Response<Void> response = DaoFactory.getTaskDao().update(query, newValue);

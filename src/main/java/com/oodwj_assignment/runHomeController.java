@@ -2,7 +2,10 @@ package com.oodwj_assignment;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
+import com.oodwj_assignment.models.Notifications;
+import com.oodwj_assignment.models.Orders;
 import com.oodwj_assignment.models.Tasks;
+import com.oodwj_assignment.models.Transactions;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.concurrent.Task;
@@ -93,8 +96,6 @@ public class runHomeController {
             tasksTableView.getItems().setAll(filtered);
             taskIdComboBox.getItems().clear();
             taskIdComboBox.getItems().addAll(activeTaskIds);
-        } else {
-            runMainController.showAlert("Read Error", "Failed to read tasks for runner ID: " + response.getMessage());
         }
     }
 
@@ -131,18 +132,45 @@ public class runHomeController {
         if (taskId == null || status == null) {
             runMainController.showAlert("Validation Error", "Please select an task ID and task status.");
             clearFields();
-        } else {
-            Map<String, Object> query = Map.of("Id", taskId);
-            Map<String, Object> newValue = Map.of("status", status);
-            Response<Void> response = DaoFactory.getTaskDao().update(query, newValue);
-            if (response.isSuccess()) {
-                loadTasks();
-                clearFields();
-                runMainController.showAlert("Success", "task status updated successfully.");
-            } else {
-                runMainController.showAlert("Update Error", "Failed to update tasks status: " + response.getMessage());
+            return;
+        }
+
+        // Update Task Status
+        Map<String, Object> taskQuery = Map.of("Id", taskId);
+        Map<String, Object> newValue = Map.of("status", status, "updatedAt", LocalDateTime.now());
+        Response<Void> taskResponse = DaoFactory.getTaskDao().update(taskQuery, newValue);
+
+        if (!taskResponse.isSuccess()) {
+            runMainController.showAlert("Update Error", "Failed to update tasks status: " + taskResponse.getMessage());
+            return;
+        }
+
+        // Update Transaction Status if Task is Delivered
+        if (status == Tasks.taskStatus.Delivered) {
+            UUID transactionId = DaoFactory.getTaskDao().read(taskQuery).getData().get(0).getTransactionId();
+            if (transactionId != null) {
+                Map<String, Object> transactionQuery = Map.of("Id", transactionId);
+                Map<String, Object> newTransactionValue = Map.of("status", Transactions.transactionStatus.Completed, "updatedAt", LocalDateTime.now());
+                Response<Void> transactionResponse = DaoFactory.getTransactionDao().update(transactionQuery, newTransactionValue);
+
+                if (!transactionResponse.isSuccess()) {
+                    runMainController.showAlert("Transaction Update Error", "Failed to update transaction status: " + transactionResponse.getMessage());
+                }
             }
         }
+
+        // Reload tasks and clear fields
+        loadTasks();
+        clearFields();
+        runMainController.showAlert("Success", "task status updated successfully.");
+
+        // Read User ID
+        UUID orderId = DaoFactory.getTaskDao().read(taskQuery).getData().get(0).getOrderId();
+        Map<String, Object> orderQuery = Map.of("Id", orderId);
+        UUID userId = DaoFactory.getOrderDao().read(orderQuery).getData().get(0).getUserId();
+
+        notificationController notificationController = new notificationController();
+        notificationController.sendNotification(userId, "Task status has been updated. Current task status: " + status, Notifications.notificationType.Information);
     }
 
     private Tasks.taskStatus parseStatusText(String statusText) {
@@ -160,16 +188,25 @@ public class runHomeController {
     }
 
     public void activeToggleClicked(ActionEvent event) throws IOException {
+        if (allTasks == null){
+            return;
+        }
         List<Tasks> filtered = filterTasks(Tasks.taskStatus.Accepted, Tasks.taskStatus.PickedUp);
         tasksTableView.getItems().setAll(filtered);
     }
 
     public void completedToggleClicked(ActionEvent event) throws IOException {
+        if (allTasks == null){
+            return;
+        }
         List<Tasks> filtered = filterTasks(Tasks.taskStatus.Delivered);
         tasksTableView.getItems().setAll(filtered);
     }
 
     public void rejectedToggleClicked(ActionEvent event) throws IOException {
+        if (allTasks == null){
+            return;
+        }
         List<Tasks> filtered = filterTasks(Tasks.taskStatus.Declined);
         tasksTableView.getItems().setAll(filtered);
     }

@@ -1,6 +1,7 @@
 package com.oodwj_assignment;
 
 import com.oodwj_assignment.models.OrderFoods;
+import com.oodwj_assignment.models.Orders;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,37 +16,42 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.UUID;
 
 public class cusOrderMethodController {
 
     @FXML private Button closeButton;
     private ObservableList<OrderFoods> orderFoodsList;
+    private UUID storeId;
+    private cusMenuController menuController;
 
     public void closeButtonClicked(ActionEvent event) {
         closePage();
     }
 
     public void deliveryButtonClicked(ActionEvent event) throws IOException {
-        openPaymentPage(true);
+        openPaymentPage(Orders.orderType.Delivery);
         closePage();
     }
 
     public void dineInButtonClicked(ActionEvent event) throws IOException {
-        openPaymentPage(false);
+        openPaymentPage(Orders.orderType.DineIn);
         closePage();
     }
 
     public void takeAwayButtonClicked(ActionEvent event) throws IOException {
-        openPaymentPage(false);
+        openPaymentPage(Orders.orderType.TakeAway);
         closePage();
     }
 
-    private void openPaymentPage(boolean isDelivery) throws IOException {
+    private void openPaymentPage(Orders.orderType orderType) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("cusPayment.fxml"));
         Parent paymentRoot = loader.load();
         cusPaymentController paymentController = loader.getController();
-        paymentController.setIsDelivery(isDelivery);
+        paymentController.setOrderType(orderType);
         paymentController.setOrderFoodsData(orderFoodsList);
+        paymentController.setStoreId(storeId);
+        paymentController.setCusMenuController(menuController);
         Stage payment = new Stage();
         payment.setTitle("Payment Page");
         payment.initStyle(StageStyle.UNDECORATED);
@@ -59,7 +65,13 @@ public class cusOrderMethodController {
         methodStage.close();
     }
 
-    public void getOrderFoodsList(ObservableList<OrderFoods> orderFoodsList) {
+    public void setOrderFoodsList(ObservableList<OrderFoods> orderFoodsList) {
         this.orderFoodsList = orderFoodsList;
     }
+
+    public void setStoreId(UUID storeId) {
+        this.storeId = storeId;
+    }
+
+    public void setCusMenuController(cusMenuController menuController){ this.menuController = menuController; }
 }

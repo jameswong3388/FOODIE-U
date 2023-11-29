@@ -186,8 +186,6 @@ public class runReviewController {
                     ratingImage.setImage(new Image(getClass().getResourceAsStream("/images/rating-null.png")));
                 }
             }
-        } else {
-            System.out.println("Failed to fetch review info");
         }
     }
 

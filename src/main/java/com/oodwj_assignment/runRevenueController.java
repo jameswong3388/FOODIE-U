@@ -82,8 +82,6 @@ public class runRevenueController {
 
             updateLineChart(filteredTasks);
             revenueLabel.setText(String.format("RM %.2f", totalRevenue));
-        } else {
-            System.out.println("No tasks found for the specified runnerIds");
         }
     }
 

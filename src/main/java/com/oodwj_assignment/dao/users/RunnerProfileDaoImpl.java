@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class RunnerProfileDaoImpl extends AbstractDao<RunnerProfile> implements RunnerProfileDao {
-    private static final String FILE_NAME = "database/runnerProfile.txt";
+    private static final String FILE_NAME = "database/runnerProfiles.txt";
 
     public RunnerProfileDaoImpl() {
         super(FILE_NAME);

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="433.0" prefWidth="302.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.receiptController">
+   <children>
+      <Pane layoutY="4.0" prefHeight="58.0" prefWidth="302.0" styleClass="background-color-1">
+         <children>
+            <Button fx:id="closeButton" focusTraversable="false" layoutX="248.0" layoutY="9.0" mnemonicParsing="false" onAction="#closeButtonClicked" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/close.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <ImageView fitHeight="58.0" fitWidth="139.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/Logo6.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutY="62.0" prefHeight="58.0" prefWidth="302.0" styleClass="primary-color">
+         <children>
+            <Label fx:id="cancelLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="211.0" layoutY="15.0" prefHeight="28.0" prefWidth="77.0" text="Cancelled" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+               <font>
+                  <Font name="Segoe UI Bold" size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="rounded-shape" />
+                  <String fx:value="red-color" />
+               </styleClass>
+            </Label>
+            <Label fx:id="typeLabel" contentDisplay="CENTER" layoutX="14.0" layoutY="15.0" prefHeight="28.0" prefWidth="192.0" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="successLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="211.0" layoutY="15.0" prefHeight="28.0" prefWidth="77.0" text="Successful" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+               <font>
+                  <Font name="Segoe UI Bold" size="12.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="rounded-shape" />
+                  <String fx:value="green-color" />
+               </styleClass>
+            </Label>
+         </children>
+      </Pane>
+      <Label layoutX="15.0" layoutY="140.0" text="Receipt ID:">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="receiptIdLabel" layoutX="15.0" layoutY="165.0" prefHeight="18.0" prefWidth="272.0">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="199.0" text="Transaction ID:">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="transactionIdLabel" layoutX="15.0" layoutY="224.0" prefHeight="18.0" prefWidth="272.0">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="321.0" text="Payer:">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="payerLabel" layoutX="15.0" layoutY="346.0" prefHeight="18.0" prefWidth="130.0">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="155.0" layoutY="321.0" text="Payee:">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="payeeLabel" layoutX="155.0" layoutY="346.0" prefHeight="18.0" prefWidth="130.0">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="119.0" layoutY="377.0" prefHeight="18.0" prefWidth="58.0" text="Amount:">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="amountLabel" alignment="CENTER" layoutX="83.0" layoutY="396.0" prefHeight="18.0" prefWidth="130.0">
+         <font>
+            <Font name="Segoe UI Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="259.0" text="Date:">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="dateLabel" layoutX="15.0" layoutY="284.0" prefHeight="18.0" prefWidth="272.0">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <Line endX="169.99996948242188" layoutX="116.0" layoutY="191.0" startX="-100.0" stroke="#969696" />
+      <Line endX="169.99996948242188" layoutX="116.0" layoutY="251.0" startX="-100.0" stroke="#969696" />
+      <Line endX="169.99996948242188" layoutX="116.0" layoutY="311.0" startX="-100.0" stroke="#969696" />
+      <Line endX="169.99996948242188" layoutX="116.0" layoutY="371.0" startX="-100.0" stroke="#969696" />
+      <Line endX="179.0" endY="3.814697265625E-6" layoutX="115.0" layoutY="2.0" startX="-100.0" stroke="#ff8400" strokeWidth="5.0" />
+      <Line endX="179.0" endY="3.814697265625E-6" layoutX="115.0" layoutY="430.0" startX="-100.0" stroke="#ff8400" strokeWidth="5.0" />
+   </children>
+</AnchorPane>

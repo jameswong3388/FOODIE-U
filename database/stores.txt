@@ -1,5 +1,1 @@
 5d6e7f8a-9b0c-1d2e-3f4a-5c6b7d8e9f0a;The Steakhouse;8a7ed604-d77a-476f-87c5-8c7e71940756;Serving mouthwatering steaks;Western;2023-10-25T08:00;2023-10-25T08:00
-7d6e5879-bff5-4aa9-9c5a-df4b350f75c2;Golden Dragon;4e284af4-c11a-4ab5-a548-610f8d46c2e1;Authentic Chinese cuisine;Chinese;2023-10-25T09:00;2023-10-25T09:00
-1a2b3c4d-5678-90ab-cdef-1234567890ab;Spice of Asia;12ef987c-11a2-4ba5-8a54-6f8d46c2e194;Taste the flavors of Asia;Asian;2023-10-25T10:00;2023-10-25T10:00
-6f8d46c2-97df-11ec-8001-4e284af4c11a;Pizza Palace;4e284af4-c11a-4ab5-a548-610f8d46c2e1;Pizza for every taste;Western;2023-10-25T11:00;2023-10-25T11:00
-4e284af4-c11a-4ab5-a548-610f8d46c2e1;Noodle World;12ef987c-11a2-4ba5-8a54-6f8d46c2e194;Variety of Chinese noodles;Chinese;2023-10-25T12:00;2023-10-25T12:00

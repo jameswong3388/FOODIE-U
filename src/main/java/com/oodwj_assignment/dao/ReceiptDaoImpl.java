@@ -18,11 +18,11 @@ public class ReceiptDaoImpl extends AbstractDao<Receipts> implements ReceiptDao 
         try {
             UUID receiptId = UUID.fromString(parts[0]);
             UUID userId = UUID.fromString(parts[1]);
-            Double credit = Double.parseDouble(parts[2]);
+            UUID transactionId = UUID.fromString(parts[2]);
             LocalDateTime updatedAt = LocalDateTime.parse(parts[3]);
             LocalDateTime createdAt = LocalDateTime.parse(parts[4]);
 
-            return new Receipts(receiptId, userId, credit, updatedAt, createdAt);
+            return new Receipts(receiptId, userId, transactionId, updatedAt, createdAt);
         } catch (Exception e) {
             return null;
         }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="380.0" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.admCreditPaneController">
+   <children>
+      <HBox prefHeight="120.0" prefWidth="375.0">
+         <children>
+            <ImageView fitHeight="89.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/topup.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <VBox alignment="CENTER_LEFT" prefHeight="115.0" prefWidth="290.0" spacing="4.0">
+               <children>
+                  <Label fx:id="transactionIdLabel" prefHeight="18.0" prefWidth="278.0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="18.0" prefWidth="275.0">
+                     <children>
+                        <Label prefHeight="15.0" prefWidth="60.0" text="Name:" textFill="#404040">
+                           <font>
+                              <Font name="Segoe UI Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="nameLabel" prefHeight="15.0" prefWidth="223.0">
+                           <font>
+                              <Font name="Segoe UI Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="18.0" prefWidth="275.0">
+                     <children>
+                        <Label prefHeight="15.0" prefWidth="60.0" text="Amount:" textFill="#404040">
+                           <font>
+                              <Font name="Segoe UI Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="amountLabel" prefHeight="15.0" prefWidth="223.0">
+                           <font>
+                              <Font name="Segoe UI Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="18.0" prefWidth="275.0">
+                     <children>
+                        <Label prefHeight="15.0" prefWidth="60.0" text="Date:" textFill="#404040">
+                           <font>
+                              <Font name="Segoe UI Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="dateLabel" prefHeight="15.0" prefWidth="223.0">
+                           <font>
+                              <Font name="Segoe UI Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="32.0" prefWidth="278.0" spacing="60.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#rejectButtonClicked" prefHeight="20.0" prefWidth="106.0" text="Reject" textFill="WHITE">
+                           <font>
+                              <Font name="Segoe UI Bold" size="13.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#approveButtonClicked" prefHeight="20.0" prefWidth="106.0" text="Approve" textFill="WHITE">
+                           <font>
+                              <Font name="Segoe UI Bold" size="13.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

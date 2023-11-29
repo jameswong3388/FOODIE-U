@@ -37,8 +37,9 @@ public class venOrderController {
     @FXML private TableColumn<OrderFoods, String> amountColumn;
     @FXML private Pane orderInfoPane;
     @FXML private Pane noOrderPane;
-    private double total = 0.0;
+    private double total;
     private UUID orderId;
+    private UUID userId;
 
     public void initialize() throws IOException {
         // Initialize the order table view columns
@@ -96,6 +97,7 @@ public class venOrderController {
     public void setOrderInfo(UUID orderId) {
         this.orderId = orderId;
         orderInfoPane.setVisible(true);
+        total = 0.0;
 
         // Fetch order food information
         Map<String, Object> foodQuery = Map.of("orderId", orderId);
@@ -107,7 +109,7 @@ public class venOrderController {
             // Fetch order information
             Map<String, Object> orderQuery = Map.of("Id", orderId);
             Response<ArrayList<Orders>> orderResponse = DaoFactory.getOrderDao().read(orderQuery);
-            UUID userId = orderResponse.getData().get(0).getUserId();
+            userId = orderResponse.getData().get(0).getUserId();
             Orders.orderType type = orderResponse.getData().get(0).getType();
 
             // Fetch user information
@@ -151,22 +153,37 @@ public class venOrderController {
         // Set the minimum delivery fee to 3 and maximum to 10
         deliveryFee = Math.max(Math.min(deliveryFee, 10), 3);
 
+        // Assign runnerId and transactionId with a default UUID
+        UUID defaultId = new UUID(0L, 0L);
+
         // Create a delivery task
-        Tasks newTask = new Tasks(UUID.randomUUID(), UUID.randomUUID(), orderId, deliveryFee, Tasks.taskStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
+        Tasks newTask = new Tasks(UUID.randomUUID(), defaultId, orderId, deliveryFee, Tasks.taskStatus.Pending, defaultId, LocalDateTime.now(), LocalDateTime.now());
         Response<UUID> taskResponse = DaoFactory.getTaskDao().create(newTask);
         if (!taskResponse.isSuccess()) {
-            venMainController.showAlert("Error", "Failed to create task: " + taskResponse.getMessage());
+            venMainController.showAlert("Error", "Failed to create delivery task: " + taskResponse.getMessage());
         }
+
+        notificationController notificationController = new notificationController();
+        notificationController.sendNotification(userId, "Store has accepted your order. Order ID: " + orderId, Notifications.notificationType.Information);
     }
 
     public void rejectButtonClicked(ActionEvent event) throws Exception {
         updateOrderStatus(Orders.orderStatus.Declined, "Order rejected.");
+        UUID transactionId = DaoFactory.getOrderDao().read(Map.of("Id", orderId)).getData().get(0).getTransactionId();
+        updateTransactionStatus(transactionId, Transactions.transactionStatus.Cancelled);
+
+        double amount = DaoFactory.getTransactionDao().read(Map.of("Id", transactionId)).getData().get(0).getAmount();
+        // Refund back to user
+        refundAmountToWallet(userId, amount);
+
+        notificationController notificationController = new notificationController();
+        notificationController.sendNotification(userId, "Store has rejected your order. Order ID: " + orderId, Notifications.notificationType.Information);
     }
 
     private void updateOrderStatus(Orders.orderStatus newStatus, String message) throws IOException {
         // Update the order status
         Map<String, Object> query = Map.of("Id", orderId);
-        Map<String, Object> newValue = Map.of("status", newStatus);
+        Map<String, Object> newValue = Map.of("status", newStatus, "updatedAt", LocalDateTime.now());
 
         Response<Void> response = DaoFactory.getOrderDao().update(query, newValue);
         if (response.isSuccess()) {
@@ -176,6 +193,35 @@ public class venOrderController {
             venMainController.showAlert("Success", message + " The order status has been updated.");
         } else {
             venMainController.showAlert("Update Error", "Failed to update order status: " + response.getMessage());
+        }
+    }
+
+    public void updateTransactionStatus(UUID transactionId, Transactions.transactionStatus newStatus) throws IOException {
+        // Update the transaction status
+        Map<String, Object> query = Map.of("Id", transactionId);
+        Map<String, Object> newValue = Map.of("status", newStatus, "updatedAt", LocalDateTime.now());
+
+        Response<Void> response = DaoFactory.getTransactionDao().update(query, newValue);
+        if (!response.isSuccess()) {
+            venMainController.showAlert("Update Error", "Failed to update transaction status: " + response.getMessage());
+        }
+    }
+
+    public void refundAmountToWallet(UUID userId, Double amount) {
+        Map<String, Object> query = Map.of("userId", userId);
+        Response<ArrayList<Wallets>> response = DaoFactory.getWalletDao().read(query);
+        if (response.isSuccess()) {
+            Wallets userWallet = response.getData().get(0);
+            double newBalance = userWallet.getCredit() + amount;
+            newBalance = Double.parseDouble(String.format("%.2f", newBalance));
+
+            Map<String, Object> newValue = Map.of("credit", newBalance, "updatedAt", LocalDateTime.now());
+            Response<Void> updateResponse = DaoFactory.getWalletDao().update(query, newValue);
+            if (!updateResponse.isSuccess()) {
+                venMainController.showAlert("Error", "Failed to update wallet balance: " + updateResponse.getMessage());
+            }
+        } else {
+            venMainController.showAlert("Error", "Failed to access wallet for updating balance: " + response.getMessage());
         }
     }
 

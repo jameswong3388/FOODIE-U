@@ -64,7 +64,7 @@ public class Transactions extends Model {
     }
 
     public enum transactionType {
-        Purchase, Payment, Refund, TopUp
+        Payment, TopUp
     }
 
     @Override

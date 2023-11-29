@@ -4,19 +4,21 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Orders extends Model {
-    private  UUID userId;
-    private  Double totalPrice;
-    private  Integer totalQuantity;
-    private  orderStatus status;
-    private  orderType type;
+    private UUID userId;
+    private Double totalPrice;
+    private Integer totalQuantity;
+    private orderStatus status;
+    private orderType type;
+    private UUID transactionId;
 
-    public Orders(UUID orderId, UUID userId, Double totalPrice, Integer totalQuantity, orderStatus status, orderType type, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Orders(UUID orderId, UUID userId, Double totalPrice, Integer totalQuantity, orderStatus status, orderType type, UUID transactionId, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(orderId, updatedAt, createdAt);
         this.userId = userId;
         this.totalPrice = totalPrice;
         this.totalQuantity = totalQuantity;
         this.status = status;
         this.type = type;
+        this.transactionId = transactionId;
     }
 
     public UUID getUserId() {
@@ -35,6 +37,10 @@ public class Orders extends Model {
 
     public orderType getType() {
         return type;
+    }
+
+    public UUID getTransactionId() {
+        return transactionId;
     }
 
     public void setUserId(UUID userId) {
@@ -57,6 +63,10 @@ public class Orders extends Model {
         this.type = type;
     }
 
+    public void setTransactionId(UUID transactionId) {
+        this.transactionId = transactionId;
+    }
+
     public enum orderType {
         DineIn,
         TakeAway,
@@ -74,6 +84,6 @@ public class Orders extends Model {
 
     @Override
     public String toString() {
-        return getId() + ";" + getUserId() + ";" + getTotalPrice() + ";" + getTotalQuantity() + ";" + getStatus() + ";" + getType() + ";" + getUpdatedAt() + ";" + getCreatedAt();
+        return getId() + ";" + getUserId() + ";" + getTotalPrice() + ";" + getTotalQuantity() + ";" + getStatus() + ";" + getType() + ";" + getTransactionId() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

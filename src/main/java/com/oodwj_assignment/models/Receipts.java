@@ -5,24 +5,24 @@ import java.util.UUID;
 
 public class Receipts extends Model {
     private final UUID userId;
-    private final Double credit;
+    private final UUID transactionId;
 
-    public Receipts(UUID receiptId, UUID userId, Double credit, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Receipts(UUID receiptId, UUID userId, UUID transactionId, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(receiptId, updatedAt, createdAt);
         this.userId = userId;
-        this.credit = credit;
+        this.transactionId = transactionId;
     }
 
     public UUID getUserId() {
         return userId;
     }
 
-    public Double getCredit() {
-        return credit;
+    public UUID getTransactionId() {
+        return transactionId;
     }
 
     @Override
     public String toString() {
-        return getId() + ";" + getUserId() + ";" + getCredit() + ";" + getUpdatedAt() + ";" + getCreatedAt();
+        return getId() + ";" + getUserId() + ";" + getTransactionId() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }

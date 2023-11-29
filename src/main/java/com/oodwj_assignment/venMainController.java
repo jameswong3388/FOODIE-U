@@ -5,6 +5,7 @@ import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Foods;
 import com.oodwj_assignment.models.OrderFoods;
+import com.oodwj_assignment.models.Stores;
 import com.oodwj_assignment.states.AppState;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,18 +43,24 @@ public class venMainController {
     @FXML private ImageView notificationIcon;
     @FXML private Circle profilePic;
     @FXML private Label nameLabel;
-    public static UUID storeId = UUID.fromString("5d6e7f8a-9b0c-1d2e-3f4a-5c6b7d8e9f0a");
-    public static UUID vendorId = UUID.fromString("8a7ed604-d77a-476f-87c5-8c7e71940756");
+    public static UUID storeId = UUID.randomUUID();
+    public static UUID vendorId;
     private venMainController mainController;
 
     public void initialize() throws IOException {
         Image home = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/home-orange.png")));
         homeIcon.setImage(home);
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venHome.fxml")));
-        borderpane.setCenter(view);
-        loadData();
     }
 
+    public void getStoreIdFromVendor(UUID vendorId){
+        Map<String, Object> query = Map.of("vendorId", vendorId);
+        Response<ArrayList<Stores>> response = DaoFactory.getStoreDao().read(query);
+        if (response.isSuccess()){
+            storeId = response.getData().get(0).getId();
+        } else {
+            storeId = UUID.randomUUID();
+        }
+    }
     public void loadData(){
         String name = DaoFactory.getUserDao().read(Map.of("Id", vendorId)).getData().get(0).getName();
         nameLabel.setText(name);
@@ -184,10 +191,13 @@ public class venMainController {
     }
 
     public void btnNotificationClicked(ActionEvent event) throws IOException {
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venNotification.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("notification.fxml"));
+        AnchorPane view = fxmlLoader.load();
+        notificationController notificationController = fxmlLoader.getController();
+        notificationController.fetchAndFilterNotifications(storeId, null);
         borderpane.setCenter(view);
         defaultSettings();
-        Image notification = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/notification-orange.png")));
+        Image notification = new Image(getClass().getResourceAsStream("/images/notification-orange.png"));
         notificationIcon.setImage(notification);
     }
 
@@ -223,12 +233,19 @@ public class venMainController {
                     storeOrderIds.addAll(orderIds);
                 }
             }
-        } else {
-            showAlert("Error", "Failed to retrieve foodIds for the store: " + foodResponse.getMessage());
         }
 
         return new ArrayList<>(storeOrderIds);
     }
 
     public void setVenMainController(venMainController controller) { mainController = controller; }
+
+    public void setUserId(UUID userId) throws IOException {
+        vendorId = userId;
+        getStoreIdFromVendor(userId);
+        loadData();
+        
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("venHome.fxml")));
+        borderpane.setCenter(view);
+    }
 }

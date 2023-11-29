@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.admRegisterController">
+   <children>
+      <Label layoutX="15.0" layoutY="21.0" prefHeight="26.0" prefWidth="150.0" text="User Registration">
+         <font>
+            <Font name="Segoe UI Bold" size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="usersTableView" layoutX="15.0" layoutY="55.0" prefHeight="412.0" prefWidth="810.0">
+         <columns>
+            <TableColumn fx:id="userIdColumn" prefWidth="90.0" text="User ID" />
+            <TableColumn fx:id="usernameColumn" prefWidth="90.0" text="Username" />
+            <TableColumn fx:id="passwordColumn" prefWidth="90.0" text="Password" />
+            <TableColumn fx:id="roleColumn" text="Role" />
+            <TableColumn fx:id="nameColumn" prefWidth="90.0" text="Name" />
+            <TableColumn fx:id="phoneNumberColumn" prefWidth="100.0" text="Phone Number" />
+            <TableColumn fx:id="emailColumn" prefWidth="90.0" text="Email" />
+            <TableColumn fx:id="createdDateColumn" prefWidth="90.0" text="Created Date" />
+            <TableColumn fx:id="actionColumn" prefWidth="90.0" text="Action" />
+         </columns>
+      </TableView>
+      <Button focusTraversable="false" layoutX="663.0" layoutY="481.0" mnemonicParsing="false" onAction="#addButtonClicked" prefHeight="34.0" prefWidth="135.0" text="Add New User" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

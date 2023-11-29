@@ -2,10 +2,7 @@ package com.oodwj_assignment;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
-import com.oodwj_assignment.models.OrderFoods;
-import com.oodwj_assignment.models.Orders;
-import com.oodwj_assignment.models.Transactions;
-import com.oodwj_assignment.models.Wallets;
+import com.oodwj_assignment.models.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -76,9 +73,6 @@ public class cusWalletController {
         if (response.isSuccess()) {
             ArrayList<Transactions> transactions = response.getData();
             transactionTableView.getItems().setAll(transactions);
-        }
-        else {
-            System.out.println("Fails to get transaction history.");
         }
     }
 

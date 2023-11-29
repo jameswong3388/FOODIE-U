@@ -74,7 +74,7 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
                 }
             }
         } else {
-            return Response.failure(users.getMessage());
+            return Response.failure(users.getMessage(), false);
         }
 
         return Response.success("Username is not taken", false);

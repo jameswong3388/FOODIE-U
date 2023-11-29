@@ -28,6 +28,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class venProfileController {
@@ -72,6 +73,7 @@ public class venProfileController {
             phoneNumberFormatLabel.setVisible(newVal);
         });
         ObservableList<Stores.storeCategory> categoryList = FXCollections.observableArrayList(Stores.storeCategory.values());
+        categoryList.remove(Stores.storeCategory.Default);
         categoryComboBox.setItems(categoryList);
         loadInfo();
     }
@@ -186,7 +188,7 @@ public class venProfileController {
 
         // Update store information
         Map<String, Object> storeQuery = Map.of("Id", storeId);
-        Map<String, Object> storeNewValue = Map.of("name", restaurantName, "description", description, "category", category);
+        Map<String, Object> storeNewValue = Map.of("name", restaurantName, "description", description, "category", category, "updatedAt", LocalDateTime.now());
         Response<Void> storeResponse = DaoFactory.getStoreDao().update(storeQuery, storeNewValue);
 
         if (!storeResponse.isSuccess()) {
@@ -195,7 +197,7 @@ public class venProfileController {
 
         // Update user information
         Map<String, Object> userQuery = Map.of("Id", vendorId);
-        Map<String, Object> userNewValue = Map.of("name", name, "phoneNumber", phoneNumber, "email", email);
+        Map<String, Object> userNewValue = Map.of("name", name, "phoneNumber", phoneNumber, "email", email, "updatedAt", LocalDateTime.now());
         Response<Void> userResponse = DaoFactory.getUserDao().update(userQuery, userNewValue);
 
         if (!userResponse.isSuccess()) {
@@ -239,7 +241,7 @@ public class venProfileController {
 
         // Update login information
         Map<String, Object> userQuery = Map.of("Id", vendorId);
-        Map<String, Object> userNewValue = Map.of("password", newPassword);
+        Map<String, Object> userNewValue = Map.of("password", newPassword, "updatedAt", LocalDateTime.now());
         Response<Void> userResponse = DaoFactory.getUserDao().update(userQuery, userNewValue);
 
         if (!userResponse.isSuccess()) {

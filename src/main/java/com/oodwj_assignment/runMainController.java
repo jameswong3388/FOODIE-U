@@ -44,16 +44,12 @@ public class runMainController {
     @FXML private Label nameLabel;
     @FXML private Circle profilePic;
 
-    public static UUID runnerId = UUID.fromString("0650da6f-d148-48b1-b759-35aeb124775d");
+    public static UUID runnerId;
     private runMainController mainController;
 
     public void initialize() throws IOException {
-        // Load an image file and set it to the ImageView
         Image home = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/home-orange.png")));
         homeIcon.setImage(home);
-        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("runHome.fxml")));
-        borderpane.setCenter(view);
-        loadData();
     }
 
     public void defaultSettings() {
@@ -156,10 +152,13 @@ public class runMainController {
         }
     }
     public void btnNotificationClicked(ActionEvent event) throws IOException {
-        //AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("runNotification.fxml")));
-        //borderpane.setCenter(view);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("notification.fxml"));
+        AnchorPane view = fxmlLoader.load();
+        notificationController notificationController = fxmlLoader.getController();
+        notificationController.fetchAndFilterNotifications(runnerId, null);
+        borderpane.setCenter(view);
         defaultSettings();
-        Image notification= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/notification-orange.png")));
+        Image notification = new Image(getClass().getResourceAsStream("/images/notification-orange.png"));
         notificationIcon.setImage(notification);
     }
 
@@ -195,14 +194,11 @@ public class runMainController {
                     storeRunnerId.addAll(taskIds);
                 }
             }
-        } else {
-            showAlert("Error", "Failed to retrieve Task Ids: " + taskResponse.getMessage());
         }
-
         return new ArrayList<>(storeRunnerId);
     }
 
-    public void loadData(){
+    public void loadData() {
         String name = DaoFactory.getUserDao().read(Map.of("Id", runnerId)).getData().get(0).getName();
         nameLabel.setText(name);
 
@@ -220,4 +216,12 @@ public class runMainController {
         }
     }
     public void setRunMainController(runMainController controller) { mainController = controller; }
+
+    public void setUserId(UUID userId) throws IOException {
+        runnerId = userId;
+        loadData();
+
+        AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("runHome.fxml")));
+        borderpane.setCenter(view);
+    }
 }

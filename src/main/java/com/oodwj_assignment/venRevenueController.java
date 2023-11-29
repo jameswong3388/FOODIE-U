@@ -88,8 +88,6 @@ public class venRevenueController {
             revenueLabel.setText(String.format("RM %.2f", totalRevenue));
             quantityLabel.setText(String.valueOf(totalQuantity));
             totalOrdersLabel.setText(String.valueOf(totalOrders));
-        } else {
-            System.out.println("Failed to retrieve orders: Order list is empty");
         }
     }
 

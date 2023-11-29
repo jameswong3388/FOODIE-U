@@ -30,7 +30,7 @@ public class RunnerProfile extends Model {
     public void setUserId(UUID userId) {
         this.userId = userId;
     }
-    public void setGender(RunnerProfile.Gender gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
     public void setDob(LocalDate dob) {
