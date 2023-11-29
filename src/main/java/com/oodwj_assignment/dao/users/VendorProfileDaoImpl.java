@@ -13,18 +13,4 @@ public class VendorProfileDaoImpl extends AbstractDao<VendorProfile> implements 
     public VendorProfileDaoImpl() {
         super(FILE);
     }
-
-    @Override
-    public VendorProfile parse(String[] parts) {
-        try {
-            UUID profileId = UUID.fromString(parts[0]);
-            UUID userId = UUID.fromString(parts[1]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[2]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[3]);
-
-            return new VendorProfile(profileId, userId, updatedAt, createdAt);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

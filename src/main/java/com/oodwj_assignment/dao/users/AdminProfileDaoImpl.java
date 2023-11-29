@@ -13,18 +13,4 @@ public class AdminProfileDaoImpl extends AbstractDao<AdminProfile> implements Ad
     public AdminProfileDaoImpl() {
         super(FILE);
     }
-
-    @Override
-    public AdminProfile parse(String[] parts) {
-        try {
-            UUID profileId = UUID.fromString(parts[0]);
-            UUID userId = UUID.fromString(parts[1]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[2]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[3]);
-
-            return new AdminProfile(profileId, userId, updatedAt, createdAt);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

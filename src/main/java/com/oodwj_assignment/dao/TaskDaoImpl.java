@@ -20,22 +20,6 @@ public class TaskDaoImpl extends AbstractDao<Tasks> implements TaskDao {
         super(FILE);
     }
 
-    public Tasks parse(String[] parts) {
-        try {
-            UUID taskId = UUID.fromString(parts[0]);
-            UUID runnerId = UUID.fromString(parts[1]);
-            UUID orderId = UUID.fromString(parts[2]);
-            Double deliveryFee = Double.parseDouble(parts[3]);
-            Tasks.taskStatus status = Tasks.taskStatus.valueOf(parts[4]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[5]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[6]);
-
-            return new Tasks(taskId, runnerId, orderId, deliveryFee, status, updatedAt, createdAt);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
     public Response<Double> calDeliveryFee(Orders orderId) {
         Response<ArrayList<Orders>> orders = DaoFactory.getOrderDao().read(Map.of("orderId", orderId));
 

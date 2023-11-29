@@ -14,18 +14,4 @@ public class WalletDaoImpl extends AbstractDao<Wallets> implements WalletDao {
     public WalletDaoImpl() {
         super(FILE);
     }
-
-    public Wallets parse(String[] parts) {
-        try {
-            UUID walletId = UUID.fromString(parts[0]);
-            UUID userId = UUID.fromString(parts[1]);
-            double balance = Double.parseDouble(parts[2]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[3]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[4]);
-
-            return new Wallets(walletId, userId, balance, createdAt, updatedAt);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }
