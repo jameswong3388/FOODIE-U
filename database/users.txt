@@ -1,5 +1,0 @@
-8a7ed604-d77a-476f-87c5-8c7e71940756;john_doe;password123;Vendor;John Doe;012-3328902;johndoe@gmail.com;Approved;2023-11-22T11:35:26.486188200;2023-10-08T15:56:16.795535
-8c5dbefc-cad2-4c81-a5a6-cc95bf506610;james;password123;Admin;James;010-9986671;james@gmail.com;Approved;2023-10-08T15:56:16.814390;2023-10-08T15:56:16.814382
-00e1b7f5-7fda-4184-a2fc-f8dadacdb772;gino;password123;Customer;Gino;012-8823332;gino123@gmail.com;Approved;2023-11-29T16:58:16.235766700;2023-10-08T15:56:16.819545
-0650da6f-d148-48b1-b759-35aeb124775d;clementine;password123;Delivery_Runner;Clementine;019-5671234;clement03@gmail.com;Approved;2023-10-08T15:56:16.819930;2023-10-08T15:56:16.819925
-0050da6f-d148-48b1-b759-35aeb124775d;thomas;password123;Vendor;Thomas;019-5671234;clement03@gmail.com;Pending;2023-10-08T15:56:16.819930;2023-10-08T15:56:16.819925
