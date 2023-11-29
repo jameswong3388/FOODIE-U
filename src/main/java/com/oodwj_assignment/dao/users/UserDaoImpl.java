@@ -40,25 +40,6 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
         }
     }
 
-    public Users parse(String[] parts) {
-        try {
-            UUID uuid = UUID.fromString(parts[0]);
-            String username = parts[1];
-            String password = parts[2];
-            Users.Role role = Users.Role.valueOf(parts[3]);
-            String name = parts[4];
-            String phoneNumber = parts[5];
-            String email = parts[6];
-            Users.AccountStatus accountStatus = Users.AccountStatus.valueOf(parts[7]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[8]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[9]);
-
-            return new Users(uuid, username, password, role, name, phoneNumber, email, accountStatus, createdAt, updatedAt);
-        } catch (Exception e) {
-            return null; // Return null if parsing fails
-        }
-    }
-
     /**
      * Checks if username is taken.
      *

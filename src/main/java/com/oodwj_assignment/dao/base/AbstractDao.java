@@ -29,14 +29,6 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
         this.FILE = file;
     }
 
-    /**
-     * Parses a line from the FILE into a T object
-     *
-     * @param parts a line from the FILE
-     * @return a T object
-     */
-    public abstract T parse(String[] parts);
-
     /***
      * Creates object in database
      *

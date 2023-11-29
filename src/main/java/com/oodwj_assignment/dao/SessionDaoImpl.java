@@ -26,31 +26,6 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
         super(FILE);
     }
 
-    public Sessions parse(String[] parts) {
-        try {
-            UUID sessionId = UUID.fromString(parts[0]);
-            UUID userId = UUID.fromString(parts[1]);
-            LocalDateTime startTime = LocalDateTime.parse(parts[2]);
-            LocalDateTime endTime = parts[3].equals("null") ? null : LocalDateTime.parse(parts[3]);
-            long duration = Long.parseLong(parts[4]);
-            String ipAddress = parts[5];
-            String userAgent = parts[6];
-            String location = parts[7];
-            String deviceInfo = parts[8];
-            boolean isAuthenticated = Boolean.parseBoolean(parts[9]);
-            String referer = parts[10];
-            String terminationReason = parts[11];
-            boolean isActive = Boolean.parseBoolean(parts[12]);
-            UUID sessionToken = UUID.fromString(parts[13]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[14]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[15]);
-
-            return new Sessions(sessionId, userId, startTime, endTime, duration, ipAddress, userAgent, location, deviceInfo, isAuthenticated, referer, terminationReason, isActive, sessionToken, updatedAt, createdAt);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
     /***
      * Authenticates user
      *
