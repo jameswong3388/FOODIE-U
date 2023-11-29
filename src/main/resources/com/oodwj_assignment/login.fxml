@@ -9,126 +9,121 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.loginController">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="400.0" prefWidth="680.0" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.loginController">
    <children>
-      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
+      <ImageView fitHeight="412.0" fitWidth="680.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/loginBackground.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="102.0" fitWidth="247.0" layoutX="27.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/Logo1.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="80.0" layoutY="58.0" text="Welcome to" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="13.0" layoutY="265.0" prefHeight="15.0" prefWidth="274.0" text="An application that streamline the food order taking" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Bold" size="11.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="13.0" layoutY="285.0" prefHeight="14.0" prefWidth="274.0" text=" process by connecting different types of users" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Bold" size="11.0" />
+         </font>
+      </Label>
+      <StackPane layoutX="410.0" layoutY="16.0" prefHeight="370.0" prefWidth="247.0">
          <children>
-            <ImageView fitHeight="403.0" fitWidth="673.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/loginBackground.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="102.0" fitWidth="247.0" layoutX="27.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/Logo1.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="80.0" layoutY="58.0" text="Welcome to" textFill="WHITE">
-               <font>
-                  <Font name="Segoe UI Bold" size="25.0" />
-               </font>
-            </Label>
-            <Label layoutX="13.0" layoutY="265.0" prefHeight="15.0" prefWidth="274.0" text="An application that streamline the food order taking" textFill="WHITE">
-               <font>
-                  <Font name="Segoe UI Bold" size="11.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="13.0" layoutY="285.0" prefHeight="14.0" prefWidth="274.0" text=" process by connecting different types of users" textFill="WHITE">
-               <font>
-                  <Font name="Segoe UI Bold" size="11.0" />
-               </font>
-            </Label>
-            <StackPane layoutX="410.0" layoutY="16.0" prefHeight="370.0" prefWidth="247.0">
+            <Pane fx:id="forgotPane" prefHeight="200.0" prefWidth="200.0" styleClass="background-color-1">
                <children>
-                  <Pane fx:id="forgotPane" prefHeight="200.0" prefWidth="200.0" styleClass="background-color-1">
-                     <children>
-                        <TextField fx:id="fgtPasswordTextField" layoutX="16.0" layoutY="185.0" prefHeight="26.0" prefWidth="215.0" promptText="New Password" />
-                        <Label layoutX="18.0" layoutY="156.0" text="New Password">
-                           <font>
-                              <Font name="Segoe UI Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="18.0" layoutY="82.0" text="Username">
-                           <font>
-                              <Font name="Segoe UI Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="44.0" layoutY="30.0" text="Forgot Password">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fgtUsernameTextField" layoutX="16.0" layoutY="111.0" prefHeight="26.0" prefWidth="215.0" promptText="Username" />
-                        <TextField fx:id="fgtConfirmTextField" layoutX="16.0" layoutY="262.0" prefHeight="26.0" prefWidth="215.0" promptText="Confirm Password" />
-                        <Label layoutX="18.0" layoutY="234.0" text="Confirm Password">
-                           <font>
-                              <Font name="Segoe UI Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Button alignment="CENTER" defaultButton="true" layoutX="42.0" layoutY="318.0" mnemonicParsing="false" onAction="#resetButtonClicked" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: #0454BF;" text="Reset Password" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../images/back.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </Pane>
-                  <Pane fx:id="loginPane" prefHeight="200.0" prefWidth="200.0" styleClass="background-color-1">
-                     <children>
-                        <Label layoutX="97.0" layoutY="42.0" text="Login">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="16.0" layoutY="99.0" text="Username">
-                           <font>
-                              <Font name="Segoe UI Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="18.0" layoutY="178.0" text="Password">
-                           <font>
-                              <Font name="Segoe UI Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="usernameTextField" layoutX="16.0" layoutY="129.0" prefHeight="26.0" prefWidth="215.0" promptText="Username" />
-                        <Label layoutX="18.0" layoutY="242.0" onMouseClicked="#forgotPasswordClicked" text="Forgot password?" textFill="#004aad">
-                           <font>
-                              <Font name="Segoe UI" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="passwordTextField" layoutX="16.0" layoutY="208.0" prefHeight="26.0" prefWidth="215.0" promptText="Password" />
-                        <PasswordField fx:id="passwordField" layoutX="16.0" layoutY="208.0" prefHeight="26.0" prefWidth="215.0" promptText="Password" />
-                        <ImageView fx:id="eyeIcon" fitHeight="18.0" fitWidth="18.0" layoutX="205.0" layoutY="212.0" nodeOrientation="INHERIT" onMouseClicked="#eyeslashClicked" pickOnBounds="true" preserveRatio="true">
+                  <TextField fx:id="fgtPasswordTextField" layoutX="16.0" layoutY="185.0" prefHeight="26.0" prefWidth="215.0" promptText="New Password" />
+                  <Label layoutX="18.0" layoutY="156.0" text="New Password">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="18.0" layoutY="82.0" text="Username">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="44.0" layoutY="30.0" text="Forgot Password">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="fgtUsernameTextField" layoutX="16.0" layoutY="111.0" prefHeight="26.0" prefWidth="215.0" promptText="Username" />
+                  <TextField fx:id="fgtConfirmTextField" layoutX="16.0" layoutY="262.0" prefHeight="26.0" prefWidth="215.0" promptText="Confirm Password" />
+                  <Label layoutX="18.0" layoutY="234.0" text="Confirm Password">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button alignment="CENTER" defaultButton="true" layoutX="42.0" layoutY="318.0" mnemonicParsing="false" onAction="#resetButtonClicked" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: #0454BF;" text="Reset Password" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../images/hide.png" />
+                              <Image url="@../../images/back.png" />
                            </image>
                         </ImageView>
-                        <Button alignment="CENTER" defaultButton="true" layoutX="42.0" layoutY="297.0" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: #0454BF;" text="Login" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button alignment="CENTER" defaultButton="true" layoutX="42.0" layoutY="334.0" mnemonicParsing="false" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: #c1e9ff;" text="Register" textAlignment="CENTER" textFill="#035886">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </Pane>
+                     </graphic>
+                  </Button>
                </children>
-            </StackPane>
+            </Pane>
+            <Pane fx:id="loginPane" prefHeight="200.0" prefWidth="200.0" styleClass="background-color-1">
+               <children>
+                  <Label layoutX="97.0" layoutY="42.0" text="Login">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="16.0" layoutY="99.0" text="Username">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="18.0" layoutY="178.0" text="Password">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="usernameTextField" layoutX="16.0" layoutY="129.0" prefHeight="26.0" prefWidth="215.0" promptText="Username" />
+                  <Label layoutX="18.0" layoutY="242.0" onMouseClicked="#forgotPasswordClicked" text="Forgot password?" textFill="#004aad">
+                     <font>
+                        <Font name="Segoe UI" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="passwordTextField" layoutX="16.0" layoutY="208.0" prefHeight="26.0" prefWidth="215.0" promptText="Password" />
+                  <PasswordField fx:id="passwordField" layoutX="16.0" layoutY="208.0" prefHeight="26.0" prefWidth="215.0" promptText="Password" />
+                  <ImageView fx:id="eyeIcon" fitHeight="18.0" fitWidth="18.0" layoutX="205.0" layoutY="212.0" nodeOrientation="INHERIT" onMouseClicked="#eyeslashClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/hide.png" />
+                     </image>
+                  </ImageView>
+                  <Button alignment="CENTER" defaultButton="true" layoutX="42.0" layoutY="297.0" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: #0454BF;" text="Login" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" layoutX="42.0" layoutY="334.0" mnemonicParsing="false" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: #c1e9ff;" text="Register" textAlignment="CENTER" textFill="#035886">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
          </children>
-      </AnchorPane>
+      </StackPane>
    </children>
-</VBox>
+</AnchorPane>

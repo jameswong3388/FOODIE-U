@@ -88,56 +88,56 @@
                <children>
                   <AnchorPane fx:id="ypane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background-color-2">
                      <children>
-                        <Label fx:id="zstatus1" layoutX="91.0" layoutY="178.0" prefHeight="18.0" prefWidth="130.0" text="Task Pending">
+                        <Label fx:id="zstatus1" disable="true" layoutX="91.0" layoutY="178.0" prefHeight="18.0" prefWidth="130.0" text="Task Pending">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="zstatus2" layoutX="91.0" layoutY="218.0" prefHeight="18.0" prefWidth="130.0" text="Task Accepted">
+                        <Label fx:id="zstatus2" disable="true" layoutX="91.0" layoutY="218.0" prefHeight="18.0" prefWidth="130.0" text="Task Accepted">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="zstatus3" layoutX="91.0" layoutY="258.0" prefHeight="18.0" prefWidth="130.0" text="Food Picked Up">
+                        <Label fx:id="zstatus3" disable="true" layoutX="91.0" layoutY="258.0" prefHeight="18.0" prefWidth="130.0" text="Food Picked Up">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="zstatus4" layoutX="91.0" layoutY="298.0" prefHeight="18.0" prefWidth="130.0" text="Order Delivered">
+                        <Label fx:id="zstatus4" disable="true" layoutX="91.0" layoutY="298.0" prefHeight="18.0" prefWidth="130.0" text="Order Delivered">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Rectangle fx:id="zshape2" arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="24.0" layoutX="57.0" layoutY="195.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
-                        <Circle fx:id="yshape5" fill="#ffc75a" layoutX="60.0" layoutY="102.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                        <Rectangle fx:id="zshape4" arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="24.0" layoutX="57.0" layoutY="235.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
-                        <Circle fx:id="zshape1" fill="#ffc75a" layoutX="60.0" layoutY="187.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Rectangle fx:id="zshape2" arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="24.0" layoutX="57.0" layoutY="195.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+                        <Circle fx:id="yshape5" fill="#d9dfe9" layoutX="60.0" layoutY="102.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Rectangle fx:id="zshape4" arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="24.0" layoutX="57.0" layoutY="235.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+                        <Circle fx:id="zshape1" fill="#d9dfe9" layoutX="60.0" layoutY="187.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
                         <Rectangle fx:id="zshape6" arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="24.0" layoutX="57.0" layoutY="275.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
-                        <Circle fx:id="zshape3" fill="#ffc75a" layoutX="60.0" layoutY="227.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Circle fx:id="zshape3" fill="#d9dfe9" layoutX="60.0" layoutY="227.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
                         <Circle fx:id="zshape7" fill="#d9dfe9" layoutX="60.0" layoutY="307.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                        <Label fx:id="ystatus1" layoutX="91.0" layoutY="13.0" prefHeight="18.0" prefWidth="130.0" text="Order Placed">
+                        <Label fx:id="ystatus1" disable="true" layoutX="91.0" layoutY="13.0" prefHeight="18.0" prefWidth="130.0" text="Order Placed">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="ystatus3" layoutX="91.0" layoutY="93.0" prefHeight="18.0" prefWidth="130.0" text="Food is Ready">
+                        <Label fx:id="ystatus3" disable="true" layoutX="91.0" layoutY="93.0" prefHeight="18.0" prefWidth="130.0" text="Food is Ready">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Rectangle fx:id="yshape2" arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="24.0" layoutX="57.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
-                        <Circle fx:id="yshape1" fill="#ffc75a" layoutX="60.0" layoutY="22.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                        <Circle fx:id="yshape3" fill="#ffc75a" layoutX="60.0" layoutY="62.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                        <Circle fx:id="zshape5" fill="#ffc75a" layoutX="60.0" layoutY="267.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                        <Rectangle fx:id="yshape4" arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="24.0" layoutX="57.0" layoutY="70.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
-                        <Label fx:id="ystatus4" layoutX="91.0" layoutY="133.0" prefHeight="18.0" prefWidth="130.0" text="Runner Picked Up">
+                        <Rectangle fx:id="yshape2" arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="24.0" layoutX="57.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+                        <Circle fx:id="yshape1" fill="#d9dfe9" layoutX="60.0" layoutY="22.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Circle fx:id="yshape3" fill="#d9dfe9" layoutX="60.0" layoutY="62.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Circle fx:id="zshape5" fill="#d9dfe9" layoutX="60.0" layoutY="267.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Rectangle fx:id="yshape4" arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="24.0" layoutX="57.0" layoutY="70.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+                        <Label fx:id="ystatus4" disable="true" layoutX="91.0" layoutY="133.0" prefHeight="18.0" prefWidth="130.0" text="Runner Picked Up">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
                         <Circle fx:id="yshape7" fill="#d9dfe9" layoutX="60.0" layoutY="142.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
                         <Rectangle fx:id="yshape6" arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="24.0" layoutX="57.0" layoutY="110.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
-                        <Label fx:id="ystatus2" layoutX="91.0" layoutY="53.0" prefHeight="18.0" prefWidth="130.0" text="Order Accepted">
+                        <Label fx:id="ystatus2" disable="true" layoutX="91.0" layoutY="53.0" prefHeight="18.0" prefWidth="130.0" text="Order Accepted">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
@@ -146,17 +146,17 @@
                   </AnchorPane>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background-color-2" fx:id="xpane">
                      <children>
-                        <Label layoutX="91.0" layoutY="65.0" prefHeight="18.0" prefWidth="130.0" text="Order Placed" fx:id="xstatus1">
+                        <Label disable="true" layoutX="91.0" layoutY="65.0" prefHeight="18.0" prefWidth="130.0" text="Order Placed" fx:id="xstatus1">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="91.0" layoutY="125.0" prefHeight="18.0" prefWidth="130.0" text="Order Accepted" fx:id="xstatus2">
+                        <Label disable="true" layoutX="91.0" layoutY="125.0" prefHeight="18.0" prefWidth="130.0" text="Order Accepted" fx:id="xstatus2">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="91.0" layoutY="185.0" prefHeight="18.0" prefWidth="130.0" text="Food is Ready" fx:id="xstatus3">
+                        <Label disable="true" layoutX="91.0" layoutY="185.0" prefHeight="18.0" prefWidth="130.0" text="Food is Ready" fx:id="xstatus3">
                            <font>
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
@@ -166,13 +166,13 @@
                               <Font name="Segoe UI Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="44.0" layoutX="57.0" layoutY="83.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" fx:id="xshape2" />
-                        <Circle fill="#ffc75a" layoutX="60.0" layoutY="75.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape1" />
-                        <Circle fill="#ffc75a" layoutX="60.0" layoutY="135.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape3" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="44.0" layoutX="57.0" layoutY="83.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" fx:id="xshape2" />
+                        <Circle fill="#d9dfe9" layoutX="60.0" layoutY="75.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape1" />
+                        <Circle fill="#d9dfe9" layoutX="60.0" layoutY="135.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape3" />
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="44.0" layoutX="57.0" layoutY="202.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" fx:id="xshape6" />
-                        <Circle fill="#ffc75a" layoutX="60.0" layoutY="195.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape5" />
+                        <Circle fill="#d9dfe9" layoutX="60.0" layoutY="195.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape5" />
                         <Circle fill="#d9dfe9" layoutX="60.0" layoutY="255.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape7" />
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="44.0" layoutX="57.0" layoutY="143.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" fx:id="xshape4" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="44.0" layoutX="57.0" layoutY="143.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" fx:id="xshape4" />
                      </children>
                   </AnchorPane>
                </children>

@@ -119,6 +119,7 @@ public class admHomeController {
             notificationController notificationController = new notificationController();
             notificationController.sendNotification(userId, "Your account has been approved. Welcome to FoodieU!", Notifications.notificationType.Information);
             createStoreIfVendor(userId);
+            createWalletIfCustomer(userId);
         } else {
             admMainController.showAlert("Update Error", "Failed to update user's account status: " + response.getMessage());
         }
@@ -136,6 +137,19 @@ public class admHomeController {
             }
             Stores newStore = new Stores(UUID.randomUUID(), "", userId, "", Stores.storeCategory.Default, LocalDateTime.now(), LocalDateTime.now());
             DaoFactory.getStoreDao().create(newStore);
+        }
+    }
+
+    public void createWalletIfCustomer(UUID userId){
+        Map<String, Object> query = Map.of("Id", userId);
+        Response<ArrayList<Users>> response = DaoFactory.getUserDao().read(query);
+        if (response.isSuccess()){
+            Users.Role role = response.getData().get(0).getRole();
+            if (role != Users.Role.Customer){
+                return;
+            }
+            Wallets newWallet = new Wallets(UUID.randomUUID(), userId, 0.0, LocalDateTime.now(), LocalDateTime.now());
+            DaoFactory.getWalletDao().create(newWallet);
         }
     }
 
