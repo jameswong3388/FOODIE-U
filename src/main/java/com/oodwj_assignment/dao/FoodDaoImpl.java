@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class FoodDaoImpl extends AbstractDao<Foods> implements FoodDao {
-    private static final File FILE = new File("database/foods.datw");
+    private static final File FILE = new File("database/foods.dat");
 
     public FoodDaoImpl() {
         super(FILE);
