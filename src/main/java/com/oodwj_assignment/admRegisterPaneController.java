@@ -83,6 +83,8 @@ public class admRegisterPaneController {
             //Check if it is vendor then assign a store for vendor
             admHomeController homeController = new admHomeController();
             homeController.createStoreIfVendor(newUserId);
+            //Check if it is customer then assign wallet
+            homeController.createWalletIfCustomer(newUserId);
             admMainController.showAlert("Success", "New user has been created successfully: " + newUserId);
             notificationController notificationController = new notificationController();
             notificationController.sendNotification(newUserId, "Your account has been created. Welcome to FoodieU!", Notifications.notificationType.Information);

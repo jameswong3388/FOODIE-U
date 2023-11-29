@@ -3,91 +3,101 @@ package com.oodwj_assignment;
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Users;
-import com.oodwj_assignment.states.AppState;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-
-import javax.swing.text.html.parser.Parser;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.net.URL;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
+import javafx.util.StringConverter;
+import javafx.util.converter.DefaultStringConverter;
 import java.time.LocalDateTime;
-import java.util.ResourceBundle;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-public class registerController implements Initializable {
-    public javafx.scene.control.Label messageLabel;
-    @FXML
-    private PasswordField passwordfield;
-    @FXML
-    private TextField emailTextField;
-    @FXML
-    private TextField nameTextField;
-    @FXML
-    private TextField phonenumTextField;
-    @FXML
-    private ChoiceBox<String> roleChoiceBox;
-    @FXML
-    private TextField usernameTextField;
-    @FXML
-    private Button registerButton;
-    private String[] role = {"User", "Vendor", "Runner"};
-    public void initialize(URL arg0, ResourceBundle arg1){
-        roleChoiceBox.getItems().addAll(role);
+public class registerController {
 
+    @FXML private TextField nameTextField;
+    @FXML private TextField phoneNumberTextField;
+    @FXML private TextField emailTextField;
+    @FXML private TextField usernameTextField;
+    @FXML private TextField passwordTextField;
+    @FXML private ComboBox<Users.Role> roleComboBox;
+    @FXML private Label phoneNumberFormatLabel;
+
+    public void initialize(){
+        phoneNumberFormatLabel.setVisible(false);
+        phoneNumberTextField.setTextFormatter(phoneNumberFormatter());
+        // Show the label when the text field gains focus
+        phoneNumberTextField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            phoneNumberFormatLabel.setVisible(newVal);
+        });
+        List<Users.Role> roleList = Arrays.stream(Users.Role.values())
+                .filter(role -> role != Users.Role.Admin)
+                .collect(Collectors.toList());
+        roleComboBox.setItems(FXCollections.observableArrayList(roleList));
     }
 
-    public void getRole(ActionEvent event) throws IOException {
-        String myrole = roleChoiceBox.getValue();
-    }
-    public void registerButtonAction(ActionEvent event){
-        String name = nameTextField.getText();
-        String phonenum = phonenumTextField.getText();
-        String email = emailTextField.getText();
+    public void registerButtonClicked(ActionEvent event) {
         String username = usernameTextField.getText();
-        String password = passwordfield.getText();
-        String myrole = roleChoiceBox.getValue();
+        String password = passwordTextField.getText();
+        Users.Role role = roleComboBox.getValue();
+        String name = nameTextField.getText();
+        String phoneNumber = phoneNumberTextField.getText();
+        String email = emailTextField.getText();
 
-        Response <Boolean> usernameResponse = DaoFactory.getUserDao().isUsernameTaken(username);
-        messageLabel.setText(usernameResponse.getMessage());
-        if (usernameResponse.getData() == true){
-            usernameTextField.setText("");
+        // Perform data validation
+        if (username.isEmpty() || password.isEmpty() || role == null || name.isEmpty() || phoneNumber.isEmpty() || email.isEmpty()) {
+            admMainController.showAlert("Validation Error", "Please fill in all required fields.");
+            return;
         }
 
-        //make sure to enter all values
-
-        switch (myrole) {
-            case "User":
-                Users users = new Users(UUID.randomUUID(), username, password, Users.Role.Customer, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
-
-            case "Vendor":
-                Users users2 = new Users(UUID.randomUUID(), username, password, Users.Role.Vendor, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
-            case "Runner":
-                Users users3 = new Users(UUID.randomUUID(), username, password, Users.Role.Delivery_Runner, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
+        // Validate email format
+        if (!email.matches(".+@.+\\..+")) {
+            admMainController.showAlert("Validation Error", "Invalid email format.");
+            return;
         }
 
-        if (myrole.equals("User")){
-            Users users = new Users(UUID.randomUUID(), username, password, Users.Role.Customer, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
-            DaoFactory.getUserDao().create(users);
-            System.out.println(DaoFactory.getUserDao().create(users).getMessage());
-        } else if (myrole == "Vendor") {
-            Users users2 = new Users(UUID.randomUUID(), username, password, Users.Role.Vendor, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
-            DaoFactory.getUserDao().create(users2);
-            System.out.println(DaoFactory.getUserDao().create(users2).getMessage());
+        // Add User
+        Users user = new Users(UUID.randomUUID(), username, password, role, name, phoneNumber, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
+        Response<UUID> newUser = DaoFactory.getUserDao().create(user);
 
-        } else if (myrole == "Runner") {
-            Users users3 = new Users(UUID.randomUUID(), username, password, Users.Role.Delivery_Runner, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
-            DaoFactory.getUserDao().create(users3);
-            System.out.println(DaoFactory.getUserDao().create(users3).getMessage());
+        if (newUser.isSuccess()) {
+            UUID newUserId = newUser.getData();
+            admMainController.showAlert("Registration Successful", "Your account request with ID" + newUserId + " has been submitted successfully. Please review and log in again to confirm the status of your registration.");
+            clearFields();
         }
-        messageLabel.setText("Kindly review the registration form again to confirm your registration status.");
+    }
 
+    public void clearButtonClicked(ActionEvent event){
+        clearFields();
+    }
 
+    private TextFormatter<String> phoneNumberFormatter() {
+        StringConverter<String> converter = new DefaultStringConverter() {
+            @Override
+            public String fromString(String string) {
+                // Filter non-numeric characters and allow only one hyphen
+                return string.replaceAll("[^0-9-]", "").replaceAll("(-.*?)-", "$1");
+            }
+        };
 
+        return new TextFormatter<>(converter, null, change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("^\\d{0,3}(-\\d{0,7})?$")) {
+                return change;
+            }
+            return null;
+        });
+    }
+
+    private void clearFields(){
+        usernameTextField.clear();
+        passwordTextField.clear();
+        nameTextField.clear();
+        roleComboBox.setValue(null);
+        phoneNumberTextField.clear();
+        emailTextField.clear();
     }
 }
