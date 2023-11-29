@@ -1,6 +1,7 @@
 package com.oodwj_assignment;
 
 import com.oodwj_assignment.dao.SessionDaoImpl;
+import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.states.AppState;
 import javafx.event.ActionEvent;
@@ -12,14 +13,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,12 +41,13 @@ public class cusMainController {
     @FXML private ImageView profileIcon;
     @FXML private ImageView logoutIcon;
     @FXML private ImageView notificationIcon;
-    @FXML private ImageView cartIcon;
-    public static UUID userId = UUID.fromString("00e1b7f5-7fda-4184-a2fc-f8dadacdb772");
+    @FXML private Label nameLabel;
+    @FXML private Circle profilePic;
+
+    public static UUID userId;
     private cusMainController mainController;
 
     public void initialize() throws IOException {
-        // Load an image file and set it to the ImageView
         Image home = new Image(getClass().getResourceAsStream("/images/home-orange.png"));
         homeIcon.setImage(home);
         AnchorPane view = FXMLLoader.load(getClass().getResource("cusHome.fxml"));
@@ -65,8 +72,6 @@ public class cusMainController {
         logoutIcon.setImage(logout);
         Image notification = new Image(getClass().getResourceAsStream("/images/notification-grey.png"));
         notificationIcon.setImage(notification);
-        Image cart = new Image(getClass().getResourceAsStream("/images/cart-grey.png"));
-        cartIcon.setImage(cart);
     }
 
     public void btnHomeClicked(ActionEvent event) throws IOException {
@@ -110,10 +115,13 @@ public class cusMainController {
     }
 
     public void btnProfileClicked(ActionEvent event) throws IOException {
-        AnchorPane view = FXMLLoader.load(getClass().getResource("cusProfile.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("cusProfile.fxml."));
+        AnchorPane view = fxmlLoader.load();
+        cusProfileController profileController = fxmlLoader.getController();
+        profileController.setCusMainController(this);
         borderpane.setCenter(view);
         defaultSettings();
-        Image profile = new Image(getClass().getResourceAsStream("/images/profile-orange.png"));
+        Image profile = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/profile-orange.png")));
         profileIcon.setImage(profile);
     }
 
@@ -156,25 +164,14 @@ public class cusMainController {
         }
     }
     public void btnNotificationClicked(ActionEvent event) throws IOException {
-        AnchorPane view = FXMLLoader.load(getClass().getResource("cusNotification.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("notification.fxml"));
+        AnchorPane view = fxmlLoader.load();
+        notificationController notificationController = fxmlLoader.getController();
+        notificationController.fetchAndFilterNotifications(userId, null);
         borderpane.setCenter(view);
         defaultSettings();
         Image notification = new Image(getClass().getResourceAsStream("/images/notification-orange.png"));
         notificationIcon.setImage(notification);
-    }
-
-    public void btnCartClicked(ActionEvent event) throws IOException {
-        //AnchorPane view = FXMLLoader.load(getClass().getResource("cusNotification.fxml"));
-        //borderpane.setCenter(view);
-        defaultSettings();
-        Image cart = new Image(getClass().getResourceAsStream("/images/cart-orange.png"));
-        cartIcon.setImage(cart);
-    }
-
-    public void btnProfileCliked(ActionEvent event) throws IOException  {
-        AnchorPane view = FXMLLoader.load(getClass().getResource("cusProfile.fxml"));
-        borderpane.setCenter(view);
-        defaultSettings();
     }
 
     public static void showAlert(String title, String content) {
@@ -185,4 +182,28 @@ public class cusMainController {
         alert.showAndWait();
     }
 
+    public void loadData(){
+        String name = DaoFactory.getUserDao().read(Map.of("Id", userId)).getData().get(0).getName();
+        nameLabel.setText(name);
+
+        Response<String> mediaResponse = DaoFactory.getUserDao().getFirstMedia(userId);
+        if (mediaResponse.isSuccess()){
+            String imagePath = mediaResponse.getData();
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                Image image = new Image(imageFile.toURI().toString());
+                profilePic.setFill(new ImagePattern(image));
+            }
+        } else {
+            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/sample-profile.png")));
+            profilePic.setFill(new ImagePattern(image));
+        }
+    }
+
+    public void setCusMainController(cusMainController controller) { mainController = controller; }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+        loadData();
+    }
 }

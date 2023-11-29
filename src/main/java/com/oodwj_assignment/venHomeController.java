@@ -2,7 +2,9 @@ package com.oodwj_assignment;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
+import com.oodwj_assignment.models.Notifications;
 import com.oodwj_assignment.models.Orders;
+import com.oodwj_assignment.models.Transactions;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -93,8 +95,6 @@ public class venHomeController {
             ordersTableView.getItems().setAll(filtered);
             orderIdComboBox.getItems().clear();
             orderIdComboBox.getItems().addAll(activeOrderIds);
-        } else {
-            venMainController.showAlert("Error", "No order IDs to retrieve orders for.");
         }
     }
 
@@ -130,18 +130,41 @@ public class venHomeController {
         if (orderId == null || status == null) {
             venMainController.showAlert("Validation Error", "Please select an order ID and order status.");
             clearFields();
-        } else {
-            Map<String, Object> query = Map.of("Id", orderId);
-            Map<String, Object> newValue = Map.of("status", status);
-            Response<Void> response = DaoFactory.getOrderDao().update(query, newValue);
-            if (response.isSuccess()) {
-                loadOrders();
-                clearFields();
-                venMainController.showAlert("Success", "Order status updated successfully.");
-            } else {
-                venMainController.showAlert("Update Error", "Failed to update order status: " + response.getMessage());
+            return;
+        }
+
+        // Update Order Status
+        Map<String, Object> orderQuery = Map.of("Id", orderId);
+        Map<String, Object> newOrderValue = Map.of("status", status, "updatedAt", LocalDateTime.now());
+        Response<Void> orderResponse = DaoFactory.getOrderDao().update(orderQuery, newOrderValue);
+
+        if (!orderResponse.isSuccess()) {
+            venMainController.showAlert("Update Error", "Failed to update order status: " + orderResponse.getMessage());
+            return;
+        }
+
+        // Update Transaction Status if Order is Completed
+        if (status == Orders.orderStatus.Completed) {
+            UUID transactionId = DaoFactory.getOrderDao().read(orderQuery).getData().get(0).getTransactionId();
+            if (transactionId != null) {
+                Map<String, Object> transactionQuery = Map.of("Id", transactionId);
+                Map<String, Object> newTransactionValue = Map.of("status", Transactions.transactionStatus.Completed, "updatedAt", LocalDateTime.now());
+                Response<Void> transactionResponse = DaoFactory.getTransactionDao().update(transactionQuery, newTransactionValue);
+
+                if (!transactionResponse.isSuccess()) {
+                    venMainController.showAlert("Transaction Update Error", "Failed to update transaction status: " + transactionResponse.getMessage());
+                }
             }
         }
+
+        // Reload orders and clear fields
+        loadOrders();
+        clearFields();
+        venMainController.showAlert("Success", "Order status updated successfully.");
+
+        UUID userId = DaoFactory.getOrderDao().read(orderQuery).getData().get(0).getUserId();
+        notificationController notificationController = new notificationController();
+        notificationController.sendNotification(userId, "Order status has been updated. Current order status: " + status, Notifications.notificationType.Information);
     }
 
     private Orders.orderStatus parseStatusText(String statusText) {
@@ -159,16 +182,25 @@ public class venHomeController {
     }
 
     public void activeToggleClicked(ActionEvent event) throws IOException {
+        if (allOrders == null){
+            return;
+        }
         List<Orders> filtered = filterOrders(Orders.orderStatus.Accepted, Orders.orderStatus.FoodsReady);
         ordersTableView.getItems().setAll(filtered);
     }
 
     public void completedToggleClicked(ActionEvent event) throws IOException {
+        if (allOrders == null){
+            return;
+        }
         List<Orders> filtered = filterOrders(Orders.orderStatus.Completed);
         ordersTableView.getItems().setAll(filtered);
     }
 
     public void rejectedToggleClicked(ActionEvent event) throws IOException {
+        if (allOrders == null){
+            return;
+        }
         List<Orders> filtered = filterOrders(Orders.orderStatus.Declined, Orders.orderStatus.Cancelled);
         ordersTableView.getItems().setAll(filtered);
     }

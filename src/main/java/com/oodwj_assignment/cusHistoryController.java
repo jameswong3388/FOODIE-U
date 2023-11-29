@@ -147,7 +147,7 @@ public class cusHistoryController {
             orderInfoTableView.getItems().setAll(orderFoodsInfo);
         } else {
             orderInfoPane.setVisible(false);
-            venMainController.showAlert("Error", "Failed to read order foods: " + foodResponse.getMessage());
+            cusMainController.showAlert("Error", "Failed to read order foods: " + foodResponse.getMessage());
         }
     }
 
@@ -164,6 +164,7 @@ public class cusHistoryController {
             cusMenuController menuController = new cusMenuController(restaurant, orderFoods);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("cusMenu.fxml"));
             fxmlLoader.setController(menuController);
+            menuController.setCusMenuController(menuController);
             Parent menuRoot = fxmlLoader.load();
             menuController.setOrderItems();
 
@@ -187,8 +188,8 @@ public class cusHistoryController {
                 Tasks task = taskResponse.getData().get(0);
                 return order.getStatus() == Orders.orderStatus.Completed && task.getStatus() == Tasks.taskStatus.Delivered;
             }
-            return false;
+            return false; // If there's no task found or any error, consider it as not completed
         }
-        return order.getStatus() == Orders.orderStatus.Completed;
+        return order.getStatus() == Orders.orderStatus.Completed; // For non-delivery orders, completion is based on order status alone
     }
 }

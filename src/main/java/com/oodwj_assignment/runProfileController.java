@@ -2,10 +2,7 @@ package com.oodwj_assignment;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
-import com.oodwj_assignment.models.RunnerProfile;
-import com.oodwj_assignment.models.Stores;
-import com.oodwj_assignment.models.Tasks;
-import com.oodwj_assignment.models.Users;
+import com.oodwj_assignment.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +23,7 @@ import javafx.util.converter.DefaultStringConverter;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -189,18 +187,29 @@ public class runProfileController {
             return;
         }
 
-        // Update runner information
+        // Check if Runner Profile exists
         Map<String, Object> runnerQuery = Map.of("userId", runnerId);
-        Map<String, Object> runnerNewValue = Map.of("gender", gender, "dob", dob);
-        Response<Void> runResponse = DaoFactory.getRunnerProfileDao().update(runnerQuery, runnerNewValue);
+        Response<ArrayList<RunnerProfile>> runnerResponse = DaoFactory.getRunnerProfileDao().read(runnerQuery);
 
-        if (!runResponse.isSuccess()) {
-            runMainController.showAlert("Update Error", "Failed to update runner information.");
+        if (runnerResponse.isSuccess()){
+            // Update existing runner profile
+            Map<String, Object> runnerNewValue = Map.of("gender", gender, "dob", dob, "updatedAt", LocalDateTime.now());
+            Response<Void> runResponse = DaoFactory.getRunnerProfileDao().update(runnerQuery, runnerNewValue);
+            if (!runResponse.isSuccess()) {
+                runMainController.showAlert("Update Error", "Failed to update runner profile information.");
+            }
+        } else {
+            // Create new runner profile
+            RunnerProfile newRunnerProfile = new RunnerProfile(UUID.randomUUID(), runnerId, gender, dob, LocalDateTime.now(), LocalDateTime.now());
+            Response<UUID> runResponse = DaoFactory.getRunnerProfileDao().create(newRunnerProfile);
+            if (!runResponse.isSuccess()) {
+                runMainController.showAlert("Update Error", "Failed to update runner profile information.");
+            }
         }
 
         // Update user information
         Map<String, Object> userQuery = Map.of("Id", runnerId);
-        Map<String, Object> userNewValue = Map.of("name", name, "phoneNumber", phoneNumber, "email", email);
+        Map<String, Object> userNewValue = Map.of("name", name, "phoneNumber", phoneNumber, "email", email, "updateAt", LocalDateTime.now());
         Response<Void> userResponse = DaoFactory.getUserDao().update(userQuery, userNewValue);
 
         if (!userResponse.isSuccess()) {
@@ -244,7 +253,7 @@ public class runProfileController {
 
         // Update login information
         Map<String, Object> userQuery = Map.of("Id", runnerId);
-        Map<String, Object> userNewValue = Map.of("password", newPassword);
+        Map<String, Object> userNewValue = Map.of("password", newPassword, "updatedAt", LocalDateTime.now());
         Response<Void> userResponse = DaoFactory.getUserDao().update(userQuery, userNewValue);
 
         if (!userResponse.isSuccess()) {

@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.admMainController">
@@ -31,14 +32,14 @@
                   <Insets left="10.0" />
                </padding>
             </Button>
-            <Button fx:id="userRegister" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#btnUserRegisterClicked" prefHeight="45.0" prefWidth="186.0" styleClass="menu-button" text="User Register" textFill="#797979">
+            <Button fx:id="register" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#btnRegisterClicked" prefHeight="45.0" prefWidth="186.0" styleClass="menu-button" text="Register" textFill="#797979">
                <font>
                   <Font name="Trebuchet MS" size="14.0" />
                </font>
                <graphic>
-                  <ImageView fx:id="userRegisterIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="registerIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/userApproveIcon.png" />
+                        <Image url="@../../images/register-grey.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -55,6 +56,21 @@
                      <image>
                         <Image url="@../../images/wallet-grey.png" />
                      </image></ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Button>
+            <Button fx:id="profile" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#btnProfileClicked" prefHeight="45.0" prefWidth="186.0" styleClass="menu-button" text="Profile">
+               <font>
+                  <Font name="Trebuchet MS" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fx:id="profileIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/profile-grey.png" />
+                     </image>
+                  </ImageView>
                </graphic>
                <padding>
                   <Insets left="10.0" />
@@ -85,37 +101,20 @@
       <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1000.0" styleClass="background-color-2" stylesheets="@../../styles/styles.css" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="70.0" prefWidth="12.0" />
-            <ImageView fitHeight="58.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="58.0" fitWidth="137.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/Logo4.png" />
                </image>
             </ImageView>
             <Pane prefHeight="70.0" prefWidth="12.0" />
-            <Pane prefHeight="70.0" prefWidth="590.0" />
-            <Button fx:id="notifcation" mnemonicParsing="false" onAction="#btnNotificationClicked" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fx:id="notificationIcon" accessibleRole="BUTTON" fitHeight="30.0" fitWidth="30.0" onDragDetected="#btnNotificationClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/notification-grey.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <Pane prefHeight="70.0" prefWidth="636.4" />
             <Pane prefHeight="70.0" prefWidth="22.0" />
-            <Label alignment="BASELINE_LEFT" prefHeight="16.0" prefWidth="122.0" styleClass="primary-text-color" text="FYH">
+            <Label fx:id="nameLabel" alignment="BASELINE_LEFT" prefHeight="16.0" prefWidth="122.0" styleClass="primary-text-color">
                <font>
                   <Font name="Trebuchet MS" size="14.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="background-color-1">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="background-color-1">
-                     <image>
-                        <Image url="@../../images/sample-profile.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <Circle fx:id="profilePic" fill="WHITE" radius="23.0" stroke="WHITE" strokeType="INSIDE" />
          </children>
       </HBox>
    </top>

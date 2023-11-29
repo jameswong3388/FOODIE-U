@@ -148,6 +148,8 @@ public class cusReviewController {
 
         if (newReview.isSuccess()) {
             cusMainController.showAlert("Success", "Your review submitted successfully.");
+            notificationController notificationController = new notificationController();
+            notificationController.sendNotification(modelId, "Customer has write a review to you. Do check it out!", Notifications.notificationType.Information);
             updateLabels(modelComboBox.getSelectionModel().getSelectedItem());
         } else {
             cusMainController.showAlert("Error", "Failed to submit review: " + newReview.getMessage());
@@ -203,9 +205,9 @@ public class cusReviewController {
                 Tasks task = taskResponse.getData().get(0);
                 return order.getStatus() == Orders.orderStatus.Completed && task.getStatus() == Tasks.taskStatus.Delivered;
             }
-            return false;
+            return false; // If there's no task found or any error, consider it as not completed
         }
-        return order.getStatus() == Orders.orderStatus.Completed;
+        return order.getStatus() == Orders.orderStatus.Completed; // For non-delivery orders, completion is based on order status alone
     }
 
     private void updateLabels(String selection) {
@@ -229,7 +231,7 @@ public class cusReviewController {
                     setModelProfile(storeId, ProfileType.Store);
                 } else {
                     reviewPane.setVisible(false);
-                    venMainController.showAlert("Error", "Failed to read review: " + orderResponse.getMessage());
+                    cusMainController.showAlert("Error", "Failed to read review: " + orderResponse.getMessage());
                 }
             } else if (selection.equals("Task")) {
                 modelId.setText("Task ID:");
@@ -249,7 +251,7 @@ public class cusReviewController {
                     setModelProfile(tasksInfo.get(0).getRunnerId(), ProfileType.Runner);
                 } else {
                     reviewPane.setVisible(false);
-                    venMainController.showAlert("Error", "Failed to read review: " + taskResponse.getMessage());
+                    cusMainController.showAlert("Error", "Failed to read review: " + taskResponse.getMessage());
                 }
             }
         }

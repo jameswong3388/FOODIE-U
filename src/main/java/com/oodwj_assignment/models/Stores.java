@@ -52,7 +52,8 @@ public class Stores extends Model {
     public enum storeCategory {
         Western,
         Chinese,
-        Asian
+        Asian,
+        Default
     }
 
     @Override

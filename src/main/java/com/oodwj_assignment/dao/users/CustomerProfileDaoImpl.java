@@ -1,6 +1,7 @@
 package com.oodwj_assignment.dao.users;
 
 import com.oodwj_assignment.dao.base.AbstractDao;
+import com.oodwj_assignment.models.AdminProfile;
 import com.oodwj_assignment.models.CustomerProfile;
 
 import java.io.File;

@@ -1,8 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="530.0" prefWidth="840.0" styleClass="background-color-1" stylesheets="@../../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oodwj_assignment.cusOrderController">
-
+   <children>
+      <Label layoutX="20.0" layoutY="20.0" text="My Active Order">
+         <font>
+            <Font name="Segoe UI Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="505.0" layoutY="34.0" text="Order Id:">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="orderIdComboBox" layoutX="574.0" layoutY="30.0" prefHeight="26.0" prefWidth="246.0" styleClass="background-color-2" />
+      <Pane layoutX="19.0" layoutY="64.0" prefHeight="452.0" prefWidth="802.0" styleClass="background-color-2">
+         <children>
+            <Label layoutX="46.0" layoutY="17.0" text="Restaurant" textFill="#797979">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="183.0" layoutY="17.0" text="Type" textFill="#797979">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="257.0" layoutY="17.0" text="Total Price" textFill="#797979">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="355.0" layoutY="17.0" text="Total Quantity" textFill="#797979">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="cancelButton" alignment="CENTER" focusTraversable="false" layoutX="536.0" layoutY="393.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="34.0" prefWidth="194.0" text="Cancel Order" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+            </Button>
+            <Label fx:id="resNameLabel" alignment="CENTER" layoutX="16.0" layoutY="41.0" prefHeight="18.0" prefWidth="132.0">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="typeLabel" alignment="CENTER" layoutX="144.0" layoutY="41.0" prefHeight="18.0" prefWidth="110.0">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="priceLabel" alignment="CENTER" layoutX="237.0" layoutY="41.0" prefHeight="18.0" prefWidth="110.0">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="quantityLabel" alignment="CENTER" layoutX="348.0" layoutY="41.0" prefHeight="18.0" prefWidth="110.0">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Label>
+            <TableView fx:id="orderFoodsTableView" layoutX="46.0" layoutY="74.0" prefHeight="361.0" prefWidth="406.0" styleClass="background-color-2">
+               <columns>
+                  <TableColumn fx:id="itemColumn" prefWidth="125.0" resizable="false" text="Item" />
+                  <TableColumn fx:id="priceColumn" prefWidth="100.0" resizable="false" text="Unit Price" />
+                  <TableColumn fx:id="quantityColumn" resizable="false" text="Quantity" />
+                  <TableColumn fx:id="amountColumn" prefWidth="100.0" resizable="false" text="Amount" />
+               </columns>
+            </TableView>
+            <StackPane layoutX="493.0" layoutY="35.0" prefHeight="337.0" prefWidth="280.0" style="-fx-border-color: #FF8A00; -fx-border-width: 4;">
+               <children>
+                  <AnchorPane fx:id="ypane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background-color-2">
+                     <children>
+                        <Label fx:id="zstatus1" layoutX="91.0" layoutY="178.0" prefHeight="18.0" prefWidth="130.0" text="Task Pending">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="zstatus2" layoutX="91.0" layoutY="218.0" prefHeight="18.0" prefWidth="130.0" text="Task Accepted">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="zstatus3" layoutX="91.0" layoutY="258.0" prefHeight="18.0" prefWidth="130.0" text="Food Picked Up">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="zstatus4" layoutX="91.0" layoutY="298.0" prefHeight="18.0" prefWidth="130.0" text="Order Delivered">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Rectangle fx:id="zshape2" arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="24.0" layoutX="57.0" layoutY="195.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+                        <Circle fx:id="yshape5" fill="#ffc75a" layoutX="60.0" layoutY="102.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Rectangle fx:id="zshape4" arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="24.0" layoutX="57.0" layoutY="235.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+                        <Circle fx:id="zshape1" fill="#ffc75a" layoutX="60.0" layoutY="187.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Rectangle fx:id="zshape6" arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="24.0" layoutX="57.0" layoutY="275.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+                        <Circle fx:id="zshape3" fill="#ffc75a" layoutX="60.0" layoutY="227.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Circle fx:id="zshape7" fill="#d9dfe9" layoutX="60.0" layoutY="307.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Label fx:id="ystatus1" layoutX="91.0" layoutY="13.0" prefHeight="18.0" prefWidth="130.0" text="Order Placed">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="ystatus3" layoutX="91.0" layoutY="93.0" prefHeight="18.0" prefWidth="130.0" text="Food is Ready">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Rectangle fx:id="yshape2" arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="24.0" layoutX="57.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+                        <Circle fx:id="yshape1" fill="#ffc75a" layoutX="60.0" layoutY="22.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Circle fx:id="yshape3" fill="#ffc75a" layoutX="60.0" layoutY="62.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Circle fx:id="zshape5" fill="#ffc75a" layoutX="60.0" layoutY="267.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Rectangle fx:id="yshape4" arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="24.0" layoutX="57.0" layoutY="70.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+                        <Label fx:id="ystatus4" layoutX="91.0" layoutY="133.0" prefHeight="18.0" prefWidth="130.0" text="Runner Picked Up">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Circle fx:id="yshape7" fill="#d9dfe9" layoutX="60.0" layoutY="142.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Rectangle fx:id="yshape6" arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="24.0" layoutX="57.0" layoutY="110.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+                        <Label fx:id="ystatus2" layoutX="91.0" layoutY="53.0" prefHeight="18.0" prefWidth="130.0" text="Order Accepted">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background-color-2" fx:id="xpane">
+                     <children>
+                        <Label layoutX="91.0" layoutY="65.0" prefHeight="18.0" prefWidth="130.0" text="Order Placed" fx:id="xstatus1">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="91.0" layoutY="125.0" prefHeight="18.0" prefWidth="130.0" text="Order Accepted" fx:id="xstatus2">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="91.0" layoutY="185.0" prefHeight="18.0" prefWidth="130.0" text="Food is Ready" fx:id="xstatus3">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label disable="true" layoutX="91.0" layoutY="245.0" prefHeight="18.0" prefWidth="130.0" text="Order Completed" fx:id="xstatus4">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="44.0" layoutX="57.0" layoutY="83.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" fx:id="xshape2" />
+                        <Circle fill="#ffc75a" layoutX="60.0" layoutY="75.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape1" />
+                        <Circle fill="#ffc75a" layoutX="60.0" layoutY="135.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape3" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9dfe9" height="44.0" layoutX="57.0" layoutY="202.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" fx:id="xshape6" />
+                        <Circle fill="#ffc75a" layoutX="60.0" layoutY="195.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape5" />
+                        <Circle fill="#d9dfe9" layoutX="60.0" layoutY="255.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" fx:id="xshape7" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffc75a" height="44.0" layoutX="57.0" layoutY="143.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" fx:id="xshape4" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </StackPane>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>

@@ -22,7 +22,7 @@ public class runProfilePicController {
     @FXML private Label pathLabel;
     @FXML private Button backButton;
     private File selectedFile;
-    private com.oodwj_assignment.runProfileController runProfileController;
+    private runProfileController runProfileController;
 
     public void initialize(){
         pathLabel.setText("");
@@ -84,7 +84,7 @@ public class runProfilePicController {
                 if (removeResponse.isSuccess()) {
                     DaoFactory.getUserDao().addMedia(selectedFile, media);
                     pathLabel.setText("Uploaded");
-                    venMainController.showAlert("Success", "New profile added");
+                    runMainController.showAlert("Success", "New profile added");
 
                     runProfileController.setRunProfileController(runProfileController);
                     runProfileController.loadProfilePic();

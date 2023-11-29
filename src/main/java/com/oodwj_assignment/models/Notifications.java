@@ -7,14 +7,14 @@ public class Notifications extends Model {
     private final String message;
     private notificationStatus status;
     private final notificationType type;
-    public final UUID userid;
+    public final UUID userId;
 
-    public Notifications(UUID notificationId, String message, notificationStatus status, notificationType type, UUID userid, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Notifications(UUID notificationId, String message, notificationStatus status, notificationType type, UUID userId, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(notificationId, updatedAt, createdAt);
         this.message = message;
         this.status = status;
         this.type = type;
-        this.userid = userid;
+        this.userId = userId;
     }
 
     public String getMessage() {
@@ -29,8 +29,8 @@ public class Notifications extends Model {
         return type;
     }
 
-    public UUID getUserid() {
-        return userid;
+    public UUID getUserId() {
+        return userId;
     }
 
     public void setStatus(notificationStatus status) {
@@ -47,17 +47,14 @@ public class Notifications extends Model {
     }
 
     public enum notificationType {
-        Receipt,
         Information,
-        Warning,
-        Error,
-        Success,
-        Other
+        Receipt,
+        Warning
     }
 
     @Override
     public String toString() {
-        return getId() + ";" + getMessage() + ";" + getStatus() + ";" + getType() + ";" + getUserid() + ";" + getUpdatedAt() + ";" + getCreatedAt();
+        return getId() + ";" + getMessage() + ";" + getStatus() + ";" + getType() + ";" + getUserId() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 }
 

@@ -2,9 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -19,19 +19,19 @@
    <children>
       <StackPane layoutX="278.0" layoutY="27.0" prefHeight="475.0" prefWidth="530.0">
          <children>
-            <Pane prefHeight="475.0" prefWidth="530.0" styleClass="background-color-2">
+            <Pane fx:id="loginInfoPane" prefHeight="475.0" prefWidth="530.0" styleClass="background-color-2">
                <children>
                   <Label layoutX="27.0" layoutY="88.0" prefHeight="19.0" prefWidth="134.0" text="Username">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="27.0" layoutY="183.0" prefHeight="19.0" prefWidth="134.0" text="Password">
+                  <Label layoutX="283.0" layoutY="86.0" prefHeight="19.0" prefWidth="134.0" text="Password">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button alignment="CENTER" focusTraversable="false" layoutX="294.0" layoutY="421.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="194.0" text="Save Changes" textFill="WHITE">
+                  <Button alignment="CENTER" focusTraversable="false" layoutX="294.0" layoutY="421.0" mnemonicParsing="false" onAction="#saveLoginInfoButtonClicked" prefHeight="34.0" prefWidth="194.0" text="Save Changes" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
@@ -39,12 +39,12 @@
                         <Insets right="5.0" />
                      </padding>
                   </Button>
-                  <Label layoutX="30.0" layoutY="28.0" prefHeight="23.0" prefWidth="211.0" text="Login &amp; Password">
+                  <Label layoutX="30.0" layoutY="28.0" prefHeight="23.0" prefWidth="211.0" text="Login Credentials">
                      <font>
                         <Font name="Segoe UI Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button alignment="CENTER" focusTraversable="false" layoutX="38.0" layoutY="421.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="194.0" text="Discard Changes" textFill="WHITE">
+                  <Button alignment="CENTER" focusTraversable="false" layoutX="38.0" layoutY="421.0" mnemonicParsing="false" onAction="#discardLoginInfoButtonClicked" prefHeight="34.0" prefWidth="194.0" text="Discard Changes" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
@@ -52,46 +52,62 @@
                         <Insets right="5.0" />
                      </padding>
                   </Button>
-                  <TextField layoutX="27.0" layoutY="113.0" prefHeight="30.0" prefWidth="217.0" text="Ven001">
+                  <TextField fx:id="usernameTextField" disable="true" editable="false" layoutX="27.0" layoutY="113.0" prefHeight="30.0" prefWidth="217.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="27.0" layoutY="208.0" prefHeight="30.0" prefWidth="217.0" text="vendor123">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="27.0" layoutY="284.0" prefHeight="19.0" prefWidth="134.0" text="Confirm Password">
+                  <Label layoutX="283.0" layoutY="191.0" prefHeight="19.0" prefWidth="161.0" text="Confirm New Password">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="27.0" layoutY="309.0" prefHeight="30.0" prefWidth="217.0" text="vendor123">
+                  <Label layoutX="27.0" layoutY="191.0" prefHeight="19.0" prefWidth="134.0" text="New Password">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Segoe UI Bold" size="14.0" />
                      </font>
-                  </TextField>
+                  </Label>
+                  <TextField fx:id="newPassTextField" layoutX="27.0" layoutY="216.0" prefHeight="30.0" prefWidth="217.0" />
+                  <PasswordField fx:id="newPassField" layoutX="27.0" layoutY="216.0" prefHeight="30.0" prefWidth="217.0" />
+                  <ImageView fx:id="newPassEyeIcon" fitHeight="18.0" fitWidth="18.0" layoutX="214.0" layoutY="222.0" nodeOrientation="INHERIT" onMouseClicked="#newEyeslashClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/hide.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="confirmPassTextField" layoutX="283.0" layoutY="216.0" prefHeight="30.0" prefWidth="217.0" />
+                  <PasswordField fx:id="confirmPassField" layoutX="283.0" layoutY="216.0" prefHeight="30.0" prefWidth="217.0" />
+                  <ImageView fx:id="confirmPassEyeIcon" fitHeight="18.0" fitWidth="18.0" layoutX="470.0" layoutY="222.0" nodeOrientation="INHERIT" onMouseClicked="#confirmEyeslashClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/hide.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="oldPassTextField" layoutX="283.0" layoutY="113.0" prefHeight="30.0" prefWidth="217.0" />
+                  <PasswordField fx:id="oldPassField" layoutX="283.0" layoutY="113.0" prefHeight="30.0" prefWidth="217.0" />
+                  <ImageView fx:id="oldPassEyeIcon" fitHeight="18.0" fitWidth="18.0" layoutX="470.0" layoutY="119.0" nodeOrientation="INHERIT" onMouseClicked="#oldEyeslashClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/hide.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
-            <Pane prefHeight="475.0" prefWidth="530.0" styleClass="background-color-2">
+            <Pane fx:id="cusInfoPane" prefHeight="475.0" prefWidth="530.0" styleClass="background-color-2">
                <children>
                   <Label layoutX="30.0" layoutY="73.0" prefHeight="19.0" prefWidth="134.0" text="Name">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="30.0" layoutY="157.0" prefHeight="19.0" prefWidth="134.0" text="Phone Number">
+                  <Label layoutX="30.0" layoutY="166.0" prefHeight="19.0" prefWidth="134.0" text="Phone Number">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="283.0" layoutY="157.0" prefHeight="19.0" prefWidth="134.0" text="Email">
+                  <Label layoutX="283.0" layoutY="166.0" prefHeight="19.0" prefWidth="134.0" text="Email">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button alignment="CENTER" focusTraversable="false" layoutX="294.0" layoutY="421.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="194.0" text="Save Changes" textFill="WHITE">
+                  <Button alignment="CENTER" focusTraversable="false" layoutX="294.0" layoutY="421.0" mnemonicParsing="false" onAction="#saveCusInfoButtonClicked" prefHeight="34.0" prefWidth="194.0" text="Save Changes" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
@@ -99,12 +115,12 @@
                         <Insets right="5.0" />
                      </padding>
                   </Button>
-                  <Label layoutX="30.0" layoutY="28.0" prefHeight="23.0" prefWidth="211.0" text="Personal Information">
+                  <Label layoutX="30.0" layoutY="28.0" prefHeight="23.0" prefWidth="211.0" text="Customer Information">
                      <font>
                         <Font name="Segoe UI Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button alignment="CENTER" focusTraversable="false" layoutX="38.0" layoutY="421.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="194.0" text="Discard Changes" textFill="WHITE">
+                  <Button alignment="CENTER" focusTraversable="false" layoutX="38.0" layoutY="421.0" mnemonicParsing="false" onAction="#discardCusInfoButtonClicked" prefHeight="34.0" prefWidth="194.0" text="Discard Changes" textFill="WHITE">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
@@ -112,22 +128,32 @@
                         <Insets right="5.0" />
                      </padding>
                   </Button>
-                  <TextField layoutX="30.0" layoutY="100.0" prefHeight="30.0" prefWidth="217.0" text="Jeremy Lau">
+                  <TextField fx:id="cusNameTextField" layoutX="30.0" layoutY="100.0" prefHeight="30.0" prefWidth="217.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="30.0" layoutY="182.0" prefHeight="30.0" prefWidth="217.0" text="010-12345678">
+                  <TextField fx:id="phoneNumberTextField" layoutX="30.0" layoutY="191.0" prefHeight="30.0" prefWidth="217.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="283.0" layoutY="182.0" prefHeight="30.0" prefWidth="217.0" text="jeremy@gmail.com">
+                  <TextField fx:id="emailTextField" layoutX="283.0" layoutY="191.0" prefHeight="30.0" prefWidth="217.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <RadioButton layoutX="283.0" layoutY="106.0" mnemonicParsing="false" text="Male">
+                  <Label fx:id="phoneNumberFormatLabel" layoutX="30.0" layoutY="221.0" text="Format: XXX-XXXXXXX" textFill="RED">
+                     <font>
+                        <Font name="Segoe UI" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="283.0" layoutY="72.0" prefHeight="19.0" prefWidth="134.0" text="Gender">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="maleRadButton" layoutX="283.0" layoutY="106.0" mnemonicParsing="false" text="Male">
                      <font>
                         <Font name="Segoe UI" size="14.0" />
                      </font>
@@ -135,53 +161,51 @@
                         <ToggleGroup fx:id="gender" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton layoutX="356.0" layoutY="106.0" mnemonicParsing="false" text="Female" toggleGroup="$gender">
+                  <RadioButton fx:id="femaleRadButton" layoutX="356.0" layoutY="106.0" mnemonicParsing="false" text="Female" toggleGroup="$gender">
                      <font>
                         <Font name="Segoe UI" size="14.0" />
                      </font>
                   </RadioButton>
-                  <Label layoutX="283.0" layoutY="73.0" prefHeight="19.0" prefWidth="134.0" text="Gender">
+                  <Label layoutX="31.0" layoutY="277.0" prefHeight="19.0" prefWidth="134.0" text="Date of Birth">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="30.0" layoutY="244.0" prefHeight="19.0" prefWidth="134.0" text="Date of Birth">
-                     <font>
-                        <Font name="Segoe UI Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <DatePicker layoutX="27.0" layoutY="272.0" prefHeight="30.0" prefWidth="217.0" />
-                  <ComboBox layoutX="283.0" layoutY="272.0" prefHeight="30.0" prefWidth="217.0" />
-                  <Label layoutX="283.0" layoutY="244.0" prefHeight="19.0" prefWidth="134.0" text="Profile">
-                     <font>
-                        <Font name="Segoe UI Bold" size="14.0" />
-                     </font>
-                  </Label>
+                  <DatePicker fx:id="dobDatePicker" layoutX="27.0" layoutY="305.0" prefHeight="30.0" prefWidth="217.0" />
                </children>
             </Pane>
          </children>
       </StackPane>
       <Pane layoutX="32.0" layoutY="27.0" prefHeight="475.0" prefWidth="230.0" styleClass="background-color-2">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="36.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="profilePic" fitHeight="150.0" fitWidth="150.0" layoutX="36.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/Lion.jpg" />
+                  <Image url="@../../images/sample-profile.png" />
                </image>
             </ImageView>
-            <Button alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="298.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="174.0" text="Login &amp; Password" textAlignment="CENTER" textFill="WHITE">
+            <Button alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="298.0" mnemonicParsing="false" onAction="#confidentialInfoButtonClicked" prefHeight="28.0" prefWidth="174.0" text="Login Credentials" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
             </Button>
-            <Label alignment="CENTER" layoutX="20.0" layoutY="186.0" prefHeight="19.0" prefWidth="181.0" text="Jeremy Lau" textAlignment="CENTER">
+            <Label fx:id="cusNameLabel" alignment="CENTER" layoutX="14.0" layoutY="196.0" prefHeight="19.0" prefWidth="194.0" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
             </Label>
-            <Button alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="249.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="174.0" text="Personal Information" textAlignment="CENTER" textFill="WHITE">
+            <Button alignment="CENTER" focusTraversable="false" layoutX="24.0" layoutY="249.0" mnemonicParsing="false" onAction="#cusInfoButtonClicked" prefHeight="28.0" prefWidth="174.0" text="Personal Information" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Bold" size="14.0" />
                </font>
+            </Button>
+            <Button layoutX="165.0" layoutY="154.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#editButtonClicked" prefHeight="32.0" prefWidth="33.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/edit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
       </Pane>

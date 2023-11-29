@@ -78,6 +78,7 @@ public class cusHomeController {
         cusMenuController menuController = new cusMenuController(name, null);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("cusMenu.fxml"));
         fxmlLoader.setController(menuController);
+        menuController.setCusMenuController(menuController);
         Parent menuRoot = fxmlLoader.load();
 
         Stage menu = new Stage();

@@ -8,18 +8,18 @@ public class Tasks extends Model {
     private UUID orderId;
     private Double deliveryFee;
     private taskStatus status;
+    private UUID transactionId;
 
-    public Tasks(UUID taskId, UUID runnerId, UUID orderId, Double deliveryFee, taskStatus status, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Tasks(UUID taskId, UUID runnerId, UUID orderId, Double deliveryFee, taskStatus status, UUID transactionId, LocalDateTime updatedAt, LocalDateTime createdAt) {
         super(taskId, updatedAt, createdAt);
         this.runnerId = runnerId;
         this.orderId = orderId;
         this.deliveryFee = deliveryFee;
         this.status = status;
+        this.transactionId = transactionId;
     }
 
-    public UUID getRunnerId() {
-        return runnerId;
-    }
+    public UUID getRunnerId() { return runnerId; }
 
     public UUID getOrderId() {
         return orderId;
@@ -31,6 +31,10 @@ public class Tasks extends Model {
 
     public taskStatus getStatus() {
         return status;
+    }
+
+    public UUID getTransactionId() {
+        return transactionId;
     }
 
     public void setRunnerId(UUID runnerId) {
@@ -49,6 +53,10 @@ public class Tasks extends Model {
         this.status = status;
     }
 
+    public void setTransactionId(UUID transactionId) {
+        this.transactionId = transactionId;
+    }
+
     public enum taskStatus {
         Pending,
         Accepted,
@@ -59,7 +67,7 @@ public class Tasks extends Model {
 
     @Override
     public String toString() {
-        return getId() + ";" + getRunnerId() + ";" + getOrderId() + ";" + getDeliveryFee() + ";" + getStatus() + ";" + getUpdatedAt() + ";" + getCreatedAt();
+        return getId() + ";" + getRunnerId() + ";" + getOrderId() + ";" + getDeliveryFee() + ";" + getStatus() + ";" + getTransactionId() + ";" + getUpdatedAt() + ";" + getCreatedAt();
     }
 
 }

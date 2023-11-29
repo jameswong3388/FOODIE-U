@@ -50,6 +50,8 @@ public class cusMenuController {
     private String name;
     private UUID storeId;
     private ArrayList<OrderFoods> orderFoods;
+    private cusMenuController menuController;
+
     public cusMenuController(String name, ArrayList<OrderFoods> orderFoods) {
         this.name = name;
         this.orderFoods = orderFoods;
@@ -143,7 +145,7 @@ public class cusMenuController {
         }
 
         if (quantity > 0) {
-            Map<String, Object> query = Map.of("foodName", foodName);
+            Map<String, Object> query = Map.of("storeId", storeId, "foodName", foodName);
             UUID foodId = DaoFactory.getFoodDao().read(query).getData().get(0).getId();
 
             // If the row doesn't exist, create a new one
@@ -173,7 +175,9 @@ public class cusMenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("cusOrderMethod.fxml"));
             Parent methodRoot = loader.load();
             cusOrderMethodController orderMethodController = loader.getController();
-            orderMethodController.getOrderFoodsList(orderFoodsTableView.getItems());
+            orderMethodController.setOrderFoodsList(orderFoodsTableView.getItems());
+            orderMethodController.setStoreId(storeId);
+            orderMethodController.setCusMenuController(menuController);
             Stage method = new Stage();
             method.setTitle("Order Method Page");
             method.initStyle(StageStyle.UNDECORATED);
@@ -246,5 +250,7 @@ public class cusMenuController {
 
         updateTotalLabel();
     }
+
+    public void setCusMenuController(cusMenuController menuController){ this.menuController = menuController; }
 
 }

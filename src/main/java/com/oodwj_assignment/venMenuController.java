@@ -76,8 +76,6 @@ public class venMenuController {
             menuTableView.getItems().setAll(foods);
             modifyItemId.getItems().clear();
             modifyItemId.getItems().addAll(foods.stream().map(Foods::getId).toList());
-        } else {
-            System.out.println("Failed to read orders: " + response.getMessage());
         }
     }
 
@@ -196,7 +194,7 @@ public class venMenuController {
         }
 
         Map<String, Object> query = Map.of("Id", foodId);
-        Map<String, Object> newValue = Map.of("foodName", name, "foodType", type, "foodPrice", price);
+        Map<String, Object> newValue = Map.of("foodName", name, "foodType", type, "foodPrice", price, "updatedAt", LocalDateTime.now());
         Response<Void> response = DaoFactory.getFoodDao().update(query, newValue);
 
         if (response.isSuccess()) {
