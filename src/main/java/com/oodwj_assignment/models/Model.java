@@ -1,9 +1,10 @@
 package com.oodwj_assignment.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Model {
+public class Model implements Serializable {
     private UUID id;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;

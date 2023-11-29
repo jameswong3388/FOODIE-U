@@ -51,9 +51,9 @@ public class loginController {
 
         Response<UUID> loginResponse = DaoFactory.getAuthDao().login(username, password);
 
-        AppState.setSessionToken(loginResponse.getData());
-
         if (loginResponse.isSuccess()) {
+            AppState.setSessionToken(loginResponse.getData());
+
             Users user = DaoFactory.getAuthDao().geAuthenticatedUser().getData();
             Users.Role userRole = user.getRole();
 

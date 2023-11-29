@@ -6,6 +6,7 @@ import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Orders;
 import com.oodwj_assignment.models.Tasks;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -13,27 +14,10 @@ import java.util.UUID;
 
 public class TaskDaoImpl extends AbstractDao<Tasks> implements TaskDao {
 
-    private static final String FILE_NAME = "database/tasks.txt";
+    private static final File FILE = new File("database/tasks.dat");
 
     public TaskDaoImpl() {
-        super(FILE_NAME);
-    }
-
-    public Tasks parse(String[] parts) {
-        try {
-            UUID taskId = UUID.fromString(parts[0]);
-            UUID runnerId = UUID.fromString(parts[1]);
-            UUID orderId = UUID.fromString(parts[2]);
-            Double deliveryFee = Double.parseDouble(parts[3]);
-            Tasks.taskStatus status = Tasks.taskStatus.valueOf(parts[4]);
-            UUID transactionId = UUID.fromString(parts[5]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[6]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[7]);
-
-            return new Tasks(taskId, runnerId, orderId, deliveryFee, status, transactionId, updatedAt, createdAt);
-        } catch (Exception e) {
-            return null;
-        }
+        super(FILE);
     }
 
     public Response<Double> calDeliveryFee(Orders orderId) {

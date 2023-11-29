@@ -5,6 +5,7 @@ import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Users;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,10 +16,10 @@ import java.util.UUID;
 
 public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
 
-    private static final String FILE_NAME = "database/users.txt";
+    private static final File FILE = new File("database/users.dat");
 
     public UserDaoImpl() {
-        super(FILE_NAME);
+        super(FILE);
     }
 
     @Override
@@ -30,31 +31,12 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
         UUID userId = UUID.randomUUID();
         model.setId(userId);
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE, true))) {
             writer.println(model);
 
             return Response.success("User created successfully", userId);
         } catch (IOException e) {
             return Response.failure("Failed to create user: " + e.getMessage());
-        }
-    }
-
-    public Users parse(String[] parts) {
-        try {
-            UUID uuid = UUID.fromString(parts[0]);
-            String username = parts[1];
-            String password = parts[2];
-            Users.Role role = Users.Role.valueOf(parts[3]);
-            String name = parts[4];
-            String phoneNumber = parts[5];
-            String email = parts[6];
-            Users.AccountStatus accountStatus = Users.AccountStatus.valueOf(parts[7]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[8]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[9]);
-
-            return new Users(uuid, username, password, role, name, phoneNumber, email, accountStatus, createdAt, updatedAt);
-        } catch (Exception e) {
-            return null; // Return null if parsing fails
         }
     }
 
@@ -66,6 +48,8 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
      */
     public Response<Boolean> isUsernameTaken(String username) {
         Response<ArrayList<Users>> users = DaoFactory.getUserDao().read(Map.of("username", username));
+
+        System.out.println(users.getData());
 
         if (users.isSuccess()) {
             for (Users user : users.getData()) {

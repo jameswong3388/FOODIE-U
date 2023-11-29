@@ -2,7 +2,6 @@ package com.oodwj_assignment;
 
 import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
-import com.oodwj_assignment.models.Notifications;
 import com.oodwj_assignment.models.Users;
 import com.oodwj_assignment.states.AppState;
 import javafx.fxml.FXML;
@@ -54,31 +53,38 @@ public class registerController implements Initializable {
         String password = passwordfield.getText();
         String myrole = roleChoiceBox.getValue();
 
-        //add login navigation button
+        Response <Boolean> usernameResponse = DaoFactory.getUserDao().isUsernameTaken(username);
+        messageLabel.setText(usernameResponse.getMessage());
+        if (usernameResponse.getData() == true){
+            usernameTextField.setText("");
+        }
+
         //make sure to enter all values
 
         switch (myrole) {
             case "User":
                 Users users = new Users(UUID.randomUUID(), username, password, Users.Role.Customer, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
-                Response <UUID> res = DaoFactory.getUserDao().create(users);
-                if (!res.isSuccess()){
-                    System.out.println(res.getMessage());
-                }
+
             case "Vendor":
                 Users users2 = new Users(UUID.randomUUID(), username, password, Users.Role.Vendor, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
-                Response <UUID> res2 = DaoFactory.getUserDao().create(users2);
-                if (!res2.isSuccess()){
-                    System.out.println(res2.getMessage());
-                }
             case "Runner":
                 Users users3 = new Users(UUID.randomUUID(), username, password, Users.Role.Delivery_Runner, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
-                Response <UUID> res3 = DaoFactory.getUserDao().create(users3);
-                if (!res3.isSuccess()){
-                    System.out.println(res3.getMessage());
-                }
         }
-        //send notification to admin 8c5dbefc-cad2-4c81-a5a6-cc95bf506610
-        DaoFactory.getNotificationDao().create(new Notifications(null, "new register user", Notifications.notificationStatus.Unread, Notifications.notificationType.Information, UUID.fromString("8c5dbefc-cad2-4c81-a5a6-cc95bf506610"), LocalDateTime.now(), LocalDateTime.now()));
+
+        if (myrole.equals("User")){
+            Users users = new Users(UUID.randomUUID(), username, password, Users.Role.Customer, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
+            DaoFactory.getUserDao().create(users);
+            System.out.println(DaoFactory.getUserDao().create(users).getMessage());
+        } else if (myrole == "Vendor") {
+            Users users2 = new Users(UUID.randomUUID(), username, password, Users.Role.Vendor, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
+            DaoFactory.getUserDao().create(users2);
+            System.out.println(DaoFactory.getUserDao().create(users2).getMessage());
+
+        } else if (myrole == "Runner") {
+            Users users3 = new Users(UUID.randomUUID(), username, password, Users.Role.Delivery_Runner, name, phonenum, email, Users.AccountStatus.Pending, LocalDateTime.now(), LocalDateTime.now());
+            DaoFactory.getUserDao().create(users3);
+            System.out.println(DaoFactory.getUserDao().create(users3).getMessage());
+        }
         messageLabel.setText("Kindly review the registration form again to confirm your registration status.");
 
 

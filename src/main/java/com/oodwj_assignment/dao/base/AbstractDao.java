@@ -16,26 +16,18 @@ import java.lang.reflect.Method;
  * @param <T> the type parameter
  */
 public abstract class AbstractDao<T extends Model> implements Dao<T> {
-    private final String fileName;
+    private final File FILE;
     private static final String CWD = System.getProperty("user.dir");
     private static final String MEDIA_DIR = CWD + "/src/main/resources/medias/";
 
     /**
      * Instantiates a new Abstract dao.
      *
-     * @param fileName the database file name
+     * @param file the database FILE name
      */
-    public AbstractDao(String fileName) {
-        this.fileName = fileName;
+    public AbstractDao(File file) {
+        this.FILE = file;
     }
-
-    /**
-     * Parses a line from the file into a T object
-     *
-     * @param parts a line from the file
-     * @return a T object
-     */
-    public abstract T parse(String[] parts);
 
     /***
      * Creates object in database
@@ -44,16 +36,25 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
      * @return UUID of created object
      */
     public Response<UUID> create(T object) {
+        try {
+            ArrayList<T> list;
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(FILE)))) {
+                list = (ArrayList<T>) objectInputStream.readObject();
+            } catch (EOFException e) {
+                list = new ArrayList<>();
+            }
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName, true))) {
             UUID id = UUID.randomUUID();
             object.setId(id);
 
-            String objectString = object.toString();
+            list.add(object);
 
-            writer.println(objectString);
+            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(FILE)))) {
+                objectOutputStream.writeObject(list);
+            }
+
             return Response.success("Object created successfully", id);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return Response.failure("Failed to create object: " + e.getMessage());
         }
     }
@@ -65,28 +66,39 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
      * @return A list of objects
      */
     public Response<ArrayList<T>> read(Map<String, Object> query) {
-        ArrayList<T> matchedObjects = new ArrayList<>();
+        ArrayList<T> objects;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String line;
+        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(FILE)))) {
 
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(";");
+            objects = (ArrayList<T>) ois.readObject();
 
-                T object = parse(parts);
+            if (query.isEmpty()) {
+                return Response.success("Objects read successfully", objects);
+            }
 
-                if (query.isEmpty() || match(query, object).isSuccess()) {
-                    matchedObjects.add(object);
+            for (Iterator<T> iterator = objects.iterator(); iterator.hasNext();) {
+                T object = iterator.next();
+                Response<Void> matchResponse = match(query, object);
+
+                if (!matchResponse.isSuccess()) {
+                    iterator.remove();
                 }
             }
-        } catch (IOException e) {
-            return Response.failure("Failed to read objects: " + e.getMessage());
+
+        } catch (EOFException e) {
+            objects = new ArrayList<>();
+            return Response.failure("No objects match the query", objects);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.failure("Error reading objects from the file: " + e.getMessage());
         }
 
-        if (matchedObjects.isEmpty()) {
-            return Response.failure("No objects match the query", matchedObjects);
+        if (objects.isEmpty()) {
+            return Response.failure("No objects match the query", objects);
         }
-        return Response.success("Objects read successfully", matchedObjects);
+
+        return Response.success("Objects read successfully", objects);
     }
 
     /***
@@ -238,13 +250,11 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
      * @return Void returned a response object with status, message and data
      */
     public Response<Void> saveAll(ArrayList<T> objects) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
-            for (T object : objects) {
-                writer.println(object.toString());
-            }
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(FILE)))) {
+            objectOutputStream.writeObject(objects);
             return Response.success("Objects saved successfully");
-        } catch (IOException e) {
-            return Response.failure("Failed to save objects: " + e.getMessage());
+        } catch (Exception e) {
+            return Response.failure("Error saving objects to the file: " + e.getMessage());
         }
     }
 
@@ -263,7 +273,7 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
 
     /***
      * Add media to a defined disk, and record the media in the database
-     * @param file uploaded file
+     * @param file uploaded FILE
      * @param media media object
      * @return null
      */
@@ -304,7 +314,7 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
      * Get all media of a model
      *
      * @param modelUUID model UUID
-     * @return file paths
+     * @return FILE paths
      */
     public Response<ArrayList<String>> getMedia(UUID modelUUID) {
         Response<ArrayList<Medias>> res = DaoFactory.getMediaDao().read(Map.of("model", modelDescriptor(), "modelUUID", modelUUID));
@@ -325,7 +335,7 @@ public abstract class AbstractDao<T extends Model> implements Dao<T> {
      * Get the first media of a model
      *
      * @param modelUUID model UUID
-     * @return file path
+     * @return FILE path
      */
     public Response<String> getFirstMedia(UUID modelUUID) {
         Response<ArrayList<Medias>> res = DaoFactory.getMediaDao().read(Map.of("model", modelDescriptor(), "modelUUID", modelUUID));

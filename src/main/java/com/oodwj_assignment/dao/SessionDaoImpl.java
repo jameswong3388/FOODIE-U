@@ -9,6 +9,7 @@ import com.oodwj_assignment.models.Sessions;
 import com.oodwj_assignment.models.Users;
 import com.oodwj_assignment.states.AppState;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.Duration;
@@ -19,35 +20,10 @@ import java.util.UUID;
 
 public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao {
 
-    private static final String FILE_NAME = "database/sessions.txt";
+    private static final File FILE = new File("database/sessions.dat");
 
     public SessionDaoImpl() {
-        super(FILE_NAME);
-    }
-
-    public Sessions parse(String[] parts) {
-        try {
-            UUID sessionId = UUID.fromString(parts[0]);
-            UUID userId = UUID.fromString(parts[1]);
-            LocalDateTime startTime = LocalDateTime.parse(parts[2]);
-            LocalDateTime endTime = parts[3].equals("null") ? null : LocalDateTime.parse(parts[3]);
-            long duration = Long.parseLong(parts[4]);
-            String ipAddress = parts[5];
-            String userAgent = parts[6];
-            String location = parts[7];
-            String deviceInfo = parts[8];
-            boolean isAuthenticated = Boolean.parseBoolean(parts[9]);
-            String referer = parts[10];
-            String terminationReason = parts[11];
-            boolean isActive = Boolean.parseBoolean(parts[12]);
-            UUID sessionToken = UUID.fromString(parts[13]);
-            LocalDateTime updatedAt = LocalDateTime.parse(parts[14]);
-            LocalDateTime createdAt = LocalDateTime.parse(parts[15]);
-
-            return new Sessions(sessionId, userId, startTime, endTime, duration, ipAddress, userAgent, location, deviceInfo, isAuthenticated, referer, terminationReason, isActive, sessionToken, updatedAt, createdAt);
-        } catch (Exception e) {
-            return null;
-        }
+        super(FILE);
     }
 
     /***
@@ -73,38 +49,44 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
             return Response.failure("Your account is pending to be approved, please try again later");
         }
 
-        Response<ArrayList<Sessions>> sessions = read(Map.of());
-
         UUID newSessionToken = generateSessionToken();
         InetAddress localhost = InetAddress.getLocalHost();
         String hostAddress = localhost.getHostAddress();
 
-        boolean hasSession = false;
+        Response<ArrayList<Sessions>> sessions = read(Map.of());
 
-        for (Sessions session : sessions.getData()) {
-            Response<Void> matchRes = match(Map.of("userId", user.getData().getId()), session);
-
-            if (matchRes.isSuccess()) {
-                hasSession = true;
-                session.setStartTime(LocalDateTime.now());
-                session.setEndTime(null);
-                session.setDuration(0);
-
-                session.setIpAddress(hostAddress);
-
-                session.setIsAuthenticated(true);
-                session.setTerminationReason(null);
-                session.setActive(true);
-                session.setSessionToken(newSessionToken);
-
-                session.setUpdatedAt(LocalDateTime.now());
-            }
-        }
-
-        if (!hasSession) {
-            Sessions newSession = new Sessions(UUID.randomUUID(), user.getData().getId(), LocalDateTime.now(), null, 0, null, null, null, null, false, null, null, true, newSessionToken, LocalDateTime.now(), LocalDateTime.now());
+        if (sessions.getData().isEmpty()) {
+            Sessions newSession = new Sessions(UUID.randomUUID(), user.getData().getId(), LocalDateTime.now(), null, 0, null, null, null, null, true, null, null, true, newSessionToken, LocalDateTime.now(), LocalDateTime.now());
             newSession.setIpAddress(hostAddress);
             sessions.getData().add(newSession);
+        } else {
+            boolean hasSession = false;
+
+            for (Sessions session : sessions.getData()) {
+                Response<Void> matchRes = match(Map.of("userId", user.getData().getId()), session);
+
+                if (matchRes.isSuccess()) {
+                    hasSession = true;
+                    session.setStartTime(LocalDateTime.now());
+                    session.setEndTime(null);
+                    session.setDuration(0);
+
+                    session.setIpAddress(hostAddress);
+
+                    session.setIsAuthenticated(true);
+                    session.setTerminationReason(null);
+                    session.setActive(true);
+                    session.setSessionToken(newSessionToken);
+
+                    session.setUpdatedAt(LocalDateTime.now());
+                }
+            }
+
+            if (!hasSession) {
+                Sessions newSession = new Sessions(UUID.randomUUID(), user.getData().getId(), LocalDateTime.now(), null, 0, null, null, null, null, true, null, null, true, newSessionToken, LocalDateTime.now(), LocalDateTime.now());
+                newSession.setIpAddress(hostAddress);
+                sessions.getData().add(newSession);
+            }
         }
 
         Response<Void> saveRes = saveAll(sessions.getData());
@@ -131,6 +113,7 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
                 Response<Void> matchRes = match(Map.of("sessionToken", sessionToken), session);
 
                 if (matchRes.isSuccess()) {
+                    session.setSessionToken(null);
                     session.setActive(false);
                     session.setEndTime(LocalDateTime.now());
                     session.setTerminationReason("User logged out");
@@ -146,6 +129,7 @@ public class SessionDaoImpl extends AbstractDao<Sessions> implements SessionDao 
                     Response<Void> saveRes = saveAll(sessions);
 
                     if (saveRes.isSuccess()) {
+                        AppState.setSessionToken(null);
                         return Response.success("User logged out successfully");
                     } else {
                         return Response.failure(saveRes.getMessage());
