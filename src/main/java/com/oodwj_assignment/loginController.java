@@ -16,7 +16,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -101,8 +104,22 @@ public class loginController {
         registerController registerController = loader.getController();
         Stage register = new Stage();
         register.setTitle("Register Page");
+        register.initStyle(StageStyle.UNDECORATED);
         register.setScene(new Scene(registerRoot));
         register.initModality(Modality.APPLICATION_MODAL);
+
+        // Calculate the new X and Y coordinates to center the stage and move it a bit
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+        double stageWidth = registerRoot.prefWidth(-1);
+        double stageHeight = registerRoot.prefHeight(stageWidth);
+
+        double centerX = (screenWidth - stageWidth) / 2;
+        double centerY = (screenHeight - stageHeight) / 2 - 75; // Move up by 75 pixels
+
+        register.setX(centerX);
+        register.setY(centerY);
+
         register.showAndWait();
     }
 

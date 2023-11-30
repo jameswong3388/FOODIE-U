@@ -114,21 +114,35 @@ public class admModifyPaneController {
             return null;
         }
 
-        // Check if username taken
-        if (DaoFactory.getUserDao().isUsernameTaken(username).getData()) {
-            admMainController.showAlert("Validation Error", "Username is taken.");
-            return null;
+        // Check if username changed
+        Map<String, Object> query = Map.of("Id", userId);
+        Response<ArrayList<Users>> userResponse = DaoFactory.getUserDao().read(query);
+        if (userResponse.isSuccess()){
+            String currentUsername = userResponse.getData().get(0).getUsername();
+            if (!currentUsername.equals(username)){
+                // Check if username taken
+                if (DaoFactory.getUserDao().isUsernameTaken(username).getData()) {
+                    admMainController.showAlert("Validation Error", "Username is taken.");
+                    return null;
+                }
+            }
         }
 
         // Update user information
-        Map<String, Object> query = Map.of("Id", userId);
         Map<String, Object> newValue = Map.of("username", username, "password", password, "role", role, "name", name, "phoneNumber", phoneNumber, "email", email, "updatedAt", LocalDateTime.now());
         Response<Void> response = DaoFactory.getUserDao().update(query, newValue);
 
         if (response.isSuccess()) {
             admMainController.showAlert("Success", "User information updated successfully.");
             notificationController notificationController = new notificationController();
-            notificationController.sendNotification(userId, "Your account information has been updated by admin.", Notifications.notificationType.Information);
+            if (role == Users.Role.Vendor){
+                venMainController mainController = new venMainController();
+                mainController.getStoreIdFromVendor(userId);
+                UUID storeId = venMainController.storeId;
+                notificationController.sendNotification(storeId, "Your account information has been updated by admin.", Notifications.notificationType.Information);
+            } else {
+                notificationController.sendNotification(userId, "Your account information has been updated by admin.", Notifications.notificationType.Information);
+            }
         } else {
             admMainController.showAlert("Update Error", "Failed to update user information: " + response.getMessage());
         }

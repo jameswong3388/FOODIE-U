@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.DefaultStringConverter;
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ public class registerController {
     @FXML private TextField passwordTextField;
     @FXML private ComboBox<Users.Role> roleComboBox;
     @FXML private Label phoneNumberFormatLabel;
+    @FXML private Button backButton;
 
     public void initialize(){
         phoneNumberFormatLabel.setVisible(false);
@@ -72,6 +74,11 @@ public class registerController {
 
     public void clearButtonClicked(ActionEvent event){
         clearFields();
+    }
+
+    public void backButtonClicked(ActionEvent event){
+        Stage methodStage = (Stage) backButton.getScene().getWindow();
+        methodStage.close();
     }
 
     private TextFormatter<String> phoneNumberFormatter() {
