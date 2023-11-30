@@ -5,10 +5,7 @@ import com.oodwj_assignment.dao.base.DaoFactory;
 import com.oodwj_assignment.helpers.Response;
 import com.oodwj_assignment.models.Users;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -24,19 +21,30 @@ public class UserDaoImpl extends AbstractDao<Users> implements UserDao {
 
     @Override
     public Response<UUID> create(Users model) {
-        if (isUsernameTaken(model.getUsername()).getData()) {
-            return Response.failure("Username is taken");
-        }
+        try {
+            ArrayList<Users> list;
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(FILE)))) {
+                list = (ArrayList<Users>) objectInputStream.readObject();
+            } catch (EOFException e) {
+                list = new ArrayList<>();
+            }
 
-        UUID userId = UUID.randomUUID();
-        model.setId(userId);
+            if (isUsernameTaken(model.getUsername()).getData()) {
+                return Response.failure("Username is taken");
+            }
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE, true))) {
-            writer.println(model);
+            UUID id = UUID.randomUUID();
+            model.setId(id);
 
-            return Response.success("User created successfully", userId);
-        } catch (IOException e) {
-            return Response.failure("Failed to create user: " + e.getMessage());
+            list.add(model);
+
+            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(FILE)))) {
+                objectOutputStream.writeObject(list);
+            }
+
+            return Response.success("Object created successfully", id);
+        } catch (Exception e) {
+            return Response.failure("Failed to create object: " + e.getMessage());
         }
     }
 
