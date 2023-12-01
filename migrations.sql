@@ -1,14 +1,15 @@
 create table Users
 (
-    userId    varchar(255) not null
+    userId      varchar(255) not null
         primary key,
-    username  varchar(255) not null,
-    password  varchar(255) not null,
-    email     varchar(255) not null,
-    age       int null,
-    role      varchar(255) not null,
-    updatedAt datetime null,
-    createdAt datetime null
+    username    varchar(255) not null,
+    password    varchar(255) not null,
+    role        varchar(255) not null,
+    name        varchar(255) not null,
+    phoneNumber varchar(255) not null,
+    email       varchar(255) not null,
+    updatedAt   datetime null,
+    createdAt   datetime null
 );
 
 create table Notifications
@@ -31,7 +32,6 @@ create table Attachments
         primary key,
     notificationId varchar(255) not null,
     attachedId     varchar(255) not null,
-    attachedType   varchar(255) not null,
     updatedAt      datetime     not null,
     createdAt      datetime     not null,
 
@@ -48,10 +48,12 @@ create table Orders
     totalQuantity int          not null,
     status        varchar(255) not null,
     type          varchar(255) not null,
+    transactionId varchar(255) not null,
     updatedAt     datetime     not null,
     createdAt     datetime     not null,
 
-    foreign key (userId) references Users (userId)
+    foreign key (userId) references Users (userId),
+    foreign key (transactionId) references Transactions (transactionId)
 );
 
 create table Receipts
@@ -59,11 +61,12 @@ create table Receipts
     receiptId varchar(255) not null
         primary key,
     userId    varchar(255) not null,
-    credit double not null,
+    transactionId double not null,
     updatedAt datetime     not null,
     createdAt datetime     not null,
 
-    foreign key (userId) references Users (userId)
+    foreign key (userId) references Users (userId),
+    foreign key (transactionId) references Transactions (transactionId)
 );
 
 create table Reviews
@@ -84,29 +87,28 @@ create table Reviews
 
 create table Stores
 (
-    storeId   varchar(255) not null
+    storeId     varchar(255) not null
         primary key,
-    name      varchar(255) not null,
-    vendorId  varchar(255) not null,
+    name        varchar(255) not null,
+    vendorId    varchar(255) not null,
     description text null,
-    category  varchar(255) not null,
-    updatedAt datetime     not null,
-    createdAt datetime     not null,
+    category    varchar(255) not null,
+    updatedAt   datetime     not null,
+    createdAt   datetime     not null,
 
     foreign key (vendorId) references Users (userId)
 );
 
 create table Foods
 (
-    foodId          varchar(255) not null
+    foodId    varchar(255) not null
         primary key,
-    storeId         varchar(255) not null,
-    foodName        varchar(255) not null,
-    foodType        varchar(255) not null,
-    foodDescription text null,
-    foodPrice       varchar(255) not null,
-    updatedAt       datetime     not null,
-    createdAt       datetime     not null,
+    storeId   varchar(255) not null,
+    foodName  varchar(255) not null,
+    foodType  varchar(255) not null,
+    foodPrice varchar(255) not null,
+    updatedAt datetime     not null,
+    createdAt datetime     not null,
 
     foreign key (storeId) references Stores (storeId)
 );
@@ -119,6 +121,7 @@ create table OrderFoods
     orderId      varchar(255) not null,
     foodName     varchar(255) not null,
     foodPrice    varchar(255) not null,
+    amount       int          not null,
     foodQuantity int          not null,
     updatedAt    datetime     not null,
     createdAt    datetime     not null,
@@ -129,17 +132,19 @@ create table OrderFoods
 
 create table Tasks
 (
-    taskId      varchar(255) not null
+    taskId        varchar(255) not null
         primary key,
-    runnerId    varchar(255) not null,
-    orderId     varchar(255) not null,
-    deliveryFee int          not null,
-    status      varchar(255) not null,
-    updatedAt   datetime     not null,
-    createdAt   datetime     not null,
+    runnerId      varchar(255) not null,
+    orderId       varchar(255) not null,
+    deliveryFee   int          not null,
+    status        varchar(255) not null,
+    transactionId varchar(255) not null,
+    updatedAt     datetime     not null,
+    createdAt     datetime     not null,
 
     foreign key (runnerId) references Users (userId),
-    foreign key (orderId) references Orders (orderId)
+    foreign key (orderId) references Orders (orderId),
+    foreign key (transactionId) references Transactions (transactionId)
 );
 
 create table Transactions
@@ -226,4 +231,54 @@ create table Medias
     createdAt  datetime     not null
 );
 
+create table AdminProfiles
+(
+    adminProfileId varchar(255) not null
+        primary key,
+    userId         varchar(255) not null,
+    gender         varchar(255) not null,
+    dob            datetime     not null,
+    updatedAt      datetime     not null,
+    createdAt      datetime     not null,
 
+    foreign key (userId) references Users (userId)
+);
+
+create table VendorProfiles
+(
+    vendorProfileId varchar(255) not null
+        primary key,
+    userId          varchar(255) not null,
+    updatedAt       datetime     not null,
+    createdAt       datetime     not null,
+
+    foreign key (userId) references Users (userId)
+)
+
+create table CustomerProfiles
+(
+    customerProfileId varchar(255) not null
+        primary key,
+    userId            varchar(255) not null,
+
+    gender            varchar(255) not null,
+    dob               datetime     not null,
+    updatedAt         datetime     not null,
+    createdAt         datetime     not null,
+
+    foreign key (userId) references Users (userId)
+)
+
+create table RunnerProfiles
+(
+    runnerProfileId varchar(255) not null
+        primary key,
+    userId          varchar(255) not null,
+
+    gender          varchar(255) not null,
+    dob             datetime     not null,
+    updatedAt       datetime     not null,
+    createdAt       datetime     not null,
+
+    foreign key (userId) references Users (userId)
+)
