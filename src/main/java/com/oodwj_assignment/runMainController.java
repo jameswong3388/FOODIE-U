@@ -103,7 +103,7 @@ public class runMainController {
     }
 
     public void btnProfileClicked(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("runProfile.fxml."));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("runProfile.fxml"));
         AnchorPane view = fxmlLoader.load();
         runProfileController profileController = fxmlLoader.getController();
         profileController.setRunMainController(this);

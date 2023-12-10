@@ -140,7 +140,7 @@ public class venMainController {
     }
 
     public void btnProfileClicked(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("venProfile.fxml."));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("venProfile.fxml"));
         AnchorPane view = fxmlLoader.load();
         venProfileController profileController = fxmlLoader.getController();
         profileController.setVenMainController(this);
