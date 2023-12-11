@@ -76,7 +76,7 @@ public class admCreditController {
         userIdComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 if (userResponse.isSuccess()) {
-                    String name = userResponse.getData().get(0).getName();
+                    String name = userResponse.getData().stream().filter(user -> user.getId().equals(newValue)).findFirst().get().getName();
                     nameTextField.setText(name);
                 } else {
                     nameTextField.clear();
