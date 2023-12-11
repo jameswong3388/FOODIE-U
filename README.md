@@ -1,7 +1,7 @@
 ## Requirement
 JDK - [Adoptium 20](https://adoptium.net/en-GB/temurin/releases/?arch=any&version=20)
 
-## Project Structure Overview
+## Project Structure Overview (Maven, JavaFX)
 
 ```
 .
@@ -15,7 +15,7 @@ JDK - [Adoptium 20](https://adoptium.net/en-GB/temurin/releases/?arch=any&versio
 │   │   │   │   ├── interfaces
 │   │   │   │   ├── models
 │   │   │   │   ├── states
-│   │   │   │   ├── main.java
+│   │   │   │   ├── main.java (Entrypoint)
 │   │   │   │   ├── <controllers>
 │   │   ├── resources
 │   │   │   ├── com.oodwj_assignment
