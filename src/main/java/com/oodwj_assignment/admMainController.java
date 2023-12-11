@@ -88,7 +88,7 @@ public class admMainController {
     }
 
     public void btnProfileClicked(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("admProfile.fxml."));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("admProfile.fxml"));
         AnchorPane view = fxmlLoader.load();
         admProfileController profileController = fxmlLoader.getController();
         profileController.setAdmMainController(this);

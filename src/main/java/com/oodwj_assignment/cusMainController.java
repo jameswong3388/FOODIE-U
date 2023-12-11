@@ -115,7 +115,7 @@ public class cusMainController {
     }
 
     public void btnProfileClicked(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("cusProfile.fxml."));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("cusProfile.fxml"));
         AnchorPane view = fxmlLoader.load();
         cusProfileController profileController = fxmlLoader.getController();
         profileController.setCusMainController(this);
